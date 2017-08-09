@@ -10,9 +10,9 @@ Event Manager je aplikacija koja služi kao katalog glazbenih, kulturnih i drugi
 * Google Static Maps API
 * Google Geocoding API
 
-## Plan rada:
+## Plan rada
 
-Ostvarene točke:
+Ostvareno:
 
 * glavni izbornik i prozori za pojedine entitete
 * CRUD za tablice bez vanjskih ključeva
@@ -22,7 +22,7 @@ Ostvarene točke:
 * vizualni identitet aplikacije
 * jednostavnija verzija aplikacije razvijena u Intellij IDEA IDE-u bez korištenja vizualnog dizajnera, dostupna na https://github.com/gkovac42/event-manager-edunova-v2
 
-Za uraditi:
+Za uraditi
 
 * CRUD za preostale tablice
 * GUI za unos/promjenu datuma događaja
