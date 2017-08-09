@@ -609,7 +609,7 @@ public class EventsPanel extends javax.swing.JPanel {
     private void btnGitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGitActionPerformed
 
         try {
-            Runtime.getRuntime().exec("cmd /c start https://github.com/gkovac42/event-manager-edunova-j16");
+            Runtime.getRuntime().exec("cmd /c start https://github.com/gkovac42/event-manager-edunova");
         } catch (IOException ex) {
             Logger.getLogger(EventsPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
