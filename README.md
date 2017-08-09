@@ -1,6 +1,6 @@
 # Event Manager
 
-Event Manager je aplikacija koja služi kao katalog glazbenih, kulturnih i drugih događaja, ulaznica za iste te njihovih korisnika.
+Event Manager je aplikacija koja služi kao katalog glazbenih, kulturnih i drugih događanja, ulaznica te evidenciju narudžbi istih od strane korisnika.
 
 ## Korišteni alati/tehnologije
 
