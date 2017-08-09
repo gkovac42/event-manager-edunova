@@ -26,6 +26,6 @@ Za uraditi:
 
 * CRUD za preostale tablice
 * GUI za unos/promjenu datuma događaja
-* poboljšanje pretraživanja podataka (filtri, kategorije)
-* poboljšanje Google Static Maps komponente (spremanje na disk)
+* poboljšati pretraživanja podataka (filtri, kategorije)
+* poboljšati Google Static Maps komponente (spremanje na disk)
 * debugging
