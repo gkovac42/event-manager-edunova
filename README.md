@@ -22,7 +22,7 @@ Ostvareno:
 * vizualni identitet aplikacije
 * jednostavnija verzija aplikacije razvijena u Intellij IDEA IDE-u bez korištenja vizualnog dizajnera, dostupna na https://github.com/gkovac42/event-manager-edunova-v2
 
-Za uraditi
+Za uraditi:
 
 * CRUD za preostale tablice
 * GUI za unos/promjenu datuma događaja
