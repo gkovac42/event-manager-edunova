@@ -20,7 +20,7 @@ Ostvareno:
 * pretraživanje podataka (djelomično)
 * povezivanje s Google Static Maps i Geocoding API
 * vizualni identitet aplikacije
-* jednostavnija verzija aplikacije razvijena u Intellij IDEA IDE-u bez korištenja vizualnog dizajnera, dostupna na https://github.com/gkovac42/event-manager-edunova-v2
+* jednostavnija verzija aplikacije razvijena u Intellij IDEA razvojnom okruženju, bez korištenja vizualnog dizajnera, dostupna na linku: https://github.com/gkovac42/event-manager-edunova-v2
 
 Za uraditi:
 
