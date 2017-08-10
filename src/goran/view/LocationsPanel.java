@@ -259,6 +259,8 @@ public class LocationsPanel extends javax.swing.JPanel {
             txtLocationName.setText(location.getName());
 
             downloadMap(location.getLat(), location.getLng(), Utils.DEFAULT_ZOOM_LEVEL);
+            
+            lblError.setText("");
 
         } catch (Exception e) {
         }

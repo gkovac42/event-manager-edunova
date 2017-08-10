@@ -26,9 +26,9 @@ public class Theme {
     // blue
     public static void setLightTheme() {
 
-        color1 = new Color(10, 100, 150);
-        color2 = new Color(20, 120, 160);
-        color3 = new Color(30, 80, 140);
+        color1 = new Color(50, 100, 160);
+        color2 = new Color(80, 160, 180);
+        color3 = new Color(30, 110, 150);
         color4 = new Color(250, 250, 250);
         font1 = new Color(0, 0, 0);
     }
