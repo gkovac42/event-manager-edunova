@@ -89,7 +89,7 @@ public class EventController extends ConnectionController {
         try {
 
             ps = connection.prepareStatement("update event set lokacija=? where id=?");
-            ps.setString(1, location.toString());
+            ps.setInt(1, location.getId());
             ps.setInt(2, event.getId());
             ps.execute();
         } catch (Exception e) {
@@ -101,14 +101,15 @@ public class EventController extends ConnectionController {
         String location = "";
         
         try {
-            ps = connection.prepareStatement("select lokacija from event where id=?");
+            ps = connection.prepareStatement("select lokacija.naziv, lokacija.mjesto from lokacija"
+                    + " inner join event on lokacija.id=event.lokacija where event.id=?");
             ps.setInt(1, event.getId());
             rs = ps.executeQuery();
             
             
             
             while (rs.next()) {
-                location = (rs.getString("lokacija"));
+                location = (rs.getString("naziv")) + ", " + (rs.getString("mjesto"));
                 
             }
             
