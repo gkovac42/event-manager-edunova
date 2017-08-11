@@ -68,7 +68,8 @@ public class TicketsPanel extends javax.swing.JPanel {
         btnFindTickets = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(60, 60, 70));
-        setPreferredSize(new java.awt.Dimension(880, 620));
+        setMinimumSize(new java.awt.Dimension(700, 500));
+        setPreferredSize(new java.awt.Dimension(700, 500));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblTickets.setBackground(new java.awt.Color(120, 120, 120));
@@ -96,12 +97,12 @@ public class TicketsPanel extends javax.swing.JPanel {
         tblTickets.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane3.setViewportView(tblTickets);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 820, 500));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 430));
 
         txtFindTickets.setBackground(new java.awt.Color(120, 120, 120));
         txtFindTickets.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtFindTickets.setForeground(new java.awt.Color(255, 255, 255));
-        add(txtFindTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 690, 30));
+        add(txtFindTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 570, 40));
 
         btnFindTickets.setBackground(new java.awt.Color(0, 0, 0));
         btnFindTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -116,7 +117,7 @@ public class TicketsPanel extends javax.swing.JPanel {
                 btnFindTicketsActionPerformed(evt);
             }
         });
-        add(btnFindTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, 100, 50));
+        add(btnFindTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 100, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindTicketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindTicketsActionPerformed

@@ -113,7 +113,6 @@ public class EventsPanel extends javax.swing.JPanel {
         lstTickets = new javax.swing.JList<>();
         btnEditEvent = new javax.swing.JButton();
         btnRemoveEvent = new javax.swing.JButton();
-        btnGit = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstEvents = new javax.swing.JList<>();
         btnAddEvent = new javax.swing.JButton();
@@ -121,11 +120,14 @@ public class EventsPanel extends javax.swing.JPanel {
         btnAddTicketToEvent = new javax.swing.JButton();
         btnAddTime = new javax.swing.JButton();
         lblTitle9 = new javax.swing.JLabel();
-        lblTitle2 = new javax.swing.JLabel();
         btnRemoveTicket = new javax.swing.JButton();
         btnEditTicket = new javax.swing.JButton();
         lblTitle4 = new javax.swing.JLabel();
         lblEventLocation = new javax.swing.JLabel();
+        lblTitle5 = new javax.swing.JLabel();
+        lblTitle6 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         frameEventsUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameEventsUtil.setUndecorated(true);
@@ -353,7 +355,8 @@ public class EventsPanel extends javax.swing.JPanel {
         frameLocationsUtil.getContentPane().add(pnlLocationsUtilTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 40));
 
         setBackground(new java.awt.Color(60, 60, 70));
-        setPreferredSize(new java.awt.Dimension(880, 620));
+        setMinimumSize(new java.awt.Dimension(700, 500));
+        setPreferredSize(new java.awt.Dimension(700, 500));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lstTickets.setBackground(new java.awt.Color(153, 153, 153));
@@ -361,7 +364,7 @@ public class EventsPanel extends javax.swing.JPanel {
         lstTickets.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(lstTickets);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 470, 170));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 320, 130));
 
         btnEditEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnEditEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -376,7 +379,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnEditEventActionPerformed(evt);
             }
         });
-        add(btnEditEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 550, 100, 50));
+        add(btnEditEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 100, 40));
 
         btnRemoveEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnRemoveEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -391,23 +394,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnRemoveEventActionPerformed(evt);
             }
         });
-        add(btnRemoveEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 550, 100, 50));
-
-        btnGit.setBackground(new java.awt.Color(0, 0, 0));
-        btnGit.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnGit.setForeground(new java.awt.Color(255, 255, 255));
-        btnGit.setText("GITHUB");
-        btnGit.setBorder(null);
-        btnGit.setFocusPainted(false);
-        btnGit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnGit.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnGit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnGit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGitActionPerformed(evt);
-            }
-        });
-        add(btnGit, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 550, 140, 50));
+        add(btnRemoveEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 100, 40));
 
         lstEvents.setBackground(new java.awt.Color(153, 153, 153));
         lstEvents.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
@@ -419,7 +406,7 @@ public class EventsPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(lstEvents);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 320, 500));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 320, 200));
 
         btnAddEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnAddEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -434,7 +421,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnAddEventActionPerformed(evt);
             }
         });
-        add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 100, 50));
+        add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 100, 40));
 
         btnAddLocation.setBackground(new java.awt.Color(0, 0, 0));
         btnAddLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -450,7 +437,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnAddLocationActionPerformed(evt);
             }
         });
-        add(btnAddLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 50, 50));
+        add(btnAddLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, 50, 40));
 
         btnAddTicketToEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnAddTicketToEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -465,7 +452,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnAddTicketToEventActionPerformed(evt);
             }
         });
-        add(btnAddTicketToEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 550, 100, 50));
+        add(btnAddTicketToEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 100, 40));
 
         btnAddTime.setBackground(new java.awt.Color(0, 0, 0));
         btnAddTime.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -476,18 +463,12 @@ public class EventsPanel extends javax.swing.JPanel {
         btnAddTime.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnAddTime.setPreferredSize(new java.awt.Dimension(80, 80));
         btnAddTime.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        add(btnAddTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 50, 50));
+        add(btnAddTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 50, 40));
 
-        lblTitle9.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        lblTitle9.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle9.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle9.setText("DODAJ VRIJEME EVENTA");
-        add(lblTitle9, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 420, 50));
-
-        lblTitle2.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
-        lblTitle2.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle2.setText("KALENDAR - PLACEHOLDER");
-        lblTitle2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(lblTitle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 470, 170));
+        add(lblTitle9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 450, 290, 40));
 
         btnRemoveTicket.setBackground(new java.awt.Color(0, 0, 0));
         btnRemoveTicket.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -502,7 +483,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnRemoveTicketActionPerformed(evt);
             }
         });
-        add(btnRemoveTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 550, 100, 50));
+        add(btnRemoveTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 450, 100, 40));
 
         btnEditTicket.setBackground(new java.awt.Color(0, 0, 0));
         btnEditTicket.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -517,17 +498,33 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnEditTicketActionPerformed(evt);
             }
         });
-        add(btnEditTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 550, 100, 50));
+        add(btnEditTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 450, 100, 40));
 
-        lblTitle4.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        lblTitle4.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle4.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle4.setText("RASPOLOŽIVE ULAZNICE");
-        add(lblTitle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 320, 370, 40));
+        lblTitle4.setText("LOKACIJA I VRIJEME");
+        add(lblTitle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 220, 30));
 
-        lblEventLocation.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        lblEventLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblEventLocation.setForeground(new java.awt.Color(255, 255, 255));
         lblEventLocation.setText("DODAJ LOKACIJU EVENTA");
-        add(lblEventLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 410, 50));
+        add(lblEventLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 290, 40));
+
+        lblTitle5.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTitle5.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitle5.setText("ULAZNICE");
+        add(lblTitle5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 220, 30));
+
+        lblTitle6.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTitle6.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitle6.setText("EVENTI");
+        add(lblTitle6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 30));
+
+        jLabel1.setText("------- klendar placeholder ----------");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 340, 130));
+
+        jLabel2.setText("------- karta placeholder ----------");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 340, 200));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditEventActionPerformed
@@ -605,15 +602,6 @@ public class EventsPanel extends javax.swing.JPanel {
 
         frameEventsUtil.dispose();
     }//GEN-LAST:event_btnCancelEventActionPerformed
-
-    private void btnGitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGitActionPerformed
-
-        try {
-            Runtime.getRuntime().exec("cmd /c start https://github.com/gkovac42/event-manager-edunova");
-        } catch (IOException ex) {
-            Logger.getLogger(EventsPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnGitActionPerformed
 
     private void lstEventsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstEventsValueChanged
 
@@ -747,7 +735,6 @@ public class EventsPanel extends javax.swing.JPanel {
         btnAddEvent.setBackground(Theme.color3);
         btnRemoveEvent.setBackground(Theme.color3);
         btnEditEvent.setBackground(Theme.color3);
-        btnGit.setBackground(Theme.color3);
         btnAddLocation.setBackground(Theme.color3);
         btnAddTime.setBackground(Theme.color3);
         btnAddTicketToEvent.setBackground(Theme.color3);
@@ -802,16 +789,17 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnConfirmTicket;
     private javax.swing.JButton btnEditEvent;
     private javax.swing.JButton btnEditTicket;
-    private javax.swing.JButton btnGit;
     private javax.swing.JButton btnRemoveEvent;
     private javax.swing.JButton btnRemoveTicket;
     private javax.swing.JFrame frameEventsUtil;
     private javax.swing.JFrame frameLocationsUtil;
     private javax.swing.JFrame frameTicketsUtil;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -822,8 +810,9 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblEventsUtil;
     private javax.swing.JLabel lblLocations;
     private javax.swing.JLabel lblTicketsUtil;
-    private javax.swing.JLabel lblTitle2;
     private javax.swing.JLabel lblTitle4;
+    private javax.swing.JLabel lblTitle5;
+    private javax.swing.JLabel lblTitle6;
     private javax.swing.JLabel lblTitle9;
     private javax.swing.JList<Event> lstEvents;
     private javax.swing.JList<Location> lstLocations;

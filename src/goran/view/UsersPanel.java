@@ -200,13 +200,14 @@ public class UsersPanel extends javax.swing.JPanel {
         frameUsersUtil.getContentPane().add(pnlUsersUtilTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 40));
 
         setBackground(new java.awt.Color(60, 60, 70));
-        setPreferredSize(new java.awt.Dimension(880, 620));
+        setMinimumSize(new java.awt.Dimension(700, 500));
+        setPreferredSize(new java.awt.Dimension(700, 500));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtFindUser.setBackground(new java.awt.Color(120, 120, 120));
         txtFindUser.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtFindUser.setForeground(new java.awt.Color(255, 255, 255));
-        add(txtFindUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 690, 30));
+        add(txtFindUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 570, 40));
 
         btnFindUser.setBackground(new java.awt.Color(0, 0, 0));
         btnFindUser.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -221,7 +222,7 @@ public class UsersPanel extends javax.swing.JPanel {
                 btnFindUserActionPerformed(evt);
             }
         });
-        add(btnFindUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, 100, 50));
+        add(btnFindUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 100, 40));
 
         btnAddUser.setBackground(new java.awt.Color(0, 0, 0));
         btnAddUser.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -236,7 +237,7 @@ public class UsersPanel extends javax.swing.JPanel {
                 btnAddUserActionPerformed(evt);
             }
         });
-        add(btnAddUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 100, 50));
+        add(btnAddUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 100, 40));
 
         btnEditUser.setBackground(new java.awt.Color(0, 0, 0));
         btnEditUser.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -251,23 +252,22 @@ public class UsersPanel extends javax.swing.JPanel {
                 btnEditUserActionPerformed(evt);
             }
         });
-        add(btnEditUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 550, 100, 50));
+        add(btnEditUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 450, 100, 40));
 
         btnReviewOrders.setBackground(new java.awt.Color(0, 0, 0));
         btnReviewOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnReviewOrders.setForeground(new java.awt.Color(255, 255, 255));
+        btnReviewOrders.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/menu_tickets.png"))); // NOI18N
         btnReviewOrders.setText("PREGLEDAJ NARUDŽBE");
         btnReviewOrders.setBorder(null);
         btnReviewOrders.setFocusPainted(false);
-        btnReviewOrders.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnReviewOrders.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnReviewOrders.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnReviewOrders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReviewOrdersActionPerformed(evt);
             }
         });
-        add(btnReviewOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 550, 210, 50));
+        add(btnReviewOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 350, 40));
 
         btnRemoveUser.setBackground(new java.awt.Color(0, 0, 0));
         btnRemoveUser.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -282,7 +282,7 @@ public class UsersPanel extends javax.swing.JPanel {
                 btnRemoveUserActionPerformed(evt);
             }
         });
-        add(btnRemoveUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 550, 100, 50));
+        add(btnRemoveUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 450, 100, 40));
 
         tblUsers.setBackground(new java.awt.Color(120, 120, 120));
         tblUsers.getTableHeader().setFont(new java.awt.Font("Lucida Sans", 1, 16));
@@ -308,7 +308,7 @@ public class UsersPanel extends javax.swing.JPanel {
         tblUsers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane5.setViewportView(tblUsers);
 
-        add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 820, 440));
+        add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 380));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindUserActionPerformed

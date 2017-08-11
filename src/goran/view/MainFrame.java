@@ -6,6 +6,7 @@
 package goran.view;
 
 import goran.controller.ConnectionController;
+import java.io.IOException;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
@@ -24,7 +25,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         
         initComponents();
-        panelPosition = new AbsoluteConstraints(120, 40, 880, 620);
+        panelPosition = new AbsoluteConstraints(100, 40, 700, 560);
         pnlEvents = new EventsPanel();
         getContentPane().add(pnlEvents, panelPosition); 
         pnlTickets = new TicketsPanel();
@@ -50,11 +51,11 @@ public class MainFrame extends javax.swing.JFrame {
         lblClose = new javax.swing.JLabel();
         lblTitle = new javax.swing.JLabel();
         lblMinimize = new javax.swing.JLabel();
+        btnGit = new javax.swing.JButton();
         pnlSide = new MotionPanel(this);
         btnEvents = new javax.swing.JButton();
         btnTickets = new javax.swing.JButton();
         btnUsers = new javax.swing.JButton();
-        btnExit = new javax.swing.JButton();
         btnLocations = new javax.swing.JButton();
         btnOrders = new javax.swing.JButton();
 
@@ -62,7 +63,8 @@ public class MainFrame extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
         setOpacity(0.97F);
-        setSize(new java.awt.Dimension(1000, 660));
+        setPreferredSize(new java.awt.Dimension(800, 540));
+        setSize(new java.awt.Dimension(800, 540));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -72,7 +74,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         pnlTitle.setBackground(new java.awt.Color(30, 30, 40));
         pnlTitle.setForeground(new java.awt.Color(255, 255, 255));
-        pnlTitle.setPreferredSize(new java.awt.Dimension(1000, 50));
+        pnlTitle.setPreferredSize(new java.awt.Dimension(800, 40));
         pnlTitle.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -95,7 +97,7 @@ public class MainFrame extends javax.swing.JFrame {
                 lblLightSwitchMouseExited(evt);
             }
         });
-        pnlTitle.add(lblLightSwitch, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 0, 30, 40));
+        pnlTitle.add(lblLightSwitch, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 0, 30, 40));
 
         lblClose.setBackground(new java.awt.Color(30, 30, 40));
         lblClose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -113,12 +115,12 @@ public class MainFrame extends javax.swing.JFrame {
                 lblCloseMouseExited(evt);
             }
         });
-        pnlTitle.add(lblClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 0, 30, 40));
+        pnlTitle.add(lblClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, 30, 40));
 
         lblTitle.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle.setText("EVENT MANAGER");
-        pnlTitle.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 0, 380, 40));
+        pnlTitle.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 150, 40));
 
         lblMinimize.setBackground(new java.awt.Color(30, 30, 40));
         lblMinimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -136,12 +138,30 @@ public class MainFrame extends javax.swing.JFrame {
                 lblMinimizeMouseExited(evt);
             }
         });
-        pnlTitle.add(lblMinimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 0, 30, 50));
+        pnlTitle.add(lblMinimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 0, 30, 50));
 
-        getContentPane().add(pnlTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 40));
+        btnGit.setBackground(new java.awt.Color(0, 0, 0));
+        btnGit.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnGit.setForeground(new java.awt.Color(255, 255, 255));
+        btnGit.setText("GITHUB");
+        btnGit.setBorder(null);
+        btnGit.setBorderPainted(false);
+        btnGit.setFocusPainted(false);
+        btnGit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnGit.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnGit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnGit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGitActionPerformed(evt);
+            }
+        });
+        pnlTitle.add(btnGit, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, 100, 20));
+
+        getContentPane().add(pnlTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 40));
 
         pnlSide.setBackground(new java.awt.Color(0, 0, 0));
         pnlSide.setForeground(new java.awt.Color(255, 255, 255));
+        pnlSide.setPreferredSize(new java.awt.Dimension(100, 560));
         pnlSide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnEvents.setBackground(new java.awt.Color(0, 0, 0));
@@ -158,7 +178,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btnEventsActionPerformed(evt);
             }
         });
-        pnlSide.add(btnEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 100, -1));
+        pnlSide.add(btnEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 100));
 
         btnTickets.setBackground(new java.awt.Color(0, 0, 0));
         btnTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -174,7 +194,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btnTicketsActionPerformed(evt);
             }
         });
-        pnlSide.add(btnTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 100, -1));
+        pnlSide.add(btnTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 100, 100));
 
         btnUsers.setBackground(new java.awt.Color(0, 0, 0));
         btnUsers.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -190,24 +210,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btnUsersActionPerformed(evt);
             }
         });
-        pnlSide.add(btnUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 100, -1));
-
-        btnExit.setBackground(new java.awt.Color(0, 0, 0));
-        btnExit.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnExit.setForeground(new java.awt.Color(255, 255, 255));
-        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/menu_exit.png"))); // NOI18N
-        btnExit.setText("IZLAZ");
-        btnExit.setBorder(null);
-        btnExit.setFocusable(false);
-        btnExit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnExit.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnExit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExitActionPerformed(evt);
-            }
-        });
-        pnlSide.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, 100, -1));
+        pnlSide.add(btnUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 100, 100));
 
         btnLocations.setBackground(new java.awt.Color(0, 0, 0));
         btnLocations.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -223,7 +226,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btnLocationsActionPerformed(evt);
             }
         });
-        pnlSide.add(btnLocations, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 100, -1));
+        pnlSide.add(btnLocations, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 100, 100));
 
         btnOrders.setBackground(new java.awt.Color(0, 0, 0));
         btnOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -234,9 +237,9 @@ public class MainFrame extends javax.swing.JFrame {
         btnOrders.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnOrders.setPreferredSize(new java.awt.Dimension(80, 80));
         btnOrders.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        pnlSide.add(btnOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 100, -1));
+        pnlSide.add(btnOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 100, 100));
 
-        getContentPane().add(pnlSide, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 120, 620));
+        getContentPane().add(pnlSide, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 100, 500));
 
         pack();
         setLocationRelativeTo(null);
@@ -252,10 +255,6 @@ public class MainFrame extends javax.swing.JFrame {
         panel.setVisible(true);
 
     }
-
-    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_btnExitActionPerformed
         
     private void btnTicketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTicketsActionPerformed
         setActivePanel(pnlTickets);
@@ -326,6 +325,15 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnLocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocationsActionPerformed
         setActivePanel(pnlLocations);
     }//GEN-LAST:event_btnLocationsActionPerformed
+
+    private void btnGitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGitActionPerformed
+
+        try {
+            Runtime.getRuntime().exec("cmd /c start https://github.com/gkovac42/event-manager-edunova");
+        } catch (IOException ex) {
+            
+        }
+    }//GEN-LAST:event_btnGitActionPerformed
         
     private void applyTheme() {
 
@@ -340,7 +348,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnUsers.setBackground(Theme.color3);
         btnOrders.setBackground(Theme.color3);
         btnLocations.setBackground(Theme.color3);
-        btnExit.setBackground(Theme.color3);
+        btnGit.setBackground(Theme.color3);
 
         pnlEvents.applyTheme();
         pnlTickets.applyTheme();
@@ -351,7 +359,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEvents;
-    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnGit;
     private javax.swing.JButton btnLocations;
     private javax.swing.JButton btnOrders;
     private javax.swing.JButton btnTickets;
