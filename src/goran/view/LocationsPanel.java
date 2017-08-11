@@ -93,7 +93,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lstLocations.setBackground(new java.awt.Color(153, 153, 153));
-        lstLocations.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        lstLocations.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstLocations.setForeground(new java.awt.Color(255, 255, 255));
         lstLocations.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -105,22 +105,22 @@ public class LocationsPanel extends javax.swing.JPanel {
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 380, 150));
 
         txtLocationName.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtLocationName.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtLocationName.setForeground(new java.awt.Color(255, 255, 255));
         add(txtLocationName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 210, 30));
 
         txtLocationAddress.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationAddress.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtLocationAddress.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtLocationAddress.setForeground(new java.awt.Color(255, 255, 255));
         add(txtLocationAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 210, 30));
 
         txtLocationLocality.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationLocality.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtLocationLocality.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtLocationLocality.setForeground(new java.awt.Color(255, 255, 255));
         add(txtLocationLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 210, 30));
 
         txtLocationCountry.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationCountry.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtLocationCountry.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtLocationCountry.setForeground(new java.awt.Color(255, 255, 255));
         add(txtLocationCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 210, 30));
 

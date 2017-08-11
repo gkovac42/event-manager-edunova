@@ -17,8 +17,9 @@ public class Utils {
     public static final String EDIT_EVENT = "UREDI EVENT";
     public static final String ADD_TICKET = "DODAJ NOVU ULAZNICU";
     public static final String EDIT_TICKET = "UREDI ULAZNICU";
-    public static final String INPUT_ERROR = "Niste unijeli potrebne podatke!";
+    public static final String INPUT_ERROR = "Niste unijeli podatke!";
     public static final String EVENT_SELECTION_ERROR = "Odaberite event!";
+    public static final String LOCATION_SELECTION_ERROR = "Odaberite lokaciju!";
     public static final int DEFAULT_ZOOM_LEVEL = 16;
     
 }

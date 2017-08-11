@@ -84,6 +84,7 @@ public class UsersPanel extends javax.swing.JPanel {
         lblError = new javax.swing.JLabel();
         pnlUsersUtilTitle = new MotionPanel(frameUsersUtil);
         lblUsersUtil = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         txtFindUser = new javax.swing.JTextField();
         btnFindUser = new javax.swing.JButton();
         btnAddUser = new javax.swing.JButton();
@@ -96,7 +97,7 @@ public class UsersPanel extends javax.swing.JPanel {
         frameUsersUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameUsersUtil.setUndecorated(true);
         frameUsersUtil.setResizable(false);
-        frameUsersUtil.setSize(new java.awt.Dimension(540, 390));
+        frameUsersUtil.setSize(new java.awt.Dimension(400, 350));
         frameUsersUtil.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlUsersUtilMain.setBackground(new java.awt.Color(60, 60, 70));
@@ -106,7 +107,7 @@ public class UsersPanel extends javax.swing.JPanel {
         txtLocality.setBackground(new java.awt.Color(153, 153, 153));
         txtLocality.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtLocality.setForeground(new java.awt.Color(255, 255, 255));
-        pnlUsersUtilMain.add(txtLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 370, 40));
+        pnlUsersUtilMain.add(txtLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 300, 40));
 
         btnConfirm.setBackground(new java.awt.Color(0, 0, 0));
         btnConfirm.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -121,7 +122,7 @@ public class UsersPanel extends javax.swing.JPanel {
                 btnConfirmActionPerformed(evt);
             }
         });
-        pnlUsersUtilMain.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 120, 50));
+        pnlUsersUtilMain.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, 100, 40));
 
         btnCancel.setBackground(new java.awt.Color(0, 0, 0));
         btnCancel.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -136,58 +137,58 @@ public class UsersPanel extends javax.swing.JPanel {
                 btnCancelActionPerformed(evt);
             }
         });
-        pnlUsersUtilMain.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 120, 50));
+        pnlUsersUtilMain.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 100, 40));
 
         txtFirstName.setBackground(new java.awt.Color(153, 153, 153));
         txtFirstName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtFirstName.setForeground(new java.awt.Color(255, 255, 255));
-        pnlUsersUtilMain.add(txtFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 370, 40));
+        pnlUsersUtilMain.add(txtFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 300, 40));
 
         txtLastName.setBackground(new java.awt.Color(153, 153, 153));
         txtLastName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtLastName.setForeground(new java.awt.Color(255, 255, 255));
-        pnlUsersUtilMain.add(txtLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 370, 40));
+        pnlUsersUtilMain.add(txtLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 300, 40));
 
         txtEmail.setBackground(new java.awt.Color(153, 153, 153));
         txtEmail.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(255, 255, 255));
-        pnlUsersUtilMain.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 370, 40));
+        pnlUsersUtilMain.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 300, 40));
 
         txtAddress.setBackground(new java.awt.Color(153, 153, 153));
         txtAddress.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtAddress.setForeground(new java.awt.Color(255, 255, 255));
-        pnlUsersUtilMain.add(txtAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 370, 40));
+        pnlUsersUtilMain.add(txtAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 300, 40));
 
-        jLabel7.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("MJESTO");
-        pnlUsersUtilMain.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 130, 40));
+        pnlUsersUtilMain.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 80, 40));
 
-        jLabel8.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("IME");
-        pnlUsersUtilMain.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 130, 40));
+        pnlUsersUtilMain.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, 40));
 
-        jLabel9.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("PREZIME");
-        pnlUsersUtilMain.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 130, 40));
+        pnlUsersUtilMain.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 80, 40));
 
-        jLabel10.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("E-MAIL");
-        pnlUsersUtilMain.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 130, 40));
+        pnlUsersUtilMain.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 80, 40));
 
-        jLabel11.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("ADRESA");
-        pnlUsersUtilMain.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 130, 40));
+        pnlUsersUtilMain.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 80, 40));
 
         lblError.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblError.setForeground(new java.awt.Color(255, 0, 0));
-        pnlUsersUtilMain.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 210, 30));
+        pnlUsersUtilMain.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 170, 40));
 
-        frameUsersUtil.getContentPane().add(pnlUsersUtilMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 540, 350));
+        frameUsersUtil.getContentPane().add(pnlUsersUtilMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 400, 310));
 
         pnlUsersUtilTitle.setBackground(new java.awt.Color(30, 30, 40));
         pnlUsersUtilTitle.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -195,9 +196,14 @@ public class UsersPanel extends javax.swing.JPanel {
         lblUsersUtil.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         lblUsersUtil.setForeground(new java.awt.Color(255, 255, 255));
         lblUsersUtil.setText("DODAJ NOVOG KORISNIKA");
-        pnlUsersUtilTitle.add(lblUsersUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 230, 40));
+        pnlUsersUtilTitle.add(lblUsersUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 230, 40));
 
-        frameUsersUtil.getContentPane().add(pnlUsersUtilTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 40));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/title_add_user.png"))); // NOI18N
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pnlUsersUtilTitle.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 40));
+
+        frameUsersUtil.getContentPane().add(pnlUsersUtilTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 40));
 
         setBackground(new java.awt.Color(60, 60, 70));
         setMinimumSize(new java.awt.Dimension(700, 500));
@@ -285,8 +291,8 @@ public class UsersPanel extends javax.swing.JPanel {
         add(btnRemoveUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 450, 100, 40));
 
         tblUsers.setBackground(new java.awt.Color(120, 120, 120));
-        tblUsers.getTableHeader().setFont(new java.awt.Font("Lucida Sans", 1, 16));
-        tblUsers.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        tblUsers.getTableHeader().setFont(new java.awt.Font("Lucida Sans", 1, 14));
+        tblUsers.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         tblUsers.setForeground(new java.awt.Color(255, 255, 255));
         tblUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -444,6 +450,7 @@ public class UsersPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnRemoveUser;
     private javax.swing.JButton btnReviewOrders;
     private javax.swing.JFrame frameUsersUtil;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel7;

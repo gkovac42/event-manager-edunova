@@ -5,7 +5,6 @@
  */
 package goran.view;
 
-import goran.controller.ConnectionController;
 import java.io.IOException;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -21,7 +20,9 @@ public class MainFrame extends javax.swing.JFrame {
     private UsersPanel pnlUsers;
     private LocationsPanel pnlLocations;
     private AbsoluteConstraints panelPosition;
-
+    
+    private int theme = Theme.DARK;
+    
     public MainFrame() {
         
         initComponents();
@@ -303,19 +304,20 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void lblLightSwitchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLightSwitchMouseClicked
 
-        if (Theme.checkTheme == Theme.LIGHT) {
-            Theme.checkTheme = Theme.DARK;
-            lblLightSwitch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/light_off.png")));
-            Theme.setDarkTheme();
-            applyTheme();
+        if (theme == Theme.DARK) {
+            
+            theme = Theme.LIGHT;
+            lblLightSwitch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/light_on.png")));
+            Theme.setLightTheme();
 
         } else {
 
-            Theme.checkTheme = Theme.LIGHT;
-            lblLightSwitch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/light_on.png")));
-            Theme.setLightTheme();
-            applyTheme();
+            theme = Theme.DARK;
+            lblLightSwitch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/light_off.png")));
+            Theme.setDarkTheme();
         }
+        
+        applyTheme();
     }//GEN-LAST:event_lblLightSwitchMouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

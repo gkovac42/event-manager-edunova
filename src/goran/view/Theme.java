@@ -15,7 +15,6 @@ public class Theme {
 
     public static final int DARK = 0;
     public static final int LIGHT = 1;
-    public static int checkTheme = 0;
 
     public static Color color1 = new Color(30, 30, 40);
     public static Color color2 = new Color(75, 75, 85);

@@ -8,9 +8,6 @@
     </Property>
     <Property name="undecorated" type="boolean" value="true"/>
     <Property name="opacity" type="float" value="0.97"/>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[800, 540]"/>
-    </Property>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[800, 540]"/>
     </Property>
