@@ -11,9 +11,6 @@ import goran.controller.TicketController;
 import goran.model.Event;
 import goran.model.Location;
 import goran.model.Ticket;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 /**
@@ -360,7 +357,7 @@ public class EventsPanel extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lstTickets.setBackground(new java.awt.Color(153, 153, 153));
-        lstTickets.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        lstTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstTickets.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(lstTickets);
 
@@ -397,7 +394,7 @@ public class EventsPanel extends javax.swing.JPanel {
         add(btnRemoveEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 100, 40));
 
         lstEvents.setBackground(new java.awt.Color(153, 153, 153));
-        lstEvents.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        lstEvents.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstEvents.setForeground(new java.awt.Color(255, 255, 255));
         lstEvents.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {

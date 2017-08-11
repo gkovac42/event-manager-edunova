@@ -28,7 +28,7 @@ public class Theme {
 
         color1 = new Color(50, 100, 160);
         color2 = new Color(80, 160, 180);
-        color3 = new Color(30, 110, 150);
+        color3 = new Color(40, 70, 120);
         color4 = new Color(250, 250, 250);
         font1 = new Color(0, 0, 0);
     }
