@@ -6,6 +6,7 @@
 package goran.view;
 
 import goran.controller.EventController;
+import goran.controller.GoogleMapsController;
 import goran.controller.LocationController;
 import goran.controller.TicketController;
 import goran.model.Event;
@@ -25,6 +26,7 @@ public class EventsPanel extends javax.swing.JPanel {
     private EventController eventControl;
     private TicketController ticketControl;
     private LocationController locationControl;
+    private GoogleMapsController mapControl;
 
     public EventsPanel() {
 
@@ -36,6 +38,7 @@ public class EventsPanel extends javax.swing.JPanel {
         eventControl = new EventController();
         ticketControl = new TicketController();
         locationControl = new LocationController();
+        mapControl = new GoogleMapsController();
 
         updateEvents();
     }
@@ -126,7 +129,7 @@ public class EventsPanel extends javax.swing.JPanel {
         lblTitle5 = new javax.swing.JLabel();
         lblTitle6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblMap = new javax.swing.JLabel();
 
         frameEventsUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameEventsUtil.setUndecorated(true);
@@ -531,8 +534,8 @@ public class EventsPanel extends javax.swing.JPanel {
         jLabel1.setText("------- klendar placeholder ----------");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 340, 130));
 
-        jLabel2.setText("------- karta placeholder ----------");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 340, 200));
+        lblMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        add(lblMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 350, 200));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditEventActionPerformed
@@ -618,8 +621,15 @@ public class EventsPanel extends javax.swing.JPanel {
             event = lstEvents.getSelectedValue();
             updateEventTickets();
             lblEventLocation.setText(eventControl.getEventLocation(event));
+            if (event.getLocation() == null) {
+                lblMap.setIcon(null);
+                lblEventLocation.setText("DODAJ LOKACIJU EVENTA");
+            } else {
+                mapControl.downloadMap(eventControl.getEventLat(event), eventControl.getEventLng(event), 14, 350, 200, lblMap);
+            }
 
         } catch (NullPointerException e) {
+            lblMap.setIcon(null);
             lblEventLocation.setText("DODAJ LOKACIJU EVENTA");
         }
     }//GEN-LAST:event_lstEventsValueChanged
@@ -713,6 +723,14 @@ public class EventsPanel extends javax.swing.JPanel {
         } else {
 
             eventControl.setEventLocation(event, location);
+            
+            if (event.getLocation() == null) {
+                lblMap.setIcon(null);
+                lblEventLocation.setText("DODAJ LOKACIJU EVENTA");
+            } else {
+                mapControl.downloadMap(eventControl.getEventLat(event), eventControl.getEventLng(event), 14, 350, 200, lblMap);
+            }
+            
             lblEventLocation.setText(location.toString());
             frameLocationsUtil.dispose();
 
@@ -807,7 +825,6 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -819,6 +836,7 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblEventLocation;
     private javax.swing.JLabel lblEventsUtil;
     private javax.swing.JLabel lblLocations;
+    private javax.swing.JLabel lblMap;
     private javax.swing.JLabel lblTicketsUtil;
     private javax.swing.JLabel lblTitle4;
     private javax.swing.JLabel lblTitle5;

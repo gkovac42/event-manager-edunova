@@ -10,6 +10,8 @@ import goran.model.Location;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -97,29 +99,66 @@ public class EventController extends ConnectionController {
     }
 
     public String getEventLocation(Event event) {
-        
+
         String location = "";
-        
+
         try {
             ps = connection.prepareStatement("select lokacija.naziv, lokacija.mjesto from lokacija"
                     + " inner join event on lokacija.id=event.lokacija where event.id=?");
             ps.setInt(1, event.getId());
             rs = ps.executeQuery();
-            
-            
-            
+
             while (rs.next()) {
                 location = (rs.getString("naziv")) + ", " + (rs.getString("mjesto"));
-                
+
             }
-            
+
         } catch (SQLException sQLException) {
         }
-        
+
         if (location.equals("")) {
             location = "DODAJ LOKACIJU EVENTA";
         }
-        
+
         return location;
     }
+
+    public String getEventLat(Event event) {
+
+        String lat = "";
+
+        try {
+            ps = connection.prepareStatement("select lokacija.lat from lokacija"
+                    + " inner join event on lokacija.id=event.lokacija where event.id=?");
+            ps.setInt(1, event.getId());
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lat = rs.getString("lat");
+            }
+        } catch (SQLException ex) {
+        }
+
+        return lat;
+    }
+
+    public String getEventLng(Event event) {
+
+        String lng = "";
+
+        try {
+            ps = connection.prepareStatement("select lokacija.lng from lokacija"
+                    + " inner join event on lokacija.id=event.lokacija where event.id=?");
+            ps.setInt(1, event.getId());
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lng = rs.getString("lng");
+            }
+        } catch (SQLException ex) {
+        }
+
+        return lng;
+    }
+
 }

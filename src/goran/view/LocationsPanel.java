@@ -8,10 +8,7 @@ package goran.view;
 import goran.controller.GoogleMapsController;
 import goran.controller.LocationController;
 import goran.model.Location;
-import java.net.MalformedURLException;
-import java.net.URL;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -23,8 +20,6 @@ public class LocationsPanel extends javax.swing.JPanel {
     private LocationController locationControl;
     private GoogleMapsController mapControl;
     private String[] mapData;
-    private String imageUrl;
-    private URL url;
     private int zoomLevel;
 
     public LocationsPanel() {
@@ -43,20 +38,6 @@ public class LocationsPanel extends javax.swing.JPanel {
         lstLocations.setModel(model);
         for (Location location : locationControl.getLocations()) {
             model.addElement(location);
-        }
-    }
-
-    private void downloadMap(String lat, String lng, int zoomLevel) {
-
-        imageUrl = "http://maps.googleapis.com/maps/api/staticmap?center="
-                + lat + ",%20" + lng + "&zoom=" + zoomLevel + "&size=680x270&scale=1&markers="
-                + lat + ",%20" + lng + "&sensor=true";
-        try {
-
-            url = new URL(imageUrl);
-            lblMap.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(680, 270, java.awt.Image.SCALE_SMOOTH)));
-
-        } catch (MalformedURLException ex) {
         }
     }
 
@@ -241,7 +222,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         lblError.setForeground(new java.awt.Color(255, 0, 0));
         lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblError.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 250, 50));
+        add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 250, 50));
 
         lblTitle6.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle6.setForeground(new java.awt.Color(255, 255, 255));
@@ -260,7 +241,7 @@ public class LocationsPanel extends javax.swing.JPanel {
             txtLocationCountry.setText(location.getCountry());
             txtLocationName.setText(location.getName());
 
-            downloadMap(location.getLat(), location.getLng(), Utils.DEFAULT_ZOOM_LEVEL);
+            mapControl.downloadMap(location.getLat(), location.getLng(), Utils.DEFAULT_ZOOM_LEVEL, 680, 270, lblMap);
             
             lblError.setText("");
 
@@ -282,7 +263,7 @@ public class LocationsPanel extends javax.swing.JPanel {
             location.setLat(mapData[0]);
             location.setLng(mapData[1]);
             
-            downloadMap(location.getLat(), location.getLng(), Utils.DEFAULT_ZOOM_LEVEL);
+            mapControl.downloadMap(location.getLat(), location.getLng(), Utils.DEFAULT_ZOOM_LEVEL, 680, 270, lblMap);
             
             txtLocationAddress.setText(mapData[3] + " " + mapData[2]);
             txtLocationLocality.setText(mapData[4]);
@@ -297,7 +278,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         try {
             
             zoomLevel--;
-            downloadMap(location.getLat(), location.getLng(), zoomLevel);
+            mapControl.downloadMap(location.getLat(), location.getLng(), zoomLevel, 680, 270, lblMap);
 
         } catch (Exception e) {
         }
@@ -308,7 +289,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         try {
             
             zoomLevel++;
-            downloadMap(location.getLat(), location.getLng(), zoomLevel);
+            mapControl.downloadMap(location.getLat(), location.getLng(), zoomLevel, 680, 270, lblMap);
             
         } catch (Exception e) {
         }
@@ -393,9 +374,8 @@ public class LocationsPanel extends javax.swing.JPanel {
         txtLocationLocality.setText("");
         txtLocationCountry.setText("");
         
-        lblMap.setIcon(null);
-
         lblError.setText("");
+        lblMap.setIcon(null);
     }//GEN-LAST:event_btnNewLocationActionPerformed
 
     public void applyTheme() {
