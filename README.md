@@ -29,4 +29,5 @@ Za uraditi:
 * osmisliti dizajn i funkcionalnost za narudžbe
 * poboljšati pretraživanja podataka (filteri, kategorije)
 * poboljšati Google Maps klasu (spremanje na disk)
+* dovršiti "lite" verziju aplikacije
 * debugging
