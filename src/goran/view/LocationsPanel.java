@@ -220,9 +220,8 @@ public class LocationsPanel extends javax.swing.JPanel {
 
         lblError.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblError.setForeground(new java.awt.Color(255, 0, 0));
-        lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblError.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 250, 50));
+        lblError.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 240, 40));
 
         lblTitle6.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle6.setForeground(new java.awt.Color(255, 255, 255));

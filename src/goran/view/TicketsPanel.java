@@ -103,7 +103,7 @@ public class TicketsPanel extends javax.swing.JPanel {
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 380));
 
         txtFindTickets.setBackground(new java.awt.Color(120, 120, 120));
-        txtFindTickets.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtFindTickets.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtFindTickets.setForeground(new java.awt.Color(255, 255, 255));
         add(txtFindTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 570, 40));
 

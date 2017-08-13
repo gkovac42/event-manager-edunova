@@ -111,6 +111,7 @@ public class EventsPanel extends javax.swing.JPanel {
         lstLocations = new javax.swing.JList<>();
         pnlLocationsUtilTitle = new MotionPanel(frameLocationsUtil);
         lblLocations = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstTickets = new javax.swing.JList<>();
         btnEditEvent = new javax.swing.JButton();
@@ -172,7 +173,7 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlEventsUtilMain.add(btnCancelEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 60, 100, 40));
 
         txtEventName.setBackground(new java.awt.Color(153, 153, 153));
-        txtEventName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtEventName.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtEventName.setForeground(new java.awt.Color(255, 255, 255));
         pnlEventsUtilMain.add(txtEventName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 250, 40));
 
@@ -243,7 +244,7 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlTicketsUtilMain.add(btnCancelTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 100, 40));
 
         txtTicketName.setBackground(new java.awt.Color(153, 153, 153));
-        txtTicketName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtTicketName.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtTicketName.setForeground(new java.awt.Color(255, 255, 255));
         pnlTicketsUtilMain.add(txtTicketName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 290, 40));
 
@@ -253,7 +254,7 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlTicketsUtilMain.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 40));
 
         txtTicketPrice.setBackground(new java.awt.Color(153, 153, 153));
-        txtTicketPrice.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtTicketPrice.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtTicketPrice.setForeground(new java.awt.Color(255, 255, 255));
         pnlTicketsUtilMain.add(txtTicketPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 290, 40));
 
@@ -268,7 +269,7 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlTicketsUtilMain.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 90, 40));
 
         txtTicketQuantity.setBackground(new java.awt.Color(153, 153, 153));
-        txtTicketQuantity.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtTicketQuantity.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtTicketQuantity.setForeground(new java.awt.Color(255, 255, 255));
         pnlTicketsUtilMain.add(txtTicketQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 290, 40));
 
@@ -333,7 +334,7 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlLocationsUtilMain.add(btnCancelLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, 100, 40));
 
         txtFindTicket.setBackground(new java.awt.Color(153, 153, 153));
-        txtFindTicket.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtFindTicket.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtFindTicket.setForeground(new java.awt.Color(255, 255, 255));
         pnlLocationsUtilMain.add(txtFindTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 380, 40));
 
@@ -342,7 +343,7 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlLocationsUtilMain.add(lblErrorLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 170, 40));
 
         lstLocations.setBackground(new java.awt.Color(153, 153, 153));
-        lstLocations.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        lstLocations.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstLocations.setForeground(new java.awt.Color(255, 255, 255));
         lstLocations.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -361,7 +362,11 @@ public class EventsPanel extends javax.swing.JPanel {
         lblLocations.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         lblLocations.setForeground(new java.awt.Color(255, 255, 255));
         lblLocations.setText("ODABERI LOKACIJU");
-        pnlLocationsUtilTitle.add(lblLocations, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 230, 40));
+        pnlLocationsUtilTitle.add(lblLocations, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 230, 40));
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/title_add_location.png"))); // NOI18N
+        pnlLocationsUtilTitle.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 40));
 
         frameLocationsUtil.getContentPane().add(pnlLocationsUtilTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 40));
 
@@ -612,6 +617,7 @@ public class EventsPanel extends javax.swing.JPanel {
     private void btnCancelEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelEventActionPerformed
 
         frameEventsUtil.dispose();
+        lblErrorLocation.setText("");
     }//GEN-LAST:event_btnCancelEventActionPerformed
 
     private void lstEventsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstEventsValueChanged
@@ -825,6 +831,7 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;

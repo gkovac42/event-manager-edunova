@@ -105,7 +105,7 @@ public class UsersPanel extends javax.swing.JPanel {
         pnlUsersUtilMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtLocality.setBackground(new java.awt.Color(153, 153, 153));
-        txtLocality.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtLocality.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtLocality.setForeground(new java.awt.Color(255, 255, 255));
         pnlUsersUtilMain.add(txtLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 300, 40));
 
@@ -140,22 +140,22 @@ public class UsersPanel extends javax.swing.JPanel {
         pnlUsersUtilMain.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 100, 40));
 
         txtFirstName.setBackground(new java.awt.Color(153, 153, 153));
-        txtFirstName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtFirstName.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtFirstName.setForeground(new java.awt.Color(255, 255, 255));
         pnlUsersUtilMain.add(txtFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 300, 40));
 
         txtLastName.setBackground(new java.awt.Color(153, 153, 153));
-        txtLastName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtLastName.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtLastName.setForeground(new java.awt.Color(255, 255, 255));
         pnlUsersUtilMain.add(txtLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 300, 40));
 
         txtEmail.setBackground(new java.awt.Color(153, 153, 153));
-        txtEmail.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtEmail.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(255, 255, 255));
         pnlUsersUtilMain.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 300, 40));
 
         txtAddress.setBackground(new java.awt.Color(153, 153, 153));
-        txtAddress.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtAddress.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtAddress.setForeground(new java.awt.Color(255, 255, 255));
         pnlUsersUtilMain.add(txtAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 300, 40));
 
