@@ -15,17 +15,20 @@ Event Manager je aplikacija koja služi kao katalog glazbenih, kulturnih i drugi
 Ostvareno:
 
 * glavni izbornik i prozori za pojedine entitete
-* CRUD za tablice bez vanjskih ključeva
+* CRUD za tablice bez vanjskih ključeva (korisnik, lokacija)
+* djelomično CRUD za druge tablice (event, ulaznica)
 * kontrola unosa podataka
-* pretraživanje podataka (djelomično)
+* pretraživanje podataka za neke tablice (djelomično)
 * povezivanje s Google Static Maps i Geocoding API
 * vizualni identitet aplikacije
-* jednostavnija verzija aplikacije razvijena u Intellij IDEA razvojnom okruženju, bez korištenja vizualnog dizajnera, dostupna na linku: https://github.com/gkovac42/event-manager-edunova-lite
+* jednostavnija verzija aplikacije razvijena u Intellij IDEA razvojnom okruženju, bez korištenja vizualnog dizajnera, dostupna na: https://github.com/gkovac42/event-manager-edunova-lite
 
 Za uraditi:
 
-* CRUD za preostale tablice
-* GUI za unos/promjenu datuma događaja
-* poboljšati pretraživanja podataka (filtri, kategorije)
-* poboljšati Google Static Maps komponente (spremanje na disk)
+* izraditi CRUD za preostale tablice i podatke
+* izraditi GUI za unos/promjenu datuma događaja (3rd party library?)
+* osmisliti dizajn i funkcionalnost za narudžbe
+* poboljšati pretraživanja podataka (filteri, kategorije)
+* poboljšati Google Maps klasu (spremanje na disk)
+* dovršiti "lite" verziju aplikacije
 * debugging
