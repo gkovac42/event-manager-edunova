@@ -28,7 +28,7 @@ import javax.swing.JLabel;
  * @author Goran
  */
 public class GoogleMapsController {
-    
+
     private final String API_KEY = "AIzaSyATHO_6DIs4uKZNZJo50n95QERyy2Np13w";
 
     public String generateUrl(Location location) {
@@ -103,19 +103,26 @@ public class GoogleMapsController {
         }
         return null;
     }
-    
+
     public void downloadMap(String lat, String lng, int zoomLevel, int width, int height, JLabel label) {
 
-        String imageUrl = "http://maps.googleapis.com/maps/api/staticmap?center="
-                + lat + ",%20" + lng + "&zoom=" + zoomLevel + "&size=" + width + "x" + height
-                + "&scale=1&markers=" + lat + ",%20" + lng + "&sensor=true";
-        try {
+        Thread t = new Thread(new Runnable() {
+            
+            public void run() {
+                String imageUrl = "http://maps.googleapis.com/maps/api/staticmap?center="
+                        + lat + ",%20" + lng + "&zoom=" + zoomLevel + "&size=" + width + "x" + height
+                        + "&scale=1&markers=" + lat + ",%20" + lng + "&sensor=true";
+                try {
 
-            URL url = new URL(imageUrl);
-            label.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH)));
+                    URL url = new URL(imageUrl);
+                    label.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH)));
 
-        } catch (MalformedURLException ex) {
-        }
+                } catch (MalformedURLException ex) {
+                }
+            }
+
+        });
+        
+        t.start();
     }
-    
 }
