@@ -725,18 +725,13 @@ public class EventsPanel extends javax.swing.JPanel {
     private void btnConfirmLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmLocationActionPerformed
 
         if (lstLocations.getSelectedIndex() == -1) {
-            lblErrorLocation.setText(Utils.EVENT_SELECTION_ERROR);
+            lblErrorLocation.setText(Utils.LOCATION_SELECTION_ERROR);
         } else {
 
             eventControl.setEventLocation(event, location);
-            
-            if (event.getLocation() == null) {
-                lblMap.setIcon(null);
-                lblEventLocation.setText("DODAJ LOKACIJU EVENTA");
-            } else {
-                mapControl.downloadMap(eventControl.getEventLat(event), eventControl.getEventLng(event), 14, 350, 200, lblMap);
-            }
-            
+
+            mapControl.downloadMap(eventControl.getEventLat(event), eventControl.getEventLng(event), 14, 350, 200, lblMap);
+
             lblEventLocation.setText(location.toString());
             frameLocationsUtil.dispose();
 
@@ -752,11 +747,9 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void lstLocationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstLocationsValueChanged
 
-        try {
-
+        if (lstLocations.getSelectedIndex() == -1) {
+        } else {
             location = lstLocations.getSelectedValue();
-
-        } catch (Exception e) {
         }
     }//GEN-LAST:event_lstLocationsValueChanged
 
