@@ -545,15 +545,17 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void btnEditEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditEventActionPerformed
 
-        try {
+        if (lstEvents.getSelectedIndex() == -1) {
+
+        } else {
 
             lblEventsUtil.setText(Utils.EDIT_EVENT);
             txtEventName.setText(event.getName());
             frameEventsUtil.setVisible(true);
             frameEventsUtil.setLocationRelativeTo(this);
-
-        } catch (Exception e) {
         }
+
+
     }//GEN-LAST:event_btnEditEventActionPerformed
 
     private void btnRemoveEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveEventActionPerformed
