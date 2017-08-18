@@ -5,6 +5,7 @@
     <Container class="javax.swing.JFrame" name="frameUsersUtil">
       <Properties>
         <Property name="defaultCloseOperation" type="int" value="2"/>
+        <Property name="alwaysOnTop" type="boolean" value="true"/>
         <Property name="undecorated" type="boolean" value="true"/>
         <Property name="resizable" type="boolean" value="false"/>
         <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -560,6 +561,7 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="tblUsers">
           <Properties>
+            <Property name="autoCreateRowSorter" type="boolean" value="true"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor" postCode="tblUsers.getTableHeader().setFont(new java.awt.Font(&quot;Lucida Sans&quot;, 1, 14));">
               <Color blue="78" green="78" red="78" type="rgb"/>
             </Property>

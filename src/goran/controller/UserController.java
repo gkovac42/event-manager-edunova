@@ -21,7 +21,7 @@ public class UserController extends ConnectionController {
 
         try {
 
-            ps = connection.prepareStatement("select * from korisnik");
+            ps = connection.prepareStatement("select * from korisnik order by prezime");
             rs = ps.executeQuery();
             User user;
 

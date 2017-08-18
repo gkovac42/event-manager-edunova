@@ -93,4 +93,35 @@ public class LocationController extends ConnectionController {
             e.printStackTrace();
         }
     }
+    
+    public List<Location> findLocation(String s) {
+
+        List<Location> locations = new ArrayList<>();
+
+        try {
+
+            ps = connection.prepareStatement("select * from lokacija where naziv like '%" + s + "%'");
+            rs = ps.executeQuery();
+            Location location;
+
+            while (rs.next()) {
+                location = new Location();
+                location.setId(rs.getInt("id"));
+                location.setName(rs.getString("naziv"));
+                location.setAddress(rs.getString("adresa"));
+                location.setLocality(rs.getString("mjesto"));
+                location.setCountry(rs.getString("drzava"));
+                location.setLat(rs.getString("lat"));
+                location.setLng(rs.getString("lng"));
+                locations.add(location);
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return locations;
+    }
 }

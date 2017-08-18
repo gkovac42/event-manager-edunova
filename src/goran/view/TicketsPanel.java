@@ -75,6 +75,7 @@ public class TicketsPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(700, 500));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tblTickets.setAutoCreateRowSorter(true);
         tblTickets.setBackground(new java.awt.Color(120, 120, 120));
         tblTickets.getTableHeader().setFont(new java.awt.Font("Lucida Sans", 1, 14));
         tblTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N

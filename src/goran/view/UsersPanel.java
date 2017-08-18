@@ -95,6 +95,7 @@ public class UsersPanel extends javax.swing.JPanel {
         tblUsers = new javax.swing.JTable();
 
         frameUsersUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        frameUsersUtil.setAlwaysOnTop(true);
         frameUsersUtil.setUndecorated(true);
         frameUsersUtil.setResizable(false);
         frameUsersUtil.setSize(new java.awt.Dimension(400, 350));
@@ -290,6 +291,7 @@ public class UsersPanel extends javax.swing.JPanel {
         });
         add(btnRemoveUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 450, 100, 40));
 
+        tblUsers.setAutoCreateRowSorter(true);
         tblUsers.setBackground(new java.awt.Color(120, 120, 120));
         tblUsers.getTableHeader().setFont(new java.awt.Font("Lucida Sans", 1, 14));
         tblUsers.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N

@@ -10,8 +10,6 @@ import goran.model.Location;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,7 +23,7 @@ public class EventController extends ConnectionController {
 
         try {
 
-            ps = connection.prepareStatement("select * from event");
+            ps = connection.prepareStatement("select * from event order by naziv");
             rs = ps.executeQuery();
             Event event;
 
