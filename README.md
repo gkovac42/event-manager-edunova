@@ -31,7 +31,9 @@ Za uraditi:
 * poboljšati Google Maps klasu (spremanje na disk)
 * debugging
 
-![Alt text](em01.jpg?raw=true "main")
-![Alt text](em02.jpg?raw=true "settings")
-![Alt text](em03.jpg?raw=true "poems")
-![Alt text](em04.jpg?raw=true "reader")
+## Screenshot
+
+![Alt text](em01.jpg?raw=true "events")
+![Alt text](em02.jpg?raw=true "tickets")
+![Alt text](em03.jpg?raw=true "locations")
+![Alt text](em04.jpg?raw=true "users")
