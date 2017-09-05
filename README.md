@@ -30,3 +30,8 @@ Za uraditi:
 * poboljšati pretraživanja podataka (filteri, kategorije)
 * poboljšati Google Maps klasu (spremanje na disk)
 * debugging
+
+![Alt text](em01.jpg?raw=true "main")
+![Alt text](em02.jpg?raw=true "settings")
+![Alt text](em03.jpg?raw=true "poems")
+![Alt text](em04.jpg?raw=true "reader")
