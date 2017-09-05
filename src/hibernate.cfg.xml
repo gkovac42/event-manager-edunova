@@ -5,10 +5,8 @@
 <hibernate-configuration>
  <session-factory>  
     <!-- 
-    Kreirati bazu 
-        create database hibernate_orm_veze character set utf8 collate utf8_general_ci;
-
-     --> 
+    create database database_name character set utf8 collate utf8_general_ci;
+    --> 
     <property name="connection.url">jdbc:mysql://localhost:3306/eventi_orm</property>
     <property name="connection.username">root</property>
     <property name="connection.password"></property>
@@ -20,16 +18,10 @@
     <property name="show_sql">true</property>
     <property name="format_sql">false</property>
     
-    <!-- 
-    validate: validate the schema, makes no changes to the database.
-    update: update the schema.
-    create: creates the schema, destroying previous data.
-    create-drop: drop the schema at the end of the session. 
+    <!--  
     1. puta create, poslije update
     -->
     <property name="hbm2ddl.auto">update</property>
-  
-    <!-- JDBC connection pool (use the built-in) -->
     <property name="connection.pool_size">1</property>
     <property name="current_session_context_class">thread</property>
 
