@@ -6,6 +6,7 @@ Event Manager je aplikacija koja služi kao katalog glazbenih, kulturnih i drugi
 
 * Java
 * MySQL
+* Hibernate ORM
 * Netbeans IDE
 * Google Static Maps API
 * Google Geocoding API
@@ -21,14 +22,11 @@ Ostvareno:
 * pretraživanje podataka za neke tablice (djelomično)
 * povezivanje s Google Static Maps i Geocoding API
 * vizualni identitet aplikacije
-* jednostavnija verzija aplikacije razvijena u Intellij IDEA razvojnom okruženju, bez korištenja vizualnog dizajnera, dostupna na: https://github.com/gkovac42/event-manager-edunova-lite
 
 Za uraditi:
 
 * izraditi CRUD za preostale tablice i podatke
-* izraditi GUI za unos/promjenu datuma događaja (3rd party library?)
 * osmisliti dizajn i funkcionalnost za narudžbe
 * poboljšati pretraživanja podataka (filteri, kategorije)
 * poboljšati Google Maps klasu (spremanje na disk)
-* dovršiti "lite" verziju aplikacije
 * debugging
