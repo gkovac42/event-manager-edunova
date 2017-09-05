@@ -5,11 +5,14 @@
  */
 package goran.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Goran
  */
-public class User extends Entity {
+@javax.persistence.Entity
+public class User extends Entity implements Serializable {
 
     private String firstName;
     private String lastName;

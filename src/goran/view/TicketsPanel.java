@@ -5,7 +5,7 @@
  */
 package goran.view;
 
-import goran.controller.TicketController;
+import goran.controller.HibernateController;
 import goran.model.Ticket;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,14 +16,16 @@ import javax.swing.table.DefaultTableModel;
 public class TicketsPanel extends javax.swing.JPanel {
 
     private Ticket ticket;
-    private TicketController ticketControl;
+    private HibernateController<Ticket> ctrlTicket;
 
     /**
      * Creates new form TicketsPanel
      */
     public TicketsPanel() {
+        
         initComponents();
-        ticketControl = new TicketController();
+        ticket = new Ticket();
+        ctrlTicket = new HibernateController<>();
         updateTickets();
     }
 
@@ -31,12 +33,13 @@ public class TicketsPanel extends javax.swing.JPanel {
 
         DefaultTableModel model = (DefaultTableModel) tblTickets.getModel();
         model.setRowCount(0);
-        Object rowData[] = new Object[3];
+        Object rowData[] = new Object[4];
 
-        for (Ticket ticket : ticketControl.getTickets()) {
+        for (Ticket ticket : ctrlTicket.getOrderedList(ticket, "name")) {
             rowData[0] = ticket.getName();
             rowData[1] = ticket.getPrice();
-            rowData[2] = ticket.getEvent();
+            rowData[2] = ticket.getQuantity();
+            rowData[3] = ticket.getEvent();
             model.addRow(rowData);
         }
     }
@@ -47,7 +50,7 @@ public class TicketsPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         Object rowData[] = new Object[3];
 
-        for (Ticket ticket : ticketControl.findTickets(txtFindTickets.getText())) {
+        for (Ticket ticket : ctrlTicket.find(ticket, "name", txtFindTickets.getText())) {
             rowData[0] = ticket.getName();
             rowData[1] = ticket.getPrice();
             rowData[2] = ticket.getEvent();
@@ -85,11 +88,11 @@ public class TicketsPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "NAZIV", "CIJENA", "KOLIČINA"
+                "NAZIV", "CIJENA", "KOLIČINA", "EVENT"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -104,7 +107,7 @@ public class TicketsPanel extends javax.swing.JPanel {
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 380));
 
         txtFindTickets.setBackground(new java.awt.Color(120, 120, 120));
-        txtFindTickets.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        txtFindTickets.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtFindTickets.setForeground(new java.awt.Color(255, 255, 255));
         add(txtFindTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 570, 40));
 

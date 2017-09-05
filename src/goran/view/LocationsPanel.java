@@ -5,8 +5,9 @@
  */
 package goran.view;
 
+import goran.util.StringUtil;
 import goran.controller.GoogleMapsController;
-import goran.controller.LocationController;
+import goran.controller.HibernateController;
 import goran.model.Location;
 import javax.swing.DefaultListModel;
 
@@ -17,18 +18,17 @@ import javax.swing.DefaultListModel;
 public class LocationsPanel extends javax.swing.JPanel {
 
     private Location location;
-    private LocationController locationControl;
+    private HibernateController<Location> hc;
     private GoogleMapsController mapControl;
-    private String[] mapData;
-    private int zoomLevel;
+    private int mapZoom;
 
     public LocationsPanel() {
 
         initComponents();
         location = new Location();
-        locationControl = new LocationController();
+        hc = new HibernateController<>();
         mapControl = new GoogleMapsController();
-        zoomLevel = Utils.DEFAULT_ZOOM_LEVEL;
+        mapZoom = 16;
         updateLocations();
     }
 
@@ -36,7 +36,7 @@ public class LocationsPanel extends javax.swing.JPanel {
 
         DefaultListModel<Location> model = new DefaultListModel<>();
         lstLocations.setModel(model);
-        for (Location location : locationControl.getLocations()) {
+        for (Location location : hc.getList(location)) {
             model.addElement(location);
         }
     }
@@ -73,7 +73,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(700, 500));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lstLocations.setBackground(new java.awt.Color(153, 153, 153));
+        lstLocations.setBackground(new java.awt.Color(120, 120, 120));
         lstLocations.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstLocations.setForeground(new java.awt.Color(255, 255, 255));
         lstLocations.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -231,7 +231,8 @@ public class LocationsPanel extends javax.swing.JPanel {
 
     private void lstLocationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstLocationsValueChanged
 
-        try {
+        if (lstLocations.getSelectedIndex() == -1) {
+        } else {
 
             location = lstLocations.getSelectedValue();
 
@@ -240,34 +241,34 @@ public class LocationsPanel extends javax.swing.JPanel {
             txtLocationCountry.setText(location.getCountry());
             txtLocationName.setText(location.getName());
 
-            mapControl.downloadMap(location.getLat(), location.getLng(), Utils.DEFAULT_ZOOM_LEVEL, 680, 270, lblMap);
-            
-            lblError.setText("");
+            mapControl.downloadMap(location.getLat(), location.getLng(), 16, 680, 270, lblMap);
 
-        } catch (Exception e) {
+            lblError.setText("");
         }
+
+
     }//GEN-LAST:event_lstLocationsValueChanged
 
     private void btnFindOnMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindOnMapActionPerformed
 
         try {
-            
+
             location.setName(txtLocationName.getText());
             location.setAddress(txtLocationAddress.getText());
             location.setLocality(txtLocationLocality.getText());
             location.setCountry(txtLocationCountry.getText());
-            
-            mapData = mapControl.getGoogleMapsData(mapControl.generateUrl(location));
-            
+
+            String[] mapData = mapControl.getGoogleMapsData(mapControl.generateUrl(location));
+
             location.setLat(mapData[0]);
             location.setLng(mapData[1]);
-            
-            mapControl.downloadMap(location.getLat(), location.getLng(), Utils.DEFAULT_ZOOM_LEVEL, 680, 270, lblMap);
-            
+
+            mapControl.downloadMap(location.getLat(), location.getLng(), 16, 680, 270, lblMap);
+
             txtLocationAddress.setText(mapData[3] + " " + mapData[2]);
             txtLocationLocality.setText(mapData[4]);
             txtLocationCountry.setText(mapData[5]);
-            
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnFindOnMapActionPerformed
@@ -275,9 +276,9 @@ public class LocationsPanel extends javax.swing.JPanel {
     private void btnZoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomOutActionPerformed
 
         try {
-            
-            zoomLevel--;
-            mapControl.downloadMap(location.getLat(), location.getLng(), zoomLevel, 680, 270, lblMap);
+
+            mapZoom--;
+            mapControl.downloadMap(location.getLat(), location.getLng(), mapZoom, 680, 270, lblMap);
 
         } catch (Exception e) {
         }
@@ -286,22 +287,22 @@ public class LocationsPanel extends javax.swing.JPanel {
     private void btnZoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomInActionPerformed
 
         try {
-            
-            zoomLevel++;
-            mapControl.downloadMap(location.getLat(), location.getLng(), zoomLevel, 680, 270, lblMap);
-            
+
+            mapZoom++;
+            mapControl.downloadMap(location.getLat(), location.getLng(), mapZoom, 680, 270, lblMap);
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnZoomInActionPerformed
 
     private void btnAddLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLocationActionPerformed
 
-        if (txtLocationName.getText().matches("")
-                || txtLocationAddress.getText().matches("")
-                || txtLocationLocality.getText().matches("")
-                || txtLocationCountry.getText().matches("")) {
+        if (txtLocationName.getText().equals("")
+                || txtLocationAddress.getText().equals("")
+                || txtLocationLocality.getText().equals("")
+                || txtLocationCountry.getText().equals("")) {
 
-            lblError.setText(Utils.INPUT_ERROR);
+            lblError.setText(StringUtil.INPUT_ERROR);
 
         } else {
 
@@ -310,71 +311,73 @@ public class LocationsPanel extends javax.swing.JPanel {
             location.setLocality(txtLocationLocality.getText());
             location.setCountry(txtLocationCountry.getText());
 
-            locationControl.addLocation(location);
-
+            hc.save(location);
             updateLocations();
-
             lblError.setText("");
+            location = new Location();
         }
 
     }//GEN-LAST:event_btnAddLocationActionPerformed
 
     private void btnEditLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditLocationActionPerformed
 
-        if (txtLocationName.getText().matches("")
-                || txtLocationAddress.getText().matches("")
-                || txtLocationLocality.getText().matches("")
-                || txtLocationCountry.getText().matches("")) {
-            
-            lblError.setText(Utils.INPUT_ERROR);
-            
+        if (lstLocations.getSelectedIndex() == -1) {
         } else {
-            
-            location.setName(txtLocationName.getText());
-            location.setAddress(txtLocationAddress.getText());
-            location.setLocality(txtLocationLocality.getText());
-            location.setCountry(txtLocationCountry.getText());
-            
-            locationControl.editLocation(location);
-            
-            updateLocations();
-            
-            lblError.setText("");
+
+            if (txtLocationName.getText().equals("")
+                    || txtLocationAddress.getText().equals("")
+                    || txtLocationLocality.getText().equals("")
+                    || txtLocationCountry.getText().equals("")) {
+
+                lblError.setText(StringUtil.INPUT_ERROR);
+
+            } else {
+
+                location.setName(txtLocationName.getText());
+                location.setAddress(txtLocationAddress.getText());
+                location.setLocality(txtLocationLocality.getText());
+                location.setCountry(txtLocationCountry.getText());
+
+                hc.save(location);
+                updateLocations();
+                lblError.setText("");
+                location = new Location();
+            }
         }
     }//GEN-LAST:event_btnEditLocationActionPerformed
 
     private void btnRemoveLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveLocationActionPerformed
 
-        try {
-            
-            locationControl.removeLocation(location);
-            
+        if (lstLocations.getSelectedIndex() == -1) {
+        } else {
+
+            hc.delete(location);
+
             txtLocationName.setText("");
             txtLocationAddress.setText("");
             txtLocationLocality.setText("");
             txtLocationCountry.setText("");
-            
-            lblMap.setIcon(null);
-            
-            updateLocations();
-            
-            location = new Location();
-            
-            lblError.setText("");
 
-        } catch (Exception e) {
+            lblMap.setIcon(null);
+            updateLocations();
+            lblError.setText("");
+            location = new Location();
+
         }
     }//GEN-LAST:event_btnRemoveLocationActionPerformed
 
     private void btnNewLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewLocationActionPerformed
 
+        lstLocations.setSelectedIndex(-1);
+        
         txtLocationName.setText("");
         txtLocationAddress.setText("");
         txtLocationLocality.setText("");
         txtLocationCountry.setText("");
-        
+
         lblError.setText("");
         lblMap.setIcon(null);
+        location = new Location();
     }//GEN-LAST:event_btnNewLocationActionPerformed
 
     public void applyTheme() {

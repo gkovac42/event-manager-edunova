@@ -5,26 +5,27 @@
  */
 package goran.model;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Goran
  */
-public class Event extends Entity {
+
+@javax.persistence.Entity
+public class Event extends Entity implements Serializable {
     
     private String name;
-    private Date startDate;
-    private Date endDate;
-    private String location;
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
+    private String startDate;
+    private String endDate;
+    @OneToMany
+    private List<Ticket> tickets;
+    @ManyToOne
+    private Location location;
 
     public String getName() {
         return name;
@@ -34,20 +35,36 @@ public class Event extends Entity {
         this.name = name;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
     
     @Override

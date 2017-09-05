@@ -5,8 +5,11 @@
  */
 package goran.view;
 
-import goran.controller.UserController;
+import goran.controller.HibernateController;
+import goran.util.StringUtil;
 import goran.model.User;
+import goran.util.HibernateUtil;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class UsersPanel extends javax.swing.JPanel {
 
     private User user;
-    private UserController userControl;
+    private HibernateController<User> ctrlUser;
 
     /**
      * Creates new form UsersPanel
@@ -24,7 +27,7 @@ public class UsersPanel extends javax.swing.JPanel {
     public UsersPanel() {
         initComponents();
         user = new User();
-        userControl = new UserController();
+        ctrlUser = new HibernateController<>();
         updateUsers();
     }
 
@@ -34,7 +37,7 @@ public class UsersPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         Object rowData[] = new Object[5];
 
-        for (User user : userControl.getUsers()) {
+        for (User user : ctrlUser.getList(user)) {
             rowData[0] = user.getFirstName();
             rowData[1] = user.getLastName();
             rowData[2] = user.getEmail();
@@ -50,7 +53,28 @@ public class UsersPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         Object rowData[] = new Object[5];
 
-        for (User user : userControl.findUsers(txtFindUser.getText())) {
+        String findBy = "";
+
+        switch (cmbFindBy.getSelectedItem().toString()) {
+            case "IME":
+                findBy = "firstName";
+                break;
+            case "PREZIME":
+                findBy = "lastName";
+                break;
+            case "E-MAIL":
+                findBy = "email";
+                break;
+            case "ADRESA":
+                findBy = "address";
+                break;
+            case "MJESTO":
+                findBy = "locality";
+                break;
+
+        }
+
+        for (User user : ctrlUser.find(user, findBy, txtFindUser.getText())) {
             rowData[0] = user.getFirstName();
             rowData[1] = user.getLastName();
             rowData[2] = user.getEmail();
@@ -93,6 +117,7 @@ public class UsersPanel extends javax.swing.JPanel {
         btnRemoveUser = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblUsers = new javax.swing.JTable();
+        cmbFindBy = new javax.swing.JComboBox<>();
 
         frameUsersUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameUsersUtil.setAlwaysOnTop(true);
@@ -212,9 +237,9 @@ public class UsersPanel extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtFindUser.setBackground(new java.awt.Color(120, 120, 120));
-        txtFindUser.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        txtFindUser.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtFindUser.setForeground(new java.awt.Color(255, 255, 255));
-        add(txtFindUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 570, 40));
+        add(txtFindUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 450, 40));
 
         btnFindUser.setBackground(new java.awt.Color(0, 0, 0));
         btnFindUser.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -317,11 +342,23 @@ public class UsersPanel extends javax.swing.JPanel {
         jScrollPane5.setViewportView(tblUsers);
 
         add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 380));
+
+        cmbFindBy.setBackground(new java.awt.Color(120, 120, 120));
+        cmbFindBy.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        cmbFindBy.setForeground(new java.awt.Color(255, 255, 255));
+        cmbFindBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PREZIME", "IME", "E-MAIL", "ADRESA", "MJESTO" }));
+        cmbFindBy.setMinimumSize(new java.awt.Dimension(90, 25));
+        cmbFindBy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFindByActionPerformed(evt);
+            }
+        });
+        add(cmbFindBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 110, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindUserActionPerformed
 
-        if (txtFindUser.getText().matches("")) {
+        if (txtFindUser.getText().equals("")) {
             updateUsers();
         } else {
             findUsers();
@@ -330,7 +367,7 @@ public class UsersPanel extends javax.swing.JPanel {
 
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
 
-        lblUsersUtil.setText(Utils.ADD_USER);
+        lblUsersUtil.setText(StringUtil.ADD_USER);
         txtFirstName.setText("");
         txtLastName.setText("");
         txtEmail.setText("");
@@ -345,10 +382,9 @@ public class UsersPanel extends javax.swing.JPanel {
 
         try {
 
-            int selectedRow = tblUsers.getSelectedRow();
-            user = userControl.getUsers().get(tblUsers.convertRowIndexToModel(selectedRow));
-            
-            lblUsersUtil.setText(Utils.EDIT_USER);
+            user = ctrlUser.getList(user).get(tblUsers.convertRowIndexToModel(tblUsers.getSelectedRow()));
+
+            lblUsersUtil.setText(StringUtil.EDIT_USER);
             txtFirstName.setText(user.getFirstName());
             txtLastName.setText(user.getLastName());
             txtEmail.setText(user.getEmail());
@@ -370,10 +406,10 @@ public class UsersPanel extends javax.swing.JPanel {
 
         try {
 
-            int selectedRow = tblUsers.getSelectedRow();
-            user = userControl.getUsers().get(tblUsers.convertRowIndexToModel(selectedRow));
-            userControl.removeUser(user);
+            user = ctrlUser.getList(user).get(tblUsers.convertRowIndexToModel(tblUsers.getSelectedRow()));
+            ctrlUser.delete(user);
             updateUsers();
+            user = new User();
 
         } catch (Exception e) {
         }
@@ -381,10 +417,10 @@ public class UsersPanel extends javax.swing.JPanel {
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
 
-        if (txtFirstName.getText().matches("") || txtLastName.getText().matches("") || txtEmail.getText().matches("")
-                || txtAddress.getText().matches("") || txtLocality.getText().matches("")) {
+        if (txtFirstName.getText().equals("") || txtLastName.getText().equals("") || txtEmail.getText().equals("")
+                || txtAddress.getText().equals("") || txtLocality.getText().equals("")) {
 
-            lblError.setText(Utils.INPUT_ERROR);
+            lblError.setText(StringUtil.INPUT_ERROR);
 
         } else {
 
@@ -394,26 +430,23 @@ public class UsersPanel extends javax.swing.JPanel {
             user.setAddress(txtAddress.getText());
             user.setLocality(txtLocality.getText());
 
-            if (lblUsersUtil.getText().matches(Utils.ADD_USER)) {
-
-                userControl.addUser(user);
-
-            } else if (lblUsersUtil.getText().matches(Utils.EDIT_USER)) {
-
-                userControl.editUser(user);
-            }
-
+            ctrlUser.save(user);
             updateUsers();
             lblError.setText("");
             frameUsersUtil.dispose();
+            user = new User();
         }
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        
+
         lblError.setText("");
         frameUsersUtil.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void cmbFindByActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFindByActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbFindByActionPerformed
 
     public void applyTheme() {
 
@@ -451,6 +484,7 @@ public class UsersPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnFindUser;
     private javax.swing.JButton btnRemoveUser;
     private javax.swing.JButton btnReviewOrders;
+    private javax.swing.JComboBox<String> cmbFindBy;
     private javax.swing.JFrame frameUsersUtil;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

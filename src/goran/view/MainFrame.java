@@ -292,6 +292,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
         System.exit(0);
+        
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void lblLightSwitchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLightSwitchMouseExited

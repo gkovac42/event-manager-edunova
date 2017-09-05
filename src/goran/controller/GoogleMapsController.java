@@ -44,7 +44,6 @@ public class GoogleMapsController {
                     + "&key=" + API_KEY;
 
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(LocationController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return url;

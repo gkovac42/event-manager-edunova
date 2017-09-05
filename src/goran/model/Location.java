@@ -5,11 +5,17 @@
  */
 package goran.model;
 
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.OneToMany;
+
 /**
  *
  * @author Goran
  */
-public class Location extends Entity {
+
+@javax.persistence.Entity
+public class Location extends Entity implements Serializable {
     
     private String name;
     private String address;
@@ -17,7 +23,9 @@ public class Location extends Entity {
     private String country;
     private String lat;
     private String lng;
-
+    @OneToMany
+    private List<Event> events;
+    
     public String getName() {
         return name;
     }
@@ -66,6 +74,14 @@ public class Location extends Entity {
         this.lng = lng;
     }
 
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+    
     @Override
     public String toString() {
         return name+ ", " + locality;

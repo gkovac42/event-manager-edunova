@@ -5,14 +5,17 @@
  */
 package goran.view;
 
-import goran.controller.EventController;
+import goran.util.StringUtil;
+import com.github.lgooddatepicker.components.DateTimePicker;
 import goran.controller.GoogleMapsController;
-import goran.controller.LocationController;
-import goran.controller.TicketController;
+import goran.controller.HibernateController;
 import goran.model.Event;
 import goran.model.Location;
 import goran.model.Ticket;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import javax.swing.DefaultListModel;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
  *
@@ -23,22 +26,28 @@ public class EventsPanel extends javax.swing.JPanel {
     private Event event;
     private Ticket ticket;
     private Location location;
-    private EventController eventControl;
-    private TicketController ticketControl;
-    private LocationController locationControl;
-    private GoogleMapsController mapControl;
+    private HibernateController<Ticket> ctrlTicket;
+    private HibernateController<Event> ctrlEvent;
+    private HibernateController<Location> ctrlLocation;
+    private GoogleMapsController ctrlMap;
+    private DateTimePicker startDateTime, endDateTime;
 
     public EventsPanel() {
 
         initComponents();
 
         event = new Event();
-        ticket = new Ticket();
         location = new Location();
-        eventControl = new EventController();
-        ticketControl = new TicketController();
-        locationControl = new LocationController();
-        mapControl = new GoogleMapsController();
+        ticket = new Ticket();
+        ctrlEvent = new HibernateController<>();
+        ctrlTicket = new HibernateController<>();
+        ctrlLocation = new HibernateController<>();
+        ctrlMap = new GoogleMapsController();
+
+        startDateTime = new DateTimePicker();
+        endDateTime = new DateTimePicker();
+        pnlDateTimeUtil.add(startDateTime, new AbsoluteConstraints(10, 30));
+        pnlDateTimeUtil.add(endDateTime, new AbsoluteConstraints(10, 100));
 
         updateEvents();
     }
@@ -47,7 +56,7 @@ public class EventsPanel extends javax.swing.JPanel {
 
         DefaultListModel<Event> model = new DefaultListModel<>();
         lstEvents.setModel(model);
-        for (Event event : eventControl.getEvents()) {
+        for (Event event : ctrlEvent.getOrderedList(event, "name")) {
             model.addElement(event);
         }
     }
@@ -56,7 +65,10 @@ public class EventsPanel extends javax.swing.JPanel {
 
         DefaultListModel<Ticket> model = new DefaultListModel<>();
         lstTickets.setModel(model);
-        for (Ticket ticket : ticketControl.getEventTickets(event)) {
+        for (Ticket ticket : event.getTickets()) {
+            if (ticket.isDeleted()) {
+                continue;
+            }
             model.addElement(ticket);
         }
     }
@@ -65,7 +77,7 @@ public class EventsPanel extends javax.swing.JPanel {
 
         DefaultListModel<Location> model = new DefaultListModel<>();
         lstLocations.setModel(model);
-        for (Location location : locationControl.getLocations()) {
+        for (Location location : ctrlLocation.getOrderedList(location, "name")) {
             model.addElement(location);
         }
     }
@@ -113,6 +125,15 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlLocationsUtilTitle = new MotionPanel(frameLocationsUtil);
         lblLocations = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        frameDateUtil = new javax.swing.JFrame();
+        pnlDateTimeUtil = new javax.swing.JPanel();
+        btnConfirmDateTime = new javax.swing.JButton();
+        btnCancelDateTime = new javax.swing.JButton();
+        lblDateTimeUtil1 = new javax.swing.JLabel();
+        lblDateTimeUtil2 = new javax.swing.JLabel();
+        pnlDateTimeUtilTitle = new MotionPanel(frameDateUtil);
+        lblDateTimeUtil = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstTickets = new javax.swing.JList<>();
         btnEditEvent = new javax.swing.JButton();
@@ -123,15 +144,16 @@ public class EventsPanel extends javax.swing.JPanel {
         btnAddLocation = new javax.swing.JButton();
         btnAddTicketToEvent = new javax.swing.JButton();
         btnAddTime = new javax.swing.JButton();
-        lblTitle9 = new javax.swing.JLabel();
+        lblDateTime = new javax.swing.JLabel();
         btnRemoveTicket = new javax.swing.JButton();
         btnEditTicket = new javax.swing.JButton();
-        lblTitle4 = new javax.swing.JLabel();
         lblEventLocation = new javax.swing.JLabel();
         lblTitle5 = new javax.swing.JLabel();
         lblTitle6 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         lblMap = new javax.swing.JLabel();
+        lblTitle7 = new javax.swing.JLabel();
+        txtFindEvent = new javax.swing.JTextField();
+        btnFindEvent = new javax.swing.JButton();
 
         frameEventsUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameEventsUtil.setAlwaysOnTop(true);
@@ -340,7 +362,7 @@ public class EventsPanel extends javax.swing.JPanel {
         txtFindLocation.setBackground(new java.awt.Color(153, 153, 153));
         txtFindLocation.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
         txtFindLocation.setForeground(new java.awt.Color(255, 255, 255));
-        pnlLocationsUtilMain.add(txtFindLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 270, 40));
+        pnlLocationsUtilMain.add(txtFindLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 320, 40));
 
         lblErrorLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblErrorLocation.setForeground(new java.awt.Color(255, 0, 0));
@@ -357,7 +379,6 @@ public class EventsPanel extends javax.swing.JPanel {
         btnFindLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnFindLocation.setForeground(new java.awt.Color(255, 255, 255));
         btnFindLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
-        btnFindLocation.setText("TRAŽI");
         btnFindLocation.setBorder(null);
         btnFindLocation.setFocusPainted(false);
         btnFindLocation.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -366,7 +387,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnFindLocationActionPerformed(evt);
             }
         });
-        pnlLocationsUtilMain.add(btnFindLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 100, 40));
+        pnlLocationsUtilMain.add(btnFindLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 50, 40));
 
         frameLocationsUtil.getContentPane().add(pnlLocationsUtilMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 400, 380));
 
@@ -384,17 +405,85 @@ public class EventsPanel extends javax.swing.JPanel {
 
         frameLocationsUtil.getContentPane().add(pnlLocationsUtilTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 40));
 
+        frameDateUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        frameDateUtil.setAlwaysOnTop(true);
+        frameDateUtil.setUndecorated(true);
+        frameDateUtil.setResizable(false);
+        frameDateUtil.setSize(new java.awt.Dimension(290, 230));
+        frameDateUtil.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pnlDateTimeUtil.setBackground(new java.awt.Color(60, 60, 70));
+        pnlDateTimeUtil.setPreferredSize(new java.awt.Dimension(290, 200));
+        pnlDateTimeUtil.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnConfirmDateTime.setBackground(new java.awt.Color(0, 0, 0));
+        btnConfirmDateTime.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnConfirmDateTime.setForeground(new java.awt.Color(255, 255, 255));
+        btnConfirmDateTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_confirm.png"))); // NOI18N
+        btnConfirmDateTime.setText("POTVRDI");
+        btnConfirmDateTime.setBorder(null);
+        btnConfirmDateTime.setFocusPainted(false);
+        btnConfirmDateTime.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnConfirmDateTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmDateTimeActionPerformed(evt);
+            }
+        });
+        pnlDateTimeUtil.add(btnConfirmDateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 100, 40));
+
+        btnCancelDateTime.setBackground(new java.awt.Color(0, 0, 0));
+        btnCancelDateTime.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnCancelDateTime.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelDateTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_cancel.png"))); // NOI18N
+        btnCancelDateTime.setText("NAZAD");
+        btnCancelDateTime.setBorder(null);
+        btnCancelDateTime.setFocusPainted(false);
+        btnCancelDateTime.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnCancelDateTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelDateTimeActionPerformed(evt);
+            }
+        });
+        pnlDateTimeUtil.add(btnCancelDateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 100, 40));
+
+        lblDateTimeUtil1.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblDateTimeUtil1.setForeground(new java.awt.Color(255, 255, 255));
+        lblDateTimeUtil1.setText("ZAVRŠETAK");
+        pnlDateTimeUtil.add(lblDateTimeUtil1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 120, 30));
+
+        lblDateTimeUtil2.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblDateTimeUtil2.setForeground(new java.awt.Color(255, 255, 255));
+        lblDateTimeUtil2.setText("POČETAK");
+        pnlDateTimeUtil.add(lblDateTimeUtil2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 120, 30));
+
+        frameDateUtil.getContentPane().add(pnlDateTimeUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 290, 190));
+
+        pnlDateTimeUtilTitle.setBackground(new java.awt.Color(30, 30, 40));
+        pnlDateTimeUtilTitle.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblDateTimeUtil.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        lblDateTimeUtil.setForeground(new java.awt.Color(255, 255, 255));
+        lblDateTimeUtil.setText("DODAJ DATUM I VRIJEME");
+        pnlDateTimeUtilTitle.add(lblDateTimeUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 220, 40));
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_calendar.png"))); // NOI18N
+        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pnlDateTimeUtilTitle.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 40));
+
+        frameDateUtil.getContentPane().add(pnlDateTimeUtilTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 40));
+
         setBackground(new java.awt.Color(60, 60, 70));
         setMinimumSize(new java.awt.Dimension(700, 500));
         setPreferredSize(new java.awt.Dimension(700, 500));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lstTickets.setBackground(new java.awt.Color(153, 153, 153));
+        lstTickets.setBackground(new java.awt.Color(120, 120, 120));
         lstTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstTickets.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(lstTickets);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 320, 130));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 320, 100));
 
         btnEditEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnEditEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -409,7 +498,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnEditEventActionPerformed(evt);
             }
         });
-        add(btnEditEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 100, 40));
+        add(btnEditEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 100, 40));
 
         btnRemoveEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnRemoveEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -424,9 +513,9 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnRemoveEventActionPerformed(evt);
             }
         });
-        add(btnRemoveEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 100, 40));
+        add(btnRemoveEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 100, 40));
 
-        lstEvents.setBackground(new java.awt.Color(153, 153, 153));
+        lstEvents.setBackground(new java.awt.Color(120, 120, 120));
         lstEvents.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstEvents.setForeground(new java.awt.Color(255, 255, 255));
         lstEvents.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -436,7 +525,7 @@ public class EventsPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(lstEvents);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 320, 200));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 320, 180));
 
         btnAddEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnAddEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -451,7 +540,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnAddEventActionPerformed(evt);
             }
         });
-        add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 100, 40));
+        add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 100, 40));
 
         btnAddLocation.setBackground(new java.awt.Color(0, 0, 0));
         btnAddLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -467,7 +556,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnAddLocationActionPerformed(evt);
             }
         });
-        add(btnAddLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, 50, 40));
+        add(btnAddLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, 50, 40));
 
         btnAddTicketToEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnAddTicketToEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -493,12 +582,17 @@ public class EventsPanel extends javax.swing.JPanel {
         btnAddTime.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnAddTime.setPreferredSize(new java.awt.Dimension(80, 80));
         btnAddTime.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        add(btnAddTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 50, 40));
+        btnAddTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddTimeActionPerformed(evt);
+            }
+        });
+        add(btnAddTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 50, 40));
 
-        lblTitle9.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        lblTitle9.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle9.setText("DODAJ VRIJEME EVENTA");
-        add(lblTitle9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 450, 290, 40));
+        lblDateTime.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblDateTime.setForeground(new java.awt.Color(255, 255, 255));
+        lblDateTime.setText("DODAJ DATUM I VRIJEME");
+        add(lblDateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 30, 290, 40));
 
         btnRemoveTicket.setBackground(new java.awt.Color(0, 0, 0));
         btnRemoveTicket.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -530,31 +624,47 @@ public class EventsPanel extends javax.swing.JPanel {
         });
         add(btnEditTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 450, 100, 40));
 
-        lblTitle4.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        lblTitle4.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle4.setText("LOKACIJA I VRIJEME");
-        add(lblTitle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 220, 30));
-
         lblEventLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblEventLocation.setForeground(new java.awt.Color(255, 255, 255));
         lblEventLocation.setText("DODAJ LOKACIJU EVENTA");
-        add(lblEventLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 290, 40));
+        add(lblEventLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 290, 40));
 
         lblTitle5.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle5.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle5.setText("ULAZNICE");
-        add(lblTitle5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 220, 30));
+        add(lblTitle5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 250, 30));
 
         lblTitle6.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle6.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle6.setText("EVENTI");
-        add(lblTitle6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 30));
-
-        jLabel1.setText("------- klendar placeholder ----------");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 340, 130));
+        lblTitle6.setText("OPŠIRNIJE");
+        add(lblTitle6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 220, 30));
 
         lblMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        add(lblMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 350, 200));
+        add(lblMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 350, 360));
+
+        lblTitle7.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTitle7.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitle7.setText("EVENTI");
+        add(lblTitle7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 30));
+
+        txtFindEvent.setBackground(new java.awt.Color(120, 120, 120));
+        txtFindEvent.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtFindEvent.setForeground(new java.awt.Color(255, 255, 255));
+        add(txtFindEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 260, 40));
+
+        btnFindEvent.setBackground(new java.awt.Color(0, 0, 0));
+        btnFindEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnFindEvent.setForeground(new java.awt.Color(255, 255, 255));
+        btnFindEvent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
+        btnFindEvent.setBorder(null);
+        btnFindEvent.setFocusPainted(false);
+        btnFindEvent.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnFindEvent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindEventActionPerformed(evt);
+            }
+        });
+        add(btnFindEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 50, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditEventActionPerformed
@@ -563,7 +673,7 @@ public class EventsPanel extends javax.swing.JPanel {
 
         } else {
 
-            lblEventsUtil.setText(Utils.EDIT_EVENT);
+            lblEventsUtil.setText(StringUtil.EDIT_EVENT);
             txtEventName.setText(event.getName());
             frameEventsUtil.setVisible(true);
             frameEventsUtil.setLocationRelativeTo(this);
@@ -573,18 +683,9 @@ public class EventsPanel extends javax.swing.JPanel {
     private void btnRemoveEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveEventActionPerformed
 
         if (lstEvents.getSelectedIndex() == -1) {
-
         } else {
 
-            try {
-
-                ticketControl.removeEventTickets(event);
-                updateEventTickets();
-
-            } catch (Exception e) {
-            }
-
-            eventControl.removeEvent(event);
+            ctrlEvent.delete(event);
             updateEvents();
 
         }
@@ -593,7 +694,6 @@ public class EventsPanel extends javax.swing.JPanel {
     private void btnAddLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLocationActionPerformed
 
         if (lstEvents.getSelectedIndex() == -1) {
-
         } else {
 
             updateLocations();
@@ -605,27 +705,20 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void btnConfirmEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEventActionPerformed
 
-        if (txtEventName.getText().matches("")) {
+        if (txtEventName.getText().equals("")) {
 
-            lblErrorEvent.setText(Utils.INPUT_ERROR);
+            lblErrorEvent.setText(StringUtil.INPUT_ERROR);
 
         } else {
 
             event.setName(txtEventName.getText());
 
-            if (lblEventsUtil.getText().matches(Utils.ADD_EVENT)) {
-
-                eventControl.addEvent(event);
-
-            } else if (lblEventsUtil.getText().matches(Utils.EDIT_EVENT)) {
-
-                eventControl.editEvent(event);
-            }
-
-            updateEvents();
-            lblErrorEvent.setText("");
-            frameEventsUtil.dispose();
+            ctrlEvent.save(event);
         }
+
+        updateEvents();
+        lblErrorEvent.setText("");
+        frameEventsUtil.dispose();
     }//GEN-LAST:event_btnConfirmEventActionPerformed
 
     private void btnCancelEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelEventActionPerformed
@@ -639,47 +732,60 @@ public class EventsPanel extends javax.swing.JPanel {
         if (lstEvents.getSelectedIndex() == -1) {
 
             lblMap.setIcon(null);
-            lblEventLocation.setText("DODAJ LOKACIJU EVENTA");
+            lblEventLocation.setText(StringUtil.ADD_EVENT_LOCATION);
+            lblDateTime.setText(StringUtil.ADD_EVENT_DATE);
 
         } else {
 
             event = lstEvents.getSelectedValue();
             updateEventTickets();
-            lblEventLocation.setText(eventControl.getEventLocation(event));
 
             if (event.getLocation() == null) {
 
                 lblMap.setIcon(null);
-                lblEventLocation.setText("DODAJ LOKACIJU EVENTA");
+                lblEventLocation.setText(StringUtil.ADD_EVENT_LOCATION);
 
             } else {
 
-                mapControl.downloadMap(eventControl.getEventLat(event), eventControl.getEventLng(event), 14, 350, 200, lblMap);
+                lblEventLocation.setText(event.getLocation().toString());
+                ctrlMap.downloadMap(event.getLocation().getLat(), event.getLocation().getLng(), 14, 350, 360, lblMap);
+            }
+
+            if (event.getStartDate() == null) {
+                lblDateTime.setText(StringUtil.ADD_EVENT_DATE);
+
+            } else {
+
+                lblDateTime.setText(event.getStartDate() + " - " + event.getEndDate());
             }
         }
     }//GEN-LAST:event_lstEventsValueChanged
 
     private void btnConfirmTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmTicketActionPerformed
 
-        if (txtTicketName.getText().matches("") || txtTicketPrice.getText().matches("")) {
+        if (txtTicketName.getText().equals("") || txtTicketPrice.getText().equals("") || txtTicketQuantity.getText().equals("")) {
 
-            lblErrorTicket.setText(Utils.INPUT_ERROR);
+            lblErrorTicket.setText(StringUtil.INPUT_ERROR);
 
         } else {
 
-            ticket.setName(txtTicketName.getText());
-            ticket.setPrice(Double.parseDouble(txtTicketPrice.getText()));
-            ticket.setEvent(lstEvents.getSelectedValue().getId());
-
-            if (lblTicketsUtil.getText().matches(Utils.ADD_TICKET)) {
-                ticketControl.addTicket(ticket);
-
-            } else if (lblTicketsUtil.getText().matches(Utils.EDIT_TICKET)) {
-                ticketControl.editTicket(ticket);
+            try {
+                
+                ticket.setName(txtTicketName.getText());
+                ticket.setPrice(Double.parseDouble(txtTicketPrice.getText()));
+                ticket.setQuantity(Integer.parseInt(txtTicketQuantity.getText()));
+                ticket.setEvent(lstEvents.getSelectedValue());
+                event.getTickets().add(ticket);
+                
+                ctrlTicket.save(ticket);
+                ctrlEvent.save(event);
+                
+                updateEventTickets();
+                frameTicketsUtil.dispose();
+                
+            } catch (NumberFormatException numberFormatException) {
+                lblErrorTicket.setText(StringUtil.NUMBER_ERROR);
             }
-
-            updateEventTickets();
-            frameTicketsUtil.dispose();
         }
     }//GEN-LAST:event_btnConfirmTicketActionPerformed
 
@@ -693,7 +799,9 @@ public class EventsPanel extends javax.swing.JPanel {
         if (lstEvents.getSelectedIndex() == -1) {
         } else {
 
-            lblTicketsUtil.setText(Utils.ADD_TICKET);
+            ticket = new Ticket();
+
+            lblTicketsUtil.setText(StringUtil.ADD_TICKET);
             lblErrorTicket.setText("");
             txtTicketName.setText(event.getName());
             txtTicketPrice.setText("");
@@ -705,7 +813,9 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void btnAddEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEventActionPerformed
 
-        lblEventsUtil.setText(Utils.ADD_EVENT);
+        event = new Event();
+
+        lblEventsUtil.setText(StringUtil.ADD_EVENT);
         lblErrorEvent.setText("");
         txtEventName.setText("");
 
@@ -719,7 +829,8 @@ public class EventsPanel extends javax.swing.JPanel {
         } else {
 
             ticket = lstTickets.getSelectedValue();
-            ticketControl.removeTicket(ticket);
+            //ticketControl.removeTicket(ticket);
+            ctrlTicket.delete(ticket);
             updateEventTickets();
 
         }
@@ -731,7 +842,7 @@ public class EventsPanel extends javax.swing.JPanel {
         } else {
 
             ticket = lstTickets.getSelectedValue();
-            lblTicketsUtil.setText(Utils.EDIT_TICKET);
+            lblTicketsUtil.setText(StringUtil.EDIT_TICKET);
             txtTicketName.setText(ticket.getName());
             txtTicketPrice.setText(ticket.getPrice().toString());
             frameTicketsUtil.setVisible(true);
@@ -743,14 +854,14 @@ public class EventsPanel extends javax.swing.JPanel {
     private void btnConfirmLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmLocationActionPerformed
 
         if (lstLocations.getSelectedIndex() == -1) {
-            lblErrorLocation.setText(Utils.LOCATION_SELECTION_ERROR);
+            lblErrorLocation.setText(StringUtil.LOCATION_SELECTION_ERROR);
         } else {
 
             location = lstLocations.getSelectedValue();
 
-            eventControl.setEventLocation(event, location);
-
-            mapControl.downloadMap(location.getLat(), location.getLng(), 15, 350, 200, lblMap);
+            event.setLocation(location);
+            ctrlEvent.save(event);
+            ctrlMap.downloadMap(location.getLat(), location.getLng(), 14, 350, 360, lblMap);
 
             lblEventLocation.setText(location.toString());
 
@@ -766,21 +877,54 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void btnFindLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindLocationActionPerformed
 
-        if (txtFindLocation.getText().matches("")) {
-            
+        if (txtFindLocation.getText().equals("")) {
+
             updateLocations();
-            
+
         } else {
-            
+
             DefaultListModel<Location> model = new DefaultListModel<>();
             lstLocations.setModel(model);
-            for (Location location : locationControl.findLocation(txtFindLocation.getText())) {
+            for (Location location : ctrlLocation.find(location, "name", txtFindLocation.getText())) {
                 model.addElement(location);
             }
         }
     }//GEN-LAST:event_btnFindLocationActionPerformed
 
-    String search = "";
+    private void btnConfirmDateTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmDateTimeActionPerformed
+        event.setStartDate(startDateTime.getDateTimeStrict().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)));
+        event.setEndDate(endDateTime.getDateTimeStrict().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)));
+        lblDateTime.setText(event.getStartDate() + " - " + event.getEndDate());
+        frameDateUtil.dispose();
+
+
+    }//GEN-LAST:event_btnConfirmDateTimeActionPerformed
+
+    private void btnCancelDateTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelDateTimeActionPerformed
+        frameDateUtil.dispose();
+    }//GEN-LAST:event_btnCancelDateTimeActionPerformed
+
+    private void btnAddTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTimeActionPerformed
+        frameDateUtil.setVisible(true);
+        frameDateUtil.setLocationRelativeTo(this);
+
+    }//GEN-LAST:event_btnAddTimeActionPerformed
+
+    private void btnFindEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindEventActionPerformed
+
+        if (txtFindEvent.getText().equals("")) {
+            
+            updateEvents();
+
+        } else {
+
+            DefaultListModel<Event> model = new DefaultListModel<>();
+            lstEvents.setModel(model);
+            for (Event event : ctrlEvent.find(event, "name", txtFindEvent.getText())) {
+                model.addElement(event);
+            }
+        }
+    }//GEN-LAST:event_btnFindEventActionPerformed
 
     public void applyTheme() {
 
@@ -794,10 +938,13 @@ public class EventsPanel extends javax.swing.JPanel {
         btnAddTicketToEvent.setBackground(Theme.color3);
         btnRemoveTicket.setBackground(Theme.color3);
         btnEditTicket.setBackground(Theme.color3);
+        btnFindEvent.setBackground(Theme.color3);
         lstEvents.setBackground(Theme.color4);
         lstEvents.setForeground(Theme.font1);
         lstTickets.setBackground(Theme.color4);
         lstTickets.setForeground(Theme.font1);
+        txtFindEvent.setBackground(Theme.color4);
+        txtFindEvent.setForeground(Theme.font1);
 
         //Events Util
         pnlEventsUtilTitle.setBackground(Theme.color1);
@@ -812,8 +959,11 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlLocationsUtilMain.setBackground(Theme.color2);
         btnConfirmLocation.setBackground(Theme.color3);
         btnCancelLocation.setBackground(Theme.color3);
+        btnFindLocation.setBackground(Theme.color3);
         lstLocations.setBackground(Theme.color4);
         lstLocations.setForeground(Theme.font1);
+        txtFindLocation.setBackground(Theme.color4);
+        txtFindLocation.setForeground(Theme.font1);
 
         //Tickets Util
         pnlTicketsUtilTitle.setBackground(Theme.color1);
@@ -826,8 +976,6 @@ public class EventsPanel extends javax.swing.JPanel {
         txtTicketName.setForeground(Theme.font1);
         txtTicketPrice.setForeground(Theme.font1);
         txtTicketQuantity.setForeground(Theme.font1);
-        txtFindLocation.setBackground(Theme.color4);
-        txtFindLocation.setForeground(Theme.font1);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -835,21 +983,24 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnAddLocation;
     private javax.swing.JButton btnAddTicketToEvent;
     private javax.swing.JButton btnAddTime;
+    private javax.swing.JButton btnCancelDateTime;
     private javax.swing.JButton btnCancelEvent;
     private javax.swing.JButton btnCancelLocation;
     private javax.swing.JButton btnCancelTicket;
+    private javax.swing.JButton btnConfirmDateTime;
     private javax.swing.JButton btnConfirmEvent;
     private javax.swing.JButton btnConfirmLocation;
     private javax.swing.JButton btnConfirmTicket;
     private javax.swing.JButton btnEditEvent;
     private javax.swing.JButton btnEditTicket;
+    private javax.swing.JButton btnFindEvent;
     private javax.swing.JButton btnFindLocation;
     private javax.swing.JButton btnRemoveEvent;
     private javax.swing.JButton btnRemoveTicket;
+    private javax.swing.JFrame frameDateUtil;
     private javax.swing.JFrame frameEventsUtil;
     private javax.swing.JFrame frameLocationsUtil;
     private javax.swing.JFrame frameTicketsUtil;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -857,9 +1008,14 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblDateTime;
+    private javax.swing.JLabel lblDateTimeUtil;
+    private javax.swing.JLabel lblDateTimeUtil1;
+    private javax.swing.JLabel lblDateTimeUtil2;
     private javax.swing.JLabel lblErrorEvent;
     private javax.swing.JLabel lblErrorLocation;
     private javax.swing.JLabel lblErrorTicket;
@@ -868,13 +1024,14 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblLocations;
     private javax.swing.JLabel lblMap;
     private javax.swing.JLabel lblTicketsUtil;
-    private javax.swing.JLabel lblTitle4;
     private javax.swing.JLabel lblTitle5;
     private javax.swing.JLabel lblTitle6;
-    private javax.swing.JLabel lblTitle9;
+    private javax.swing.JLabel lblTitle7;
     private javax.swing.JList<Event> lstEvents;
     private javax.swing.JList<Location> lstLocations;
     private javax.swing.JList<Ticket> lstTickets;
+    private javax.swing.JPanel pnlDateTimeUtil;
+    private javax.swing.JPanel pnlDateTimeUtilTitle;
     private javax.swing.JPanel pnlEventsUtilMain;
     private javax.swing.JPanel pnlEventsUtilTitle;
     private javax.swing.JPanel pnlLocationsUtilMain;
@@ -882,6 +1039,7 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JPanel pnlTicketsUtilMain;
     private javax.swing.JPanel pnlTicketsUtilTitle;
     private javax.swing.JTextField txtEventName;
+    private javax.swing.JTextField txtFindEvent;
     private javax.swing.JTextField txtFindLocation;
     private javax.swing.JTextField txtTicketName;
     private javax.swing.JTextField txtTicketPrice;

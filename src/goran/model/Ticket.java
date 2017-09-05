@@ -5,17 +5,22 @@
  */
 package goran.model;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Goran
  */
-public class Ticket extends Entity {
+@javax.persistence.Entity
+public class Ticket extends Entity implements Serializable {
     
     private String name;
     private Double price;
-    private int Event;
+    private int quantity;
+    @ManyToOne
+    private Event event;
 
     public String getName() {
         return name;
@@ -33,12 +38,20 @@ public class Ticket extends Entity {
         this.price = price;
     }
 
-    public int getEvent() {
-        return Event;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setEvent(int Event) {
-        this.Event = Event;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     @Override
