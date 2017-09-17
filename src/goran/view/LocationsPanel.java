@@ -9,7 +9,10 @@ import goran.util.StringUtil;
 import goran.controller.GoogleMapsController;
 import goran.controller.HibernateController;
 import goran.model.Location;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.DefaultListModel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -48,6 +51,7 @@ public class LocationsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenu1 = new java.awt.PopupMenu();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstLocations = new javax.swing.JList<>();
         txtLocationName = new javax.swing.JTextField();
@@ -68,6 +72,8 @@ public class LocationsPanel extends javax.swing.JPanel {
         lblError = new javax.swing.JLabel();
         lblTitle6 = new javax.swing.JLabel();
 
+        popupMenu1.setLabel("popupMenu1");
+
         setBackground(new java.awt.Color(60, 60, 70));
         setMinimumSize(new java.awt.Dimension(700, 500));
         setPreferredSize(new java.awt.Dimension(700, 500));
@@ -86,23 +92,43 @@ public class LocationsPanel extends javax.swing.JPanel {
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 380, 150));
 
         txtLocationName.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationName.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        txtLocationName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtLocationName.setForeground(new java.awt.Color(255, 255, 255));
+        txtLocationName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindOnMapActionPerformed(evt);
+            }
+        });
         add(txtLocationName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 210, 30));
 
         txtLocationAddress.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationAddress.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        txtLocationAddress.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtLocationAddress.setForeground(new java.awt.Color(255, 255, 255));
+        txtLocationAddress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindOnMapActionPerformed(evt);
+            }
+        });
         add(txtLocationAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 210, 30));
 
         txtLocationLocality.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationLocality.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        txtLocationLocality.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtLocationLocality.setForeground(new java.awt.Color(255, 255, 255));
+        txtLocationLocality.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindOnMapActionPerformed(evt);
+            }
+        });
         add(txtLocationLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 210, 30));
 
         txtLocationCountry.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationCountry.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        txtLocationCountry.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtLocationCountry.setForeground(new java.awt.Color(255, 255, 255));
+        txtLocationCountry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindOnMapActionPerformed(evt);
+            }
+        });
         add(txtLocationCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 210, 30));
 
         btnFindOnMap.setBackground(new java.awt.Color(0, 0, 0));
@@ -241,7 +267,7 @@ public class LocationsPanel extends javax.swing.JPanel {
             txtLocationCountry.setText(location.getCountry());
             txtLocationName.setText(location.getName());
 
-            mapControl.downloadMap(location.getLat(), location.getLng(), 16, 680, 270, lblMap);
+            mapControl.downloadMap(location.getLat(), location.getLng(), 16, lblMap);
 
             lblError.setText("");
         }
@@ -263,7 +289,7 @@ public class LocationsPanel extends javax.swing.JPanel {
             location.setLat(mapData[0]);
             location.setLng(mapData[1]);
 
-            mapControl.downloadMap(location.getLat(), location.getLng(), 16, 680, 270, lblMap);
+            mapControl.downloadMap(location.getLat(), location.getLng(), 16, lblMap);
 
             txtLocationAddress.setText(mapData[3] + " " + mapData[2]);
             txtLocationLocality.setText(mapData[4]);
@@ -278,7 +304,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         try {
 
             mapZoom--;
-            mapControl.downloadMap(location.getLat(), location.getLng(), mapZoom, 680, 270, lblMap);
+            mapControl.downloadMap(location.getLat(), location.getLng(), mapZoom, lblMap);
 
         } catch (Exception e) {
         }
@@ -289,7 +315,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         try {
 
             mapZoom++;
-            mapControl.downloadMap(location.getLat(), location.getLng(), mapZoom, 680, 270, lblMap);
+            mapControl.downloadMap(location.getLat(), location.getLng(), mapZoom, lblMap);
 
         } catch (Exception e) {
         }
@@ -415,9 +441,12 @@ public class LocationsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle4;
     private javax.swing.JLabel lblTitle6;
     private javax.swing.JList<Location> lstLocations;
+    private java.awt.PopupMenu popupMenu1;
     private javax.swing.JTextField txtLocationAddress;
     private javax.swing.JTextField txtLocationCountry;
     private javax.swing.JTextField txtLocationLocality;
     private javax.swing.JTextField txtLocationName;
     // End of variables declaration//GEN-END:variables
+
+   
 }

@@ -6,6 +6,7 @@
 package goran.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.ManyToOne;
@@ -17,15 +18,20 @@ import javax.persistence.OneToMany;
  */
 
 @javax.persistence.Entity
+@javax.persistence.Table
 public class Event extends Entity implements Serializable {
     
     private String name;
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
     @OneToMany
     private List<Ticket> tickets;
     @ManyToOne
     private Location location;
+    
+    public Event() {
+        tickets = new ArrayList<>();
+    }
 
     public String getName() {
         return name;
@@ -35,19 +41,19 @@ public class Event extends Entity implements Serializable {
         this.name = name;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

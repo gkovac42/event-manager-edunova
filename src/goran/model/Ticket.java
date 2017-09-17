@@ -7,6 +7,8 @@ package goran.model;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.List;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -14,13 +16,24 @@ import javax.persistence.ManyToOne;
  * @author Goran
  */
 @javax.persistence.Entity
+@javax.persistence.Table
 public class Ticket extends Entity implements Serializable {
-    
+
     private String name;
     private Double price;
     private int quantity;
     @ManyToOne
     private Event event;
+    @ManyToMany
+    private List<Order> orders;
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     public String getName() {
         return name;
@@ -45,7 +58,7 @@ public class Ticket extends Entity implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
+
     public Event getEvent() {
         return event;
     }
@@ -56,8 +69,12 @@ public class Ticket extends Entity implements Serializable {
 
     @Override
     public String toString() {
-        return name + " - " + new DecimalFormat("#.00").format(price) + "kn";
+        return name + " - " + new DecimalFormat("#.00").format(price) + "kn" + " - " + quantity + " kom.";
     }
-    
-    
+
+    public String getTotalPrice() {
+        double totalPrice = this.getPrice() * this.getQuantity();
+        return new DecimalFormat("#.00").format(totalPrice);
+    }
+
 }

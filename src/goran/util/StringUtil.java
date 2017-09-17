@@ -11,8 +11,8 @@ package goran.util;
  */
 public class StringUtil {
     
-    public static final String ADD_USER = "DODAJ NOVOG KORISNIKA";
-    public static final String EDIT_USER = "UREDI KORISNIKA";
+    public static final String ADD_CUSTOMER = "DODAJ NOVOG KORISNIKA";
+    public static final String EDIT_CUSTOMER = "UREDI KORISNIKA";
     public static final String ADD_EVENT = "DODAJ NOVI EVENT";
     public static final String EDIT_EVENT = "UREDI EVENT";
     public static final String ADD_TICKET = "DODAJ NOVU ULAZNICU";

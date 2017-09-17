@@ -21,15 +21,16 @@
     <!--  
     1. puta create, poslije update
     -->
-    <property name="hbm2ddl.auto">update</property>
+    <property name="hbm2ddl.auto">create</property>
     <property name="connection.pool_size">1</property>
     <property name="current_session_context_class">thread</property>
 
     <!-- moraju se slijedno navesti klase koje su mapirane -->
-    <mapping class="goran.model.User" />
+    <mapping class="goran.model.Customer" />
     <mapping class="goran.model.Event" />
     <mapping class="goran.model.Location" />
     <mapping class="goran.model.Ticket" />
+    <mapping class="goran.model.Order" />
     
 </session-factory>
 </hibernate-configuration>

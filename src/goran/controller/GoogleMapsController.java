@@ -103,25 +103,26 @@ public class GoogleMapsController {
         return null;
     }
 
-    public void downloadMap(String lat, String lng, int zoomLevel, int width, int height, JLabel label) {
+    public void downloadMap(String lat, String lng, int zoomLevel, JLabel lblMap) {
 
         Thread t = new Thread(new Runnable() {
-            
+
             public void run() {
                 String imageUrl = "http://maps.googleapis.com/maps/api/staticmap?center="
-                        + lat + ",%20" + lng + "&zoom=" + zoomLevel + "&size=" + width + "x" + height
+                        + lat + ",%20" + lng + "&zoom=" + zoomLevel + "&size=" + lblMap.getWidth()+ "x" + lblMap.getHeight()
                         + "&scale=1&markers=" + lat + ",%20" + lng + "&sensor=true";
                 try {
 
                     URL url = new URL(imageUrl);
-                    label.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH)));
+                    lblMap.setIcon(new ImageIcon(new ImageIcon(url).getImage().
+                            getScaledInstance(lblMap.getWidth(), lblMap.getHeight(), java.awt.Image.SCALE_SMOOTH)));
 
                 } catch (MalformedURLException ex) {
                 }
             }
 
         });
-        
+
         t.start();
     }
 }

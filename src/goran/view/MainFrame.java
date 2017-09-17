@@ -16,9 +16,10 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 public class MainFrame extends javax.swing.JFrame {
 
     private EventsPanel pnlEvents;
-    private TicketsPanel pnlTickets;
-    private UsersPanel pnlUsers;
+    private ReviewPanel pnlReview;
+    private CustomersPanel pnlCustomers;
     private LocationsPanel pnlLocations;
+    private OrdersPanel pnlOrders;
     private AbsoluteConstraints panelPosition;
     
     private int theme = Theme.DARK;
@@ -29,12 +30,15 @@ public class MainFrame extends javax.swing.JFrame {
         panelPosition = new AbsoluteConstraints(100, 40, 700, 560);
         pnlEvents = new EventsPanel();
         getContentPane().add(pnlEvents, panelPosition); 
-        pnlTickets = new TicketsPanel();
-        getContentPane().add(pnlTickets, panelPosition);
-        pnlUsers = new UsersPanel();
-        getContentPane().add(pnlUsers, panelPosition);
+        pnlReview = new ReviewPanel();
+        getContentPane().add(pnlReview, panelPosition);
+        pnlCustomers = new CustomersPanel();
+        getContentPane().add(pnlCustomers, panelPosition);
         pnlLocations = new LocationsPanel();
         getContentPane().add(pnlLocations, panelPosition);
+        pnlOrders = new OrdersPanel();
+        getContentPane().add(pnlOrders, panelPosition);
+        
         setActivePanel(pnlEvents);
     }
 
@@ -55,8 +59,8 @@ public class MainFrame extends javax.swing.JFrame {
         btnGit = new javax.swing.JButton();
         pnlSide = new MotionPanel(this);
         btnEvents = new javax.swing.JButton();
-        btnTickets = new javax.swing.JButton();
-        btnUsers = new javax.swing.JButton();
+        btnReview = new javax.swing.JButton();
+        btnCustomers = new javax.swing.JButton();
         btnLocations = new javax.swing.JButton();
         btnOrders = new javax.swing.JButton();
 
@@ -64,7 +68,6 @@ public class MainFrame extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
         setOpacity(0.97F);
-        setPreferredSize(new java.awt.Dimension(800, 540));
         setSize(new java.awt.Dimension(800, 540));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -181,37 +184,37 @@ public class MainFrame extends javax.swing.JFrame {
         });
         pnlSide.add(btnEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 100));
 
-        btnTickets.setBackground(new java.awt.Color(0, 0, 0));
-        btnTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnTickets.setForeground(new java.awt.Color(255, 255, 255));
-        btnTickets.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/menu_tickets.png"))); // NOI18N
-        btnTickets.setText("ULAZNICE");
-        btnTickets.setBorder(null);
-        btnTickets.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnTickets.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnTickets.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnTickets.addActionListener(new java.awt.event.ActionListener() {
+        btnReview.setBackground(new java.awt.Color(0, 0, 0));
+        btnReview.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnReview.setForeground(new java.awt.Color(255, 255, 255));
+        btnReview.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/menu_tickets.png"))); // NOI18N
+        btnReview.setText("PREGLED");
+        btnReview.setBorder(null);
+        btnReview.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnReview.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnReview.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnReview.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTicketsActionPerformed(evt);
+                btnReviewActionPerformed(evt);
             }
         });
-        pnlSide.add(btnTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 100, 100));
+        pnlSide.add(btnReview, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 100, 100));
 
-        btnUsers.setBackground(new java.awt.Color(0, 0, 0));
-        btnUsers.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnUsers.setForeground(new java.awt.Color(255, 255, 255));
-        btnUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/menu_users.png"))); // NOI18N
-        btnUsers.setText("KORISNICI");
-        btnUsers.setBorder(null);
-        btnUsers.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnUsers.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnUsers.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnUsers.addActionListener(new java.awt.event.ActionListener() {
+        btnCustomers.setBackground(new java.awt.Color(0, 0, 0));
+        btnCustomers.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnCustomers.setForeground(new java.awt.Color(255, 255, 255));
+        btnCustomers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/menu_users.png"))); // NOI18N
+        btnCustomers.setText("KORISNICI");
+        btnCustomers.setBorder(null);
+        btnCustomers.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCustomers.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnCustomers.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCustomers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUsersActionPerformed(evt);
+                btnCustomersActionPerformed(evt);
             }
         });
-        pnlSide.add(btnUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 100, 100));
+        pnlSide.add(btnCustomers, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 100, 100));
 
         btnLocations.setBackground(new java.awt.Color(0, 0, 0));
         btnLocations.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -227,7 +230,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btnLocationsActionPerformed(evt);
             }
         });
-        pnlSide.add(btnLocations, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 100, 100));
+        pnlSide.add(btnLocations, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 100, 100));
 
         btnOrders.setBackground(new java.awt.Color(0, 0, 0));
         btnOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -238,7 +241,12 @@ public class MainFrame extends javax.swing.JFrame {
         btnOrders.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnOrders.setPreferredSize(new java.awt.Dimension(80, 80));
         btnOrders.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        pnlSide.add(btnOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 100, 100));
+        btnOrders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdersActionPerformed(evt);
+            }
+        });
+        pnlSide.add(btnOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 100, 100));
 
         getContentPane().add(pnlSide, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 100, 500));
 
@@ -249,26 +257,28 @@ public class MainFrame extends javax.swing.JFrame {
    private void setActivePanel(JPanel panel) {
 
         pnlEvents.setVisible(false);
-        pnlTickets.setVisible(false);
-        pnlUsers.setVisible(false);
+        pnlReview.setVisible(false);
+        pnlCustomers.setVisible(false);
         pnlLocations.setVisible(false);
+        pnlOrders.setVisible(false);
 
         panel.setVisible(true);
 
     }
         
-    private void btnTicketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTicketsActionPerformed
-        setActivePanel(pnlTickets);
-        pnlTickets.updateTickets();
-    }//GEN-LAST:event_btnTicketsActionPerformed
+    private void btnReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewActionPerformed
+        pnlReview.updateTickets();
+        pnlReview.updateOrders();
+        setActivePanel(pnlReview);
+    }//GEN-LAST:event_btnReviewActionPerformed
 
     private void btnEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventsActionPerformed
         setActivePanel(pnlEvents);
     }//GEN-LAST:event_btnEventsActionPerformed
 
-    private void btnUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersActionPerformed
-        setActivePanel(pnlUsers);
-    }//GEN-LAST:event_btnUsersActionPerformed
+    private void btnCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomersActionPerformed
+        setActivePanel(pnlCustomers);
+    }//GEN-LAST:event_btnCustomersActionPerformed
 
     private void lblMinimizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizeMouseExited
         lblMinimize.setBackground(Theme.color1);
@@ -337,6 +347,12 @@ public class MainFrame extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btnGitActionPerformed
+
+    private void btnOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdersActionPerformed
+        pnlOrders.updateTickets();
+        pnlOrders.updateCustomers();
+        setActivePanel(pnlOrders);
+    }//GEN-LAST:event_btnOrdersActionPerformed
         
     private void applyTheme() {
 
@@ -347,26 +363,26 @@ public class MainFrame extends javax.swing.JFrame {
 
         pnlSide.setBackground(Theme.color3);
         btnEvents.setBackground(Theme.color3);
-        btnTickets.setBackground(Theme.color3);
-        btnUsers.setBackground(Theme.color3);
+        btnReview.setBackground(Theme.color3);
+        btnCustomers.setBackground(Theme.color3);
         btnOrders.setBackground(Theme.color3);
         btnLocations.setBackground(Theme.color3);
         btnGit.setBackground(Theme.color3);
 
         pnlEvents.applyTheme();
-        pnlTickets.applyTheme();
-        pnlUsers.applyTheme();
+        pnlReview.applyTheme();
+        pnlCustomers.applyTheme();
         pnlLocations.applyTheme();
         
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCustomers;
     private javax.swing.JButton btnEvents;
     private javax.swing.JButton btnGit;
     private javax.swing.JButton btnLocations;
     private javax.swing.JButton btnOrders;
-    private javax.swing.JButton btnTickets;
-    private javax.swing.JButton btnUsers;
+    private javax.swing.JButton btnReview;
     private javax.swing.JLabel lblClose;
     private javax.swing.JLabel lblIcon;
     private javax.swing.JLabel lblLightSwitch;

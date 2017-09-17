@@ -6,19 +6,24 @@
 package goran.model;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Goran
  */
 @javax.persistence.Entity
-public class User extends Entity implements Serializable {
+@javax.persistence.Table
+public class Customer extends Entity implements Serializable {
 
     private String firstName;
     private String lastName;
     private String email;
     private String address;
     private String locality;
+    @OneToMany
+    private List<Order> orders;
 
     public String getFirstName() {
         return firstName;
@@ -59,5 +64,20 @@ public class User extends Entity implements Serializable {
     public void setLocality(String country) {
         this.locality = country;
     }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    @Override
+    public String toString() {
+        return this.lastName + " " + this.firstName; 
+    }
+    
+    
 
 }

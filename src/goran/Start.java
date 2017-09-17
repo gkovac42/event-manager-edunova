@@ -34,6 +34,8 @@ public class Start {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
+                new LoadData();
                 new MainFrame().setVisible(true);
             }
         });

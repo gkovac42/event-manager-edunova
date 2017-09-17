@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
  */
 
 @javax.persistence.Entity
+@javax.persistence.Table
 public class Location extends Entity implements Serializable {
     
     private String name;
