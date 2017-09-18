@@ -17,19 +17,20 @@ import javax.swing.DefaultListModel;
  * @author Goran
  */
 public class OrdersPanel extends javax.swing.JPanel {
-
+    
     private Order order;
     private Customer customer;
     private Ticket ticket;
+    private Ticket ordTicket;
     private HibernateController<Customer> ctrlCustomer;
     private HibernateController<Ticket> ctrlTicket;
     private HibernateController<Order> ctrlOrder;
     private double totalPrice;
-
+    
     public OrdersPanel() {
-
+        
         initComponents();
-
+        
         order = new Order();
         customer = new Customer();
         ticket = new Ticket();
@@ -37,41 +38,38 @@ public class OrdersPanel extends javax.swing.JPanel {
         ctrlTicket = new HibernateController<>();
         ctrlOrder = new HibernateController<>();
         totalPrice = 0;
-
+        
         updateCustomers();
         updateTickets();
     }
-
+    
     public void updateCustomers() {
-
+        
         DefaultListModel<Customer> model = new DefaultListModel<>();
         lstCustomers.setModel(model);
         for (Customer customer : ctrlCustomer.getOrderedList(customer, "lastName")) {
             model.addElement(customer);
         }
     }
-
+    
     public void updateTickets() {
-
+        
         DefaultListModel<Ticket> model = new DefaultListModel<>();
         lstTickets.setModel(model);
         for (Ticket ticket : ctrlTicket.getOrderedList(ticket, "name")) {
             model.addElement(ticket);
         }
     }
-
+    
     private void updateOrderTickets() {
-
+        
         DefaultListModel<Ticket> model = new DefaultListModel<>();
         lstOrderTickets.setModel(model);
         for (Ticket ticket : order.getTickets()) {
-            if (ticket.isDeleted()) {
-                continue;
-            }
             model.addElement(ticket);
         }
     }
-
+    
     private void updateOrders() {
         DefaultListModel<Order> model = new DefaultListModel<>();
         lstOrders.setModel(model);
@@ -89,14 +87,14 @@ public class OrdersPanel extends javax.swing.JPanel {
 
         frameOrdersUtil = new javax.swing.JFrame();
         pnlOrdersUtilMain = new javax.swing.JPanel();
-        btnConfirmLocation = new javax.swing.JButton();
-        btnCancelLocation = new javax.swing.JButton();
+        btnConfirm = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         txtFindOrder = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         lstOrders = new javax.swing.JList<>();
         btnFindOrder = new javax.swing.JButton();
         pnlOrdersUtilTitle = new MotionPanel(frameOrdersUtil);
-        lblLocations = new javax.swing.JLabel();
+        lblOrders = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblOrder = new javax.swing.JLabel();
         lblTitle9 = new javax.swing.JLabel();
@@ -124,6 +122,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         lblFirstName = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        btnNewOrder = new javax.swing.JButton();
 
         frameOrdersUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameOrdersUtil.setAlwaysOnTop(true);
@@ -136,35 +135,35 @@ public class OrdersPanel extends javax.swing.JPanel {
         pnlOrdersUtilMain.setPreferredSize(new java.awt.Dimension(400, 380));
         pnlOrdersUtilMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnConfirmLocation.setBackground(new java.awt.Color(0, 0, 0));
-        btnConfirmLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnConfirmLocation.setForeground(new java.awt.Color(255, 255, 255));
-        btnConfirmLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_confirm.png"))); // NOI18N
-        btnConfirmLocation.setText("POTVRDI");
-        btnConfirmLocation.setBorder(null);
-        btnConfirmLocation.setFocusPainted(false);
-        btnConfirmLocation.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnConfirmLocation.addActionListener(new java.awt.event.ActionListener() {
+        btnConfirm.setBackground(new java.awt.Color(0, 0, 0));
+        btnConfirm.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnConfirm.setForeground(new java.awt.Color(255, 255, 255));
+        btnConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_confirm.png"))); // NOI18N
+        btnConfirm.setText("POTVRDI");
+        btnConfirm.setBorder(null);
+        btnConfirm.setFocusPainted(false);
+        btnConfirm.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnConfirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmLocationActionPerformed(evt);
+                btnConfirmActionPerformed(evt);
             }
         });
-        pnlOrdersUtilMain.add(btnConfirmLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 110, 40));
+        pnlOrdersUtilMain.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 110, 40));
 
-        btnCancelLocation.setBackground(new java.awt.Color(0, 0, 0));
-        btnCancelLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnCancelLocation.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_cancel.png"))); // NOI18N
-        btnCancelLocation.setText("NAZAD");
-        btnCancelLocation.setBorder(null);
-        btnCancelLocation.setFocusPainted(false);
-        btnCancelLocation.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnCancelLocation.addActionListener(new java.awt.event.ActionListener() {
+        btnCancel.setBackground(new java.awt.Color(0, 0, 0));
+        btnCancel.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnCancel.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_cancel.png"))); // NOI18N
+        btnCancel.setText("NAZAD");
+        btnCancel.setBorder(null);
+        btnCancel.setFocusPainted(false);
+        btnCancel.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelLocationActionPerformed(evt);
+                btnCancelActionPerformed(evt);
             }
         });
-        pnlOrdersUtilMain.add(btnCancelLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 110, 40));
+        pnlOrdersUtilMain.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 110, 40));
 
         txtFindOrder.setBackground(new java.awt.Color(153, 153, 153));
         txtFindOrder.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
@@ -212,10 +211,10 @@ public class OrdersPanel extends javax.swing.JPanel {
         pnlOrdersUtilTitle.setBackground(new java.awt.Color(30, 30, 40));
         pnlOrdersUtilTitle.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblLocations.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
-        lblLocations.setForeground(new java.awt.Color(255, 255, 255));
-        lblLocations.setText("NARUDŽBE");
-        pnlOrdersUtilTitle.add(lblLocations, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 230, 40));
+        lblOrders.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        lblOrders.setForeground(new java.awt.Color(255, 255, 255));
+        lblOrders.setText("NARUDŽBE");
+        pnlOrdersUtilTitle.add(lblOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 230, 40));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_calendar.png"))); // NOI18N
@@ -230,7 +229,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         lblOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblOrder.setForeground(new java.awt.Color(255, 255, 255));
         lblOrder.setText("DETALJI NARUDŽBE");
-        add(lblOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 250, 30));
+        add(lblOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 170, 40));
 
         lblTitle9.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle9.setForeground(new java.awt.Color(255, 255, 255));
@@ -239,34 +238,34 @@ public class OrdersPanel extends javax.swing.JPanel {
 
         lblEmail.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblEmail.setForeground(new java.awt.Color(255, 255, 255));
-        add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, 250, 40));
+        add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 440, 200, 40));
 
         jLabel15.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("IME");
-        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, 100, 40));
+        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 100, 40));
 
         jLabel16.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("MJESTO");
-        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 100, 40));
+        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 100, 40));
 
         jLabel8.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("E-MAIL");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, 100, 40));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 100, 40));
 
         lblLastName.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblLastName.setForeground(new java.awt.Color(255, 255, 255));
-        add(lblLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 250, 40));
+        add(lblLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 200, 40));
 
         lblAddress.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblAddress.setForeground(new java.awt.Color(255, 255, 255));
-        add(lblAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 110, 250, 40));
+        add(lblAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 200, 40));
 
         lblLocality.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblLocality.setForeground(new java.awt.Color(255, 255, 255));
-        add(lblLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 250, 40));
+        add(lblLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 200, 40));
 
         btnViewOrders.setBackground(new java.awt.Color(0, 0, 0));
         btnViewOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -279,7 +278,7 @@ public class OrdersPanel extends javax.swing.JPanel {
                 btnViewOrdersActionPerformed(evt);
             }
         });
-        add(btnViewOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 450, 110, 40));
+        add(btnViewOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 230, 110, 40));
 
         lstCustomers.setBackground(new java.awt.Color(120, 120, 120));
         lstCustomers.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -291,7 +290,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(lstCustomers);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 330, 190));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 300, 190));
 
         lstTickets.setBackground(new java.awt.Color(120, 120, 120));
         lstTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -303,7 +302,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(lstTickets);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 330, 190));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 370, 190));
 
         lstOrderTickets.setBackground(new java.awt.Color(120, 120, 120));
         lstOrderTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -315,7 +314,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(lstOrderTickets);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 340, 190));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 370, 160));
 
         btnAdd.setBackground(new java.awt.Color(0, 0, 0));
         btnAdd.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -328,12 +327,12 @@ public class OrdersPanel extends javax.swing.JPanel {
                 btnAddActionPerformed(evt);
             }
         });
-        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 100, 40));
+        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 90, 40));
 
         lblTitle8.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle8.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle8.setText("RASPOLOŽIVE ULAZNICE");
-        add(lblTitle8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 250, 30));
+        add(lblTitle8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 250, 30));
 
         btnRemove.setBackground(new java.awt.Color(0, 0, 0));
         btnRemove.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -346,7 +345,7 @@ public class OrdersPanel extends javax.swing.JPanel {
                 btnRemoveActionPerformed(evt);
             }
         });
-        add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 100, 40));
+        add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 90, 40));
 
         txtQuantity.setBackground(new java.awt.Color(120, 120, 120));
         txtQuantity.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
@@ -358,17 +357,17 @@ public class OrdersPanel extends javax.swing.JPanel {
                 txtQuantityActionPerformed(evt);
             }
         });
-        add(txtQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 450, 70, 40));
+        add(txtQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 230, 50, 40));
 
         jLabel12.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("UKUPNO:");
-        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 450, -1, 40));
+        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 450, -1, 30));
 
         lblTotalPrice.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTotalPrice.setForeground(new java.awt.Color(255, 255, 255));
         lblTotalPrice.setText("0.00kn");
-        add(lblTotalPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 450, 70, 40));
+        add(lblTotalPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 450, 80, 30));
 
         btnFinishOrder.setBackground(new java.awt.Color(0, 0, 0));
         btnFinishOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -381,55 +380,84 @@ public class OrdersPanel extends javax.swing.JPanel {
                 btnFinishOrderActionPerformed(evt);
             }
         });
-        add(btnFinishOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 450, 120, 40));
+        add(btnFinishOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, 150, 40));
 
         lblFirstName.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblFirstName.setForeground(new java.awt.Color(255, 255, 255));
-        add(lblFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 250, 40));
+        add(lblFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 200, 40));
 
         jLabel11.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("ADRESA");
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 100, 40));
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 100, 40));
 
         jLabel9.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("PREZIME");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 100, 40));
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 100, 40));
+
+        btnNewOrder.setBackground(new java.awt.Color(0, 0, 0));
+        btnNewOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnNewOrder.setForeground(new java.awt.Color(255, 255, 255));
+        btnNewOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_cancel.png"))); // NOI18N
+        btnNewOrder.setBorder(null);
+        btnNewOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewOrderActionPerformed(evt);
+            }
+        });
+        add(btnNewOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 450, 50, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-
+        
         if (lstOrderTickets.getSelectedIndex() != -1) {
-
-            order.getTickets().remove(lstOrderTickets.getSelectedValue());
-            updateOrderTickets();
-
-            totalPrice -= lstOrderTickets.getSelectedValue().getPrice() * lstOrderTickets.getSelectedValue().getQuantity();
-            lblTotalPrice.setText(new DecimalFormat("#.00").format(totalPrice) + "kn");
+            
+            try {
+                ticket = lstTickets.getSelectedValue();
+                ordTicket = lstOrderTickets.getSelectedValue();
+                ticket.setQuantity(ticket.getQuantity() + ordTicket.getQuantity());
+                order.getTickets().remove(lstOrderTickets.getSelectedValue());
+                updateOrderTickets();
+                updateTickets();
+                totalPrice -= ordTicket.getPrice() * ordTicket.getQuantity();
+                lblTotalPrice.setText(new DecimalFormat("#.00").format(totalPrice) + "kn");
+                lstTickets.setSelectedValue(ticket, true);
+            } catch (Exception e) {
+            }
+            
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-
+        
         if (lstTickets.getSelectedIndex() != -1 && lstCustomers.getSelectedIndex() != -1) {
-
+            
             ticket = lstTickets.getSelectedValue();
             ticket.setQuantity(ticket.getQuantity() - Integer.parseInt(txtQuantity.getText()));
             ctrlTicket.save(ticket);
             updateTickets();
-
+            lstTickets.setSelectedValue(ticket, true);
+            
+            ordTicket = new Ticket();
+            ordTicket.setName(ticket.getName());
+            ordTicket.setEvent(ticket.getEvent());
+            ordTicket.setPrice(ticket.getPrice());
+            ordTicket.setQuantity(Integer.parseInt(txtQuantity.getText()));
+            ordTicket.setDeleted(true);
+            ctrlTicket.save(ordTicket);
+            
             order.setCustomer(customer);
-            order.getTickets().add(ticket);
+            order.getTickets().add(ordTicket);
             updateOrderTickets();
-
-            totalPrice += ticket.getPrice() * ticket.getQuantity();
+            
+            totalPrice += ordTicket.getPrice() * ordTicket.getQuantity();
             lblTotalPrice.setText(new DecimalFormat("#.00").format(totalPrice) + "kn");
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnFinishOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishOrderActionPerformed
-
+        
         ctrlOrder.save(order);
         updateOrders();
         
@@ -441,6 +469,8 @@ public class OrdersPanel extends javax.swing.JPanel {
         lblAddress.setText("");
         lblLocality.setText("");
         lblEmail.setText("");
+        totalPrice = 0;
+        lblTotalPrice.setText(new DecimalFormat("#.00").format(totalPrice) + "kn");
     }//GEN-LAST:event_btnFinishOrderActionPerformed
 
     private void lstCustomersValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCustomersValueChanged
@@ -472,32 +502,33 @@ public class OrdersPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_lstOrderTicketsValueChanged
 
-    private void btnConfirmLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmLocationActionPerformed
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
         
         try {
             order = lstOrders.getSelectedValue();
             lstCustomers.setSelectedValue(order.getCustomer(), true);
             updateOrderTickets();
             lblOrder.setText("DETALJI NARUDŽBE #" + order.getId());
+            totalPrice = order.getTotalPrice();
             frameOrdersUtil.dispose();
         } catch (Exception e) {
         }
 
-    }//GEN-LAST:event_btnConfirmLocationActionPerformed
+    }//GEN-LAST:event_btnConfirmActionPerformed
 
-    private void btnCancelLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelLocationActionPerformed
-
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        
         frameOrdersUtil.dispose();
-    }//GEN-LAST:event_btnCancelLocationActionPerformed
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnFindOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindOrderActionPerformed
-
+        
         if (txtFindOrder.getText().equals("")) {
-
+            
             updateOrders();
-
+            
         } else {
-
+            
             DefaultListModel<Order> model = new DefaultListModel<>();
             lstOrders.setModel(model);
             for (Order order : ctrlOrder.find(order, "id", txtFindOrder.getText())) {
@@ -520,21 +551,37 @@ public class OrdersPanel extends javax.swing.JPanel {
             lstCustomers.setSelectedValue(order.getCustomer(), true);
             updateOrderTickets();
             lblOrder.setText("DETALJI NARUDŽBE #" + order.getId());
+            totalPrice = order.getTotalPrice();
+            lblTotalPrice.setText(new DecimalFormat("#.00").format(totalPrice) + "kn");
             frameOrdersUtil.dispose();
         }
     }//GEN-LAST:event_lstOrdersMouseClicked
 
     private void lstOrdersValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstOrdersValueChanged
-
+        
 
     }//GEN-LAST:event_lstOrdersValueChanged
 
+    private void btnNewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewOrderActionPerformed
+        
+        order = new Order();
+        updateOrderTickets();
+        lblOrder.setText("DETALJI NARUDŽBE");
+        lblFirstName.setText("");
+        lblLastName.setText("");
+        lblAddress.setText("");
+        lblLocality.setText("");
+        lblEmail.setText("");
+        totalPrice = 0;
+        lblTotalPrice.setText(new DecimalFormat("#.00").format(totalPrice) + "kn");
+    }//GEN-LAST:event_btnNewOrderActionPerformed
+    
     public void applyTheme() {
         setBackground(Theme.color2);
         btnAdd.setBackground(Theme.color3);
         btnRemove.setBackground(Theme.color3);
-        btnConfirmLocation.setBackground(Theme.color3);
-        btnCancelLocation.setBackground(Theme.color3);
+        btnConfirm.setBackground(Theme.color3);
+        btnCancel.setBackground(Theme.color3);
         btnFindOrder.setBackground(Theme.color3);
         btnFinishOrder.setBackground(Theme.color3);
         btnViewOrders.setBackground(Theme.color3);
@@ -554,14 +601,15 @@ public class OrdersPanel extends javax.swing.JPanel {
         pnlOrdersUtilTitle.setBackground(Theme.color1);
         
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnCancelLocation;
-    private javax.swing.JButton btnConfirmLocation;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnConfirm;
     private javax.swing.JButton btnFindOrder;
     private javax.swing.JButton btnFinishOrder;
+    private javax.swing.JButton btnNewOrder;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnViewOrders;
     private javax.swing.JFrame frameOrdersUtil;
@@ -581,8 +629,8 @@ public class OrdersPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblFirstName;
     private javax.swing.JLabel lblLastName;
     private javax.swing.JLabel lblLocality;
-    private javax.swing.JLabel lblLocations;
     private javax.swing.JLabel lblOrder;
+    private javax.swing.JLabel lblOrders;
     private javax.swing.JLabel lblTitle8;
     private javax.swing.JLabel lblTitle9;
     private javax.swing.JLabel lblTotalPrice;

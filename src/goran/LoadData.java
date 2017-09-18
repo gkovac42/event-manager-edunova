@@ -69,7 +69,7 @@ public class LoadData {
             for (int j = 0; j < 3; j++) {
                 t = new Ticket();
                 t.setName(e.getName() + " ulaznica " + j);
-                t.setPrice(Math.random() * 100 + 1);
+                t.setPrice((double) Math.round(Math.random() * 100 + 1));
                 t.setQuantity((int) (Math.random() * 1000 + 1));
                 t.setEvent(e);
                 e.getTickets().add(t);
