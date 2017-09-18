@@ -8,7 +8,9 @@ package goran.view;
 import goran.controller.HibernateController;
 import goran.model.Order;
 import goran.model.Ticket;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -50,6 +52,8 @@ public class ReviewPanel extends javax.swing.JPanel {
     }
 
     public void updateOrders() {
+        
+        DateFormat df = new SimpleDateFormat("dd/MM/yy");
 
         DefaultTableModel model = (DefaultTableModel) tblOrders.getModel();
         model.setRowCount(0);
@@ -58,14 +62,14 @@ public class ReviewPanel extends javax.swing.JPanel {
         for (Order order : ctrlOrder.getOrderedList(order, "id")) {
 
             rowData[0] = order.getId();
-            rowData[1] = order.getDateCreated();
+            rowData[1] = df.format(order.getDateCreated());
             rowData[2] = order.getCustomer().toString();
             rowData[3] = new DecimalFormat("#.00").format(order.getTotalPrice());
             model.addRow(rowData);
         }
     }
 
-    public void findTickets() {
+    private void findTickets() {
 
         DefaultTableModel model = (DefaultTableModel) tblTickets.getModel();
         model.setRowCount(0);
@@ -80,7 +84,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         }
     }
 
-    public void findOrders() {
+    private void findOrders() {
         DefaultTableModel model = (DefaultTableModel) tblOrders.getModel();
         model.setRowCount(0);
         Object rowData[] = new Object[4];
@@ -266,6 +270,10 @@ public class ReviewPanel extends javax.swing.JPanel {
         tblTickets.setBackground(Theme.color4);
         tblTickets.setForeground(Theme.font1);
         txtFind.setForeground(Theme.font1);
+        btnOrders.setBackground(Theme.color3);
+        btnTickets.setBackground(Theme.color3);
+        tblOrders.setBackground(Theme.color4);
+        tblTickets.setForeground(Theme.font1);
 
     }
 

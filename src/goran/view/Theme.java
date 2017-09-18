@@ -23,15 +23,14 @@ public class Theme {
     public static Color font1 = new Color(255, 255, 255);
 
     // blue
-    public static void setLightTheme() {
-
-        color1 = new Color(50, 100, 160);
-        color2 = new Color(80, 160, 180);
-        color3 = new Color(40, 70, 120);
-        color4 = new Color(250, 250, 250);
-        font1 = new Color(0, 0, 0);
-    }
-
+//    public static void setLightTheme() {
+//
+//        color1 = new Color(50, 100, 160);
+//        color2 = new Color(80, 160, 180);
+//        color3 = new Color(40, 70, 120);
+//        color4 = new Color(250, 250, 250);
+//        font1 = new Color(0, 0, 0);
+//    }
     // black
     public static void setDarkTheme() {
 
@@ -43,12 +42,13 @@ public class Theme {
     }
 
     // green
-    /*public static void setLightTheme() {
-    
-    color1 = new Color(60, 110, 10);
-    color2 = new Color(90, 170, 40);
-    color3 = new Color(40, 90, 0);
-    color4 = new Color(250, 250, 250);
-    font1 = new Color(0, 0, 0);
-    }*/
+    public static void setLightTheme() {
+
+        color1 = new Color(60, 110, 10);
+        color2 = new Color(120, 170, 80);
+        color3 = new Color(50, 90, 20);
+        color4 = new Color(220, 220, 210);
+        font1 = new Color(60, 50, 40);
+
+    }
 }

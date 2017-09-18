@@ -13,6 +13,7 @@ import goran.model.Event;
 import goran.model.Location;
 import goran.model.Ticket;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
@@ -435,7 +436,7 @@ public class EventsPanel extends javax.swing.JPanel {
         frameDateUtil.setAlwaysOnTop(true);
         frameDateUtil.setUndecorated(true);
         frameDateUtil.setResizable(false);
-        frameDateUtil.setSize(new java.awt.Dimension(240, 230));
+        frameDateUtil.setSize(new java.awt.Dimension(230, 230));
         frameDateUtil.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlDateTimeUtil.setBackground(new java.awt.Color(60, 60, 70));
@@ -455,7 +456,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnConfirmDateTimeActionPerformed(evt);
             }
         });
-        pnlDateTimeUtil.add(btnConfirmDateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 100, 40));
+        pnlDateTimeUtil.add(btnConfirmDateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 100, 40));
 
         btnCancelDateTime.setBackground(new java.awt.Color(0, 0, 0));
         btnCancelDateTime.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -470,7 +471,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnCancelDateTimeActionPerformed(evt);
             }
         });
-        pnlDateTimeUtil.add(btnCancelDateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 100, 40));
+        pnlDateTimeUtil.add(btnCancelDateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 100, 40));
 
         lblDateTimeUtil1.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblDateTimeUtil1.setForeground(new java.awt.Color(255, 255, 255));
@@ -482,7 +483,7 @@ public class EventsPanel extends javax.swing.JPanel {
         lblDateTimeUtil2.setText("POČETAK");
         pnlDateTimeUtil.add(lblDateTimeUtil2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 120, 30));
 
-        frameDateUtil.getContentPane().add(pnlDateTimeUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 240, 190));
+        frameDateUtil.getContentPane().add(pnlDateTimeUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 230, 190));
 
         pnlDateTimeUtilTitle.setBackground(new java.awt.Color(30, 30, 40));
         pnlDateTimeUtilTitle.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -490,7 +491,7 @@ public class EventsPanel extends javax.swing.JPanel {
         lblDateTimeUtil.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         lblDateTimeUtil.setForeground(new java.awt.Color(255, 255, 255));
         lblDateTimeUtil.setText("DODAJ DATUM EVENTA");
-        pnlDateTimeUtilTitle.add(lblDateTimeUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 210, 40));
+        pnlDateTimeUtilTitle.add(lblDateTimeUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 200, 40));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_calendar.png"))); // NOI18N
@@ -1043,6 +1044,12 @@ public class EventsPanel extends javax.swing.JPanel {
         txtTicketName.setForeground(Theme.font1);
         txtTicketPrice.setForeground(Theme.font1);
         txtTicketQuantity.setForeground(Theme.font1);
+        
+        //Date Util
+        pnlDateTimeUtilTitle.setBackground(Theme.color1);
+        pnlDateTimeUtil.setBackground(Theme.color2);
+        btnConfirmDateTime.setBackground(Theme.color3);
+        btnCancelDateTime.setBackground(Theme.color3);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1118,8 +1125,11 @@ public class EventsPanel extends javax.swing.JPanel {
 
         startDatePicker = new DatePicker();
         startDatePicker.setLocale(new Locale("hr"));
+        startDatePicker.setDateToToday();
+        startDatePicker.getSettings().setDateRangeLimits(LocalDate.now(), LocalDate.MAX);
         endDatePicker = new DatePicker();
         endDatePicker.setLocale(new Locale("hr"));
+        endDatePicker.getSettings().setDateRangeLimits(LocalDate.now(), LocalDate.MAX);
         pnlDateTimeUtil.add(startDatePicker, new AbsoluteConstraints(10, 30));
         pnlDateTimeUtil.add(endDatePicker, new AbsoluteConstraints(10, 100));
         sdf = new SimpleDateFormat("MM.dd.yyyy");

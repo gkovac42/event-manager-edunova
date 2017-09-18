@@ -373,6 +373,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnlReview.applyTheme();
         pnlCustomers.applyTheme();
         pnlLocations.applyTheme();
+        pnlOrders.applyTheme();
         
     }
     

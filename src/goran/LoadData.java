@@ -33,7 +33,7 @@ public class LoadData {
 
     }
 
-    public void loadLocations() {
+    private void loadLocations() {
         
         Location l;
         
@@ -51,7 +51,7 @@ public class LoadData {
         }
     }
     
-    public void loadEventsTickets() {
+    private void loadEventsTickets() {
 
         Event e;
         Ticket t;
@@ -80,7 +80,7 @@ public class LoadData {
         }
     }
     
-    public void loadCustomersOrders() {
+    private void loadCustomersOrders() {
 
         Customer c;
         Order o;
