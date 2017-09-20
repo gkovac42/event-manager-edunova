@@ -349,8 +349,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGitActionPerformed
 
     private void btnOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdersActionPerformed
-        pnlOrders.updateTickets();
         pnlOrders.updateCustomers();
+        pnlOrders.updateTickets();
         setActivePanel(pnlOrders);
     }//GEN-LAST:event_btnOrdersActionPerformed
         

@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
  * @author Goran
  */
 @javax.persistence.Entity
-@javax.persistence.Table
+@javax.persistence.Table (name = "ticket_store")
 public class Ticket extends Entity implements Serializable {
 
     private String name;
@@ -74,7 +74,7 @@ public class Ticket extends Entity implements Serializable {
 
     public String getTotalPrice() {
         double totalPrice = this.getPrice() * this.getQuantity();
-        return new DecimalFormat("#.00").format(totalPrice);
+        return new DecimalFormat("#.00").format(totalPrice) + "kn";
     }
 
 }

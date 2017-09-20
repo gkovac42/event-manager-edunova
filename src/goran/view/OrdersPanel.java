@@ -9,15 +9,18 @@ import goran.controller.HibernateController;
 import goran.model.Order;
 import goran.model.Ticket;
 import goran.model.Customer;
+import goran.util.PdfMaker;
 import java.text.DecimalFormat;
+import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
 
 /**
  *
  * @author Goran
  */
 public class OrdersPanel extends javax.swing.JPanel {
-    
+
     private Order order;
     private Customer customer;
     private Ticket ticket;
@@ -25,57 +28,81 @@ public class OrdersPanel extends javax.swing.JPanel {
     private HibernateController<Customer> ctrlCustomer;
     private HibernateController<Ticket> ctrlTicket;
     private HibernateController<Order> ctrlOrder;
-    private double totalPrice;
-    
+
     public OrdersPanel() {
-        
+
         initComponents();
-        
+
         order = new Order();
         customer = new Customer();
         ticket = new Ticket();
         ctrlCustomer = new HibernateController<>();
         ctrlTicket = new HibernateController<>();
         ctrlOrder = new HibernateController<>();
-        totalPrice = 0;
-        
+
         updateCustomers();
         updateTickets();
     }
-    
+
     public void updateCustomers() {
-        
+
         DefaultListModel<Customer> model = new DefaultListModel<>();
         lstCustomers.setModel(model);
         for (Customer customer : ctrlCustomer.getOrderedList(customer, "lastName")) {
             model.addElement(customer);
         }
     }
-    
+
     public void updateTickets() {
-        
+
         DefaultListModel<Ticket> model = new DefaultListModel<>();
         lstTickets.setModel(model);
         for (Ticket ticket : ctrlTicket.getOrderedList(ticket, "name")) {
             model.addElement(ticket);
         }
+        lstTickets.repaint();
     }
-    
+
     private void updateOrderTickets() {
-        
+
         DefaultListModel<Ticket> model = new DefaultListModel<>();
         lstOrderTickets.setModel(model);
         for (Ticket ticket : order.getTickets()) {
             model.addElement(ticket);
         }
     }
-    
+
     private void updateOrders() {
+
         DefaultListModel<Order> model = new DefaultListModel<>();
         lstOrders.setModel(model);
-        for (Order order : ctrlOrder.getList(order)) {
+        for (Order order : ctrlOrder.getOrderedList(order, "id")) {
             model.addElement(order);
         }
+    }
+
+    private void calcTotalPrice() {
+
+        DefaultListModel<Ticket> model = (DefaultListModel<Ticket>) lstOrderTickets.getModel();
+        Double tp = 0.0;
+
+        for (int i = 0; i < model.getSize(); i++) {
+            tp += (model.get(i).getPrice() * model.get(i).getQuantity());
+        }
+
+        lblTotalPrice.setText(new DecimalFormat("#.00").format(tp) + "kn");
+    }
+
+    private Ticket getExistingTicket(Ticket ticket, List<Ticket> tickets) {
+
+        Ticket exTicket = null;
+        for (int i = 0; i < tickets.size(); i++) {
+            if (tickets.get(i).getName().equals(ticket.getName())) {
+                exTicket = tickets.get(i);
+                break;
+            }
+        }
+        return exTicket;
     }
 
     /**
@@ -410,58 +437,84 @@ public class OrdersPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        
+
         if (lstOrderTickets.getSelectedIndex() != -1) {
-            
+
             try {
-                ticket = lstTickets.getSelectedValue();
+
                 ordTicket = lstOrderTickets.getSelectedValue();
-                ticket.setQuantity(ticket.getQuantity() + ordTicket.getQuantity());
-                order.getTickets().remove(lstOrderTickets.getSelectedValue());
+
+                DefaultListModel<Ticket> m = (DefaultListModel) lstTickets.getModel();
+                Ticket t = null;
+                for (int i = 0; i < m.getSize(); i++) {
+                    if (m.get(i).getName().equals(ordTicket.getName())) {
+                        t = m.get(i);
+                        break;
+                    }
+                }
+                if (t == null) {
+                    return;
+                }
+
+                t.setQuantity(t.getQuantity() + ordTicket.getQuantity());
+
+                calcTotalPrice();
+                lstTickets.setSelectedValue(t, true);
+
+                ctrlTicket.save(t);
+                order.getTickets().remove(ordTicket);
+                ctrlTicket.delete(ordTicket);
+
                 updateOrderTickets();
-                updateTickets();
-                totalPrice -= ordTicket.getPrice() * ordTicket.getQuantity();
-                lblTotalPrice.setText(new DecimalFormat("#.00").format(totalPrice) + "kn");
-                lstTickets.setSelectedValue(ticket, true);
+                lstOrderTickets.repaint();
+                lstTickets.repaint();
+
             } catch (Exception e) {
             }
-            
+
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        
+
         if (lstTickets.getSelectedIndex() != -1 && lstCustomers.getSelectedIndex() != -1) {
-            
+
             ticket = lstTickets.getSelectedValue();
             ticket.setQuantity(ticket.getQuantity() - Integer.parseInt(txtQuantity.getText()));
-            ctrlTicket.save(ticket);
-            updateTickets();
+
+            lstTickets.repaint();
             lstTickets.setSelectedValue(ticket, true);
-            
-            ordTicket = new Ticket();
-            ordTicket.setName(ticket.getName());
-            ordTicket.setEvent(ticket.getEvent());
-            ordTicket.setPrice(ticket.getPrice());
-            ordTicket.setQuantity(Integer.parseInt(txtQuantity.getText()));
+
+            ordTicket = getExistingTicket(ticket, order.getTickets());
+
+            if (ordTicket == null) {
+                ordTicket = new Ticket();
+                ordTicket.setName(ticket.getName());
+                ordTicket.setEvent(ticket.getEvent());
+                ordTicket.setPrice(ticket.getPrice());
+                ordTicket.setQuantity(Integer.parseInt(txtQuantity.getText()));
+                order.getTickets().add(ordTicket);
+            } else {
+                ordTicket.setQuantity(ordTicket.getQuantity() + Integer.parseInt(txtQuantity.getText()));
+            }
             ordTicket.setDeleted(true);
-            ctrlTicket.save(ordTicket);
-            
             order.setCustomer(customer);
-            order.getTickets().add(ordTicket);
             updateOrderTickets();
-            
-            totalPrice += ordTicket.getPrice() * ordTicket.getQuantity();
-            lblTotalPrice.setText(new DecimalFormat("#.00").format(totalPrice) + "kn");
+
+            calcTotalPrice();
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnFinishOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishOrderActionPerformed
-        
+
+        ctrlTicket.save(ticket);
+        ctrlTicket.saveList(order.getTickets());
         ctrlOrder.save(order);
+        PdfMaker.createPdf(order);
         updateOrders();
-        
+
         order = new Order();
+        updateTickets();
         updateOrderTickets();
         lblOrder.setText("DETALJI NARUDŽBE");
         lblFirstName.setText("");
@@ -469,8 +522,8 @@ public class OrdersPanel extends javax.swing.JPanel {
         lblAddress.setText("");
         lblLocality.setText("");
         lblEmail.setText("");
-        totalPrice = 0;
-        lblTotalPrice.setText(new DecimalFormat("#.00").format(totalPrice) + "kn");
+        calcTotalPrice();
+        calcTotalPrice();
     }//GEN-LAST:event_btnFinishOrderActionPerformed
 
     private void lstCustomersValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCustomersValueChanged
@@ -503,13 +556,13 @@ public class OrdersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lstOrderTicketsValueChanged
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
-        
+
         try {
             order = lstOrders.getSelectedValue();
             lstCustomers.setSelectedValue(order.getCustomer(), true);
             updateOrderTickets();
             lblOrder.setText("DETALJI NARUDŽBE #" + order.getId());
-            totalPrice = order.getTotalPrice();
+            calcTotalPrice();
             frameOrdersUtil.dispose();
         } catch (Exception e) {
         }
@@ -517,18 +570,18 @@ public class OrdersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        
+
         frameOrdersUtil.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnFindOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindOrderActionPerformed
-        
+
         if (txtFindOrder.getText().equals("")) {
-            
+
             updateOrders();
-            
+
         } else {
-            
+
             DefaultListModel<Order> model = new DefaultListModel<>();
             lstOrders.setModel(model);
             for (Order order : ctrlOrder.find(order, "id", txtFindOrder.getText())) {
@@ -544,38 +597,48 @@ public class OrdersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnViewOrdersActionPerformed
 
     private void lstOrdersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstOrdersMouseClicked
-        
+
         if (evt.getClickCount() == 2) {
-            
+
             order = lstOrders.getSelectedValue();
             lstCustomers.setSelectedValue(order.getCustomer(), true);
             updateOrderTickets();
             lblOrder.setText("DETALJI NARUDŽBE #" + order.getId());
-            totalPrice = order.getTotalPrice();
-            lblTotalPrice.setText(new DecimalFormat("#.00").format(totalPrice) + "kn");
+            calcTotalPrice();
             frameOrdersUtil.dispose();
         }
     }//GEN-LAST:event_lstOrdersMouseClicked
 
     private void lstOrdersValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstOrdersValueChanged
-        
+
 
     }//GEN-LAST:event_lstOrdersValueChanged
 
     private void btnNewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewOrderActionPerformed
-        
+
+        DefaultListModel<Ticket> model = (DefaultListModel) lstTickets.getModel();
+
+        for (Ticket t : order.getTickets()) {
+            for (int i = 0; i < model.getSize(); i++) {
+                if (t.getName().equals(model.get(i).getName())) {
+                    model.get(i).setQuantity(model.get(i).getQuantity() + t.getQuantity());
+                    break;
+                }
+            }
+        }
+
         order = new Order();
         updateOrderTickets();
+        updateTickets();
         lblOrder.setText("DETALJI NARUDŽBE");
         lblFirstName.setText("");
         lblLastName.setText("");
         lblAddress.setText("");
         lblLocality.setText("");
         lblEmail.setText("");
-        totalPrice = 0;
-        lblTotalPrice.setText(new DecimalFormat("#.00").format(totalPrice) + "kn");
+        calcTotalPrice();
     }//GEN-LAST:event_btnNewOrderActionPerformed
-    
+
     public void applyTheme() {
         setBackground(Theme.color2);
         btnAdd.setBackground(Theme.color3);
@@ -599,7 +662,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         txtQuantity.setForeground(Theme.font1);
         pnlOrdersUtilMain.setBackground(Theme.color2);
         pnlOrdersUtilTitle.setBackground(Theme.color1);
-        
+
     }
 
 

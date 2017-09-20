@@ -29,6 +29,10 @@ public class CustomersPanel extends javax.swing.JPanel {
         updateCustomers();
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+    
     private void updateCustomers() {
 
         DefaultTableModel model = (DefaultTableModel) tblCustomers.getModel();
@@ -427,7 +431,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditCustomerActionPerformed
 
     private void btnReviewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewOrdersActionPerformed
-          
+        
     }//GEN-LAST:event_btnReviewOrdersActionPerformed
 
     private void btnRemoveCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveCustomerActionPerformed

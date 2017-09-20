@@ -5,7 +5,7 @@
 <hibernate-configuration>
  <session-factory>  
     <!-- 
-    create database database_name character set utf8 collate utf8_general_ci;
+    create database event_manager_db character set utf8 collate utf8_general_ci;
     --> 
     <property name="connection.url">jdbc:mysql://localhost:3306/event_manager_db</property>
     <property name="connection.username">root</property>
@@ -21,7 +21,7 @@
     <!--  
     1. puta create, poslije update
     -->
-    <property name="hbm2ddl.auto">create</property>
+    <property name="hbm2ddl.auto">update</property>
     <property name="connection.pool_size">1</property>
     <property name="current_session_context_class">thread</property>
 

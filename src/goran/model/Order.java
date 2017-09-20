@@ -7,6 +7,7 @@ package goran.model;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +47,12 @@ public class Order extends goran.model.Entity implements Serializable {
         this.tickets = tickets;
     }
 
-    public double getTotalPrice() {
+    public String getTotalPrice() {
         double totalPrice = 0;
         for (Ticket ticket : tickets) {
             totalPrice += ticket.getPrice() * ticket.getQuantity();
         }
-        return totalPrice;
+        return new DecimalFormat("#.00").format(totalPrice) + "kn";
     }
 
     @Override

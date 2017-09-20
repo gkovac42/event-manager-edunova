@@ -64,7 +64,7 @@ public class ReviewPanel extends javax.swing.JPanel {
             rowData[0] = order.getId();
             rowData[1] = df.format(order.getDateCreated());
             rowData[2] = order.getCustomer().toString();
-            rowData[3] = new DecimalFormat("#.00").format(order.getTotalPrice());
+            rowData[3] = order.getTotalPrice();
             model.addRow(rowData);
         }
     }
