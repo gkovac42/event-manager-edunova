@@ -353,7 +353,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnlOrders.updateTickets();
         setActivePanel(pnlOrders);
     }//GEN-LAST:event_btnOrdersActionPerformed
-        
+     
     private void applyTheme() {
 
         pnlTitle.setBackground(Theme.color1);
@@ -376,6 +376,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnlOrders.applyTheme();
         
     }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCustomers;

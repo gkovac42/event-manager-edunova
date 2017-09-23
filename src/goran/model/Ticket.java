@@ -69,12 +69,12 @@ public class Ticket extends Entity implements Serializable {
 
     @Override
     public String toString() {
-        return name + " - " + new DecimalFormat("#.00").format(price) + "kn" + " - " + quantity + " kom.";
+        return this.name + " - " + price + "kn" + " - " + this.quantity + " kom.";
     }
 
-    public String getTotalPrice() {
+    public double getTotalPrice() {
         double totalPrice = this.getPrice() * this.getQuantity();
-        return new DecimalFormat("#.00").format(totalPrice) + "kn";
+        return totalPrice;
     }
 
 }

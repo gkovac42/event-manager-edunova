@@ -43,7 +43,7 @@ public class ReviewPanel extends javax.swing.JPanel {
 
         for (Ticket ticket : ctrlTicket.getOrderedList(ticket, "name")) {
             rowData[0] = ticket.getName();
-            rowData[1] = new DecimalFormat("#.00").format(ticket.getPrice());
+            rowData[1] = ticket.getPrice() + "kn";
             rowData[2] = ticket.getQuantity();
             rowData[3] = ticket.getEvent();
             model.addRow(rowData);

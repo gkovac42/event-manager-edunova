@@ -717,6 +717,10 @@ public class EventsPanel extends javax.swing.JPanel {
         if (lstEvents.getSelectedIndex() == -1) {
 
         } else {
+            
+            for (Ticket t : event.getTickets()) {
+                ctrlTicket.delete(t);
+            }
 
             ctrlEvent.delete(event);
             updateEvents();

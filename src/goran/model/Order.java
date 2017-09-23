@@ -57,7 +57,7 @@ public class Order extends goran.model.Entity implements Serializable {
 
     @Override
     public String toString() {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         return "Narudžba #" + this.getId().toString() + " od " + df.format(this.getDateCreated());
     }
     

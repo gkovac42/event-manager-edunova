@@ -33,7 +33,6 @@ public class HibernateController<T extends Entity> {
         }
         entity.setDateModified(currentDate);
         session.beginTransaction();
-        System.out.println(entity.hashCode());
         session.saveOrUpdate(entity);
         session.getTransaction().commit();
         return entity;
@@ -44,6 +43,12 @@ public class HibernateController<T extends Entity> {
         entity.setDeleted(true);
         save(entity);
     }
+    
+    public void permDelete (T entity) {
+        session.beginTransaction();
+        session.delete(entity);
+        session.getTransaction().commit();
+}
 
     public List<T> saveList(List<T> list) {
         
