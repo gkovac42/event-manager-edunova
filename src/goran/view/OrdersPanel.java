@@ -493,17 +493,23 @@ public class OrdersPanel extends javax.swing.JPanel {
 
     private void btnFinishOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishOrderActionPerformed
 
-        order.setCustomer(customer);
-        ctrlTicket.save(ticket);
-        ctrlTicket.saveList(order.getTickets());
-        ctrlOrder.save(order);
-        PdfMaker.createPdf(order);
-        updateOrders();
+        Thread t = new Thread(() -> {
 
-        order = new Order();
-        cmbCustomer.setSelectedIndex(0);
-        updateOrderTickets();
-        calcTotalPrice();
+            order.setCustomer(customer);
+            ctrlTicket.save(ticket);
+            ctrlTicket.saveList(order.getTickets());
+            ctrlOrder.save(order);
+            PdfMaker.createPdf(order);
+            updateOrders();
+
+            order = new Order();
+            cmbCustomer.setSelectedIndex(0);
+            updateOrderTickets();
+            calcTotalPrice();
+
+        });
+        t.start();
+
     }//GEN-LAST:event_btnFinishOrderActionPerformed
 
     private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
@@ -554,25 +560,27 @@ public class OrdersPanel extends javax.swing.JPanel {
 
     private void btnNewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewOrderActionPerformed
 
-        if (lblOrder.getText().equals("NOVA NARUDŽBA")) {
-            DefaultListModel<Ticket> model = (DefaultListModel) lstTickets.getModel();
+        Thread t = new Thread(() -> {
 
-            for (Ticket t : order.getTickets()) {
-                for (int i = 0; i < model.getSize(); i++) {
-                    if (t.getName().equals(model.get(i).getName())) {
-                        model.get(i).setQuantity(model.get(i).getQuantity() + t.getQuantity());
-                        ctrlTicket.save(model.get(i));
-                        break;
+            if (lblOrder.getText().equals("NOVA NARUDŽBA")) {
+                DefaultListModel<Ticket> model = (DefaultListModel) lstTickets.getModel();
+                for (Ticket t1 : order.getTickets()) {
+                    for (int i = 0; i < model.getSize(); i++) {
+                        if (t1.getName().equals(model.get(i).getName())) {
+                            model.get(i).setQuantity(model.get(i).getQuantity() + t1.getQuantity());
+                            ctrlTicket.save(model.get(i));
+                            break;
+                        }
                     }
                 }
             }
-        }
-
-        updateOrders();
-        order = new Order();
-        updateOrderTickets();
-        lstTickets.repaint();
-        calcTotalPrice();
+            updateOrders();
+            order = new Order();
+            updateOrderTickets();
+            lstTickets.repaint();
+            calcTotalPrice();
+        });
+        t.start();
     }//GEN-LAST:event_btnNewOrderActionPerformed
 
     private void txtFindCustomerbtnFindCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindCustomerbtnFindCustomerActionPerformed
