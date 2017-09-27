@@ -8,6 +8,7 @@ package goran.view;
 import goran.controller.HibernateController;
 import goran.model.Order;
 import goran.model.Ticket;
+import goran.util.ExcelMaker;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -52,8 +53,8 @@ public class ReviewPanel extends javax.swing.JPanel {
     }
 
     public void updateOrders() {
-        
-        DateFormat df = new SimpleDateFormat("dd/MM/yy");
+
+        DateFormat df = new SimpleDateFormat("dd.MM.yy");
 
         DefaultTableModel model = (DefaultTableModel) tblOrders.getModel();
         model.setRowCount(0);
@@ -114,6 +115,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         btnTickets = new javax.swing.JButton();
         paneOrders = new javax.swing.JScrollPane();
         tblOrders = new javax.swing.JTable();
+        btnExportToExcel = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(60, 60, 70));
         setMinimumSize(new java.awt.Dimension(700, 500));
@@ -230,6 +232,21 @@ public class ReviewPanel extends javax.swing.JPanel {
         paneOrders.setViewportView(tblOrders);
 
         add(paneOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 380));
+
+        btnExportToExcel.setBackground(new java.awt.Color(0, 0, 0));
+        btnExportToExcel.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnExportToExcel.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportToExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/title_add_event.png"))); // NOI18N
+        btnExportToExcel.setText("EXCEL");
+        btnExportToExcel.setBorder(null);
+        btnExportToExcel.setFocusPainted(false);
+        btnExportToExcel.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnExportToExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportToExcelActionPerformed(evt);
+            }
+        });
+        add(btnExportToExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 450, 110, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
@@ -262,6 +279,12 @@ public class ReviewPanel extends javax.swing.JPanel {
         paneTickets.setVisible(true);
     }//GEN-LAST:event_btnTicketsActionPerformed
 
+    private void btnExportToExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportToExcelActionPerformed
+        if (paneTickets.isVisible()) {
+            ExcelMaker.ticketsToExcel(ctrlTicket.getOrderedList(ticket, "name"));
+        } else ExcelMaker.ordersToExcel(ctrlOrder.getList(order));
+    }//GEN-LAST:event_btnExportToExcelActionPerformed
+
     public void applyTheme() {
 
         setBackground(Theme.color2);
@@ -278,6 +301,7 @@ public class ReviewPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExportToExcel;
     private javax.swing.JButton btnFind;
     private javax.swing.JButton btnOrders;
     private javax.swing.JButton btnTickets;

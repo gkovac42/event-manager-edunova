@@ -6,8 +6,9 @@
 package goran.view;
 
 import goran.controller.HibernateController;
-import goran.util.StringUtil;
+import goran.util.TxtUtil;
 import goran.model.Customer;
+import goran.util.ExcelMaker;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -115,11 +116,11 @@ public class CustomersPanel extends javax.swing.JPanel {
         btnFindCustomer = new javax.swing.JButton();
         btnAddCustomer = new javax.swing.JButton();
         btnEditCustomer = new javax.swing.JButton();
-        btnReviewOrders = new javax.swing.JButton();
         btnRemoveCustomer = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblCustomers = new javax.swing.JTable();
         cmbFindBy = new javax.swing.JComboBox<>();
+        btnExportToExcel = new javax.swing.JButton();
 
         frameCustomersUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameCustomersUtil.setAlwaysOnTop(true);
@@ -318,21 +319,6 @@ public class CustomersPanel extends javax.swing.JPanel {
         });
         add(btnEditCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 450, 100, 40));
 
-        btnReviewOrders.setBackground(new java.awt.Color(0, 0, 0));
-        btnReviewOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnReviewOrders.setForeground(new java.awt.Color(255, 255, 255));
-        btnReviewOrders.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/menu_tickets.png"))); // NOI18N
-        btnReviewOrders.setText("NARUČI");
-        btnReviewOrders.setBorder(null);
-        btnReviewOrders.setFocusPainted(false);
-        btnReviewOrders.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnReviewOrders.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReviewOrdersActionPerformed(evt);
-            }
-        });
-        add(btnReviewOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 350, 40));
-
         btnRemoveCustomer.setBackground(new java.awt.Color(0, 0, 0));
         btnRemoveCustomer.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnRemoveCustomer.setForeground(new java.awt.Color(255, 255, 255));
@@ -386,6 +372,21 @@ public class CustomersPanel extends javax.swing.JPanel {
             }
         });
         add(cmbFindBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 110, 40));
+
+        btnExportToExcel.setBackground(new java.awt.Color(0, 0, 0));
+        btnExportToExcel.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnExportToExcel.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportToExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/title_add_event.png"))); // NOI18N
+        btnExportToExcel.setText("EXCEL");
+        btnExportToExcel.setBorder(null);
+        btnExportToExcel.setFocusPainted(false);
+        btnExportToExcel.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnExportToExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportToExcelActionPerformed(evt);
+            }
+        });
+        add(btnExportToExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 450, 110, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindCustomerActionPerformed
@@ -399,7 +400,7 @@ public class CustomersPanel extends javax.swing.JPanel {
 
     private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
 
-        lblCustomersUtil.setText(StringUtil.ADD_CUSTOMER);
+        lblCustomersUtil.setText(TxtUtil.ADD_CUSTOMER);
         txtFirstName.setText("");
         txtLastName.setText("");
         txtEmail.setText("");
@@ -416,7 +417,7 @@ public class CustomersPanel extends javax.swing.JPanel {
 
             customer = ctrlCustomer.getList(customer).get(tblCustomers.convertRowIndexToModel(tblCustomers.getSelectedRow()));
 
-            lblCustomersUtil.setText(StringUtil.EDIT_CUSTOMER);
+            lblCustomersUtil.setText(TxtUtil.EDIT_CUSTOMER);
             txtFirstName.setText(customer.getFirstName());
             txtLastName.setText(customer.getLastName());
             txtEmail.setText(customer.getEmail());
@@ -429,10 +430,6 @@ public class CustomersPanel extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnEditCustomerActionPerformed
-
-    private void btnReviewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewOrdersActionPerformed
-        
-    }//GEN-LAST:event_btnReviewOrdersActionPerformed
 
     private void btnRemoveCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveCustomerActionPerformed
 
@@ -452,7 +449,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         if (txtFirstName.getText().equals("") || txtLastName.getText().equals("") || txtEmail.getText().equals("")
                 || txtAddress.getText().equals("") || txtLocality.getText().equals("")) {
 
-            lblError.setText(StringUtil.INPUT_ERROR);
+            lblError.setText(TxtUtil.INPUT_ERROR);
 
         } else {
 
@@ -480,13 +477,16 @@ public class CustomersPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbFindByActionPerformed
 
+    private void btnExportToExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportToExcelActionPerformed
+        ExcelMaker.customersToExcel(ctrlCustomer.getOrderedList(customer, "LastName"));
+    }//GEN-LAST:event_btnExportToExcelActionPerformed
+
     public void applyTheme() {
 
         setBackground(Theme.color2);
         btnAddCustomer.setBackground(Theme.color3);
         btnRemoveCustomer.setBackground(Theme.color3);
         btnEditCustomer.setBackground(Theme.color3);
-        btnReviewOrders.setBackground(Theme.color3);
         btnFindCustomer.setBackground(Theme.color3);
         txtFindCustomer.setBackground(Theme.color4);
         tblCustomers.setBackground(Theme.color4);
@@ -513,9 +513,9 @@ public class CustomersPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnConfirm;
     private javax.swing.JButton btnEditCustomer;
+    private javax.swing.JButton btnExportToExcel;
     private javax.swing.JButton btnFindCustomer;
     private javax.swing.JButton btnRemoveCustomer;
-    private javax.swing.JButton btnReviewOrders;
     private javax.swing.JComboBox<String> cmbFindBy;
     private javax.swing.JFrame frameCustomersUtil;
     private javax.swing.JLabel jLabel1;

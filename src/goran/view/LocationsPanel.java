@@ -5,14 +5,11 @@
  */
 package goran.view;
 
-import goran.util.StringUtil;
+import goran.util.TxtUtil;
 import goran.controller.GoogleMapsController;
 import goran.controller.HibernateController;
 import goran.model.Location;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.DefaultListModel;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -24,22 +21,25 @@ public class LocationsPanel extends javax.swing.JPanel {
     private HibernateController<Location> hc;
     private GoogleMapsController mapControl;
     private int mapZoom;
+    private String orderedBy;
 
     public LocationsPanel() {
 
         initComponents();
+        lstLocations.setComponentPopupMenu(locationsMenu);
         location = new Location();
         hc = new HibernateController<>();
         mapControl = new GoogleMapsController();
+        orderedBy = "name";
         mapZoom = 16;
-        updateLocations();
+        updateLocations(orderedBy);
     }
 
-    private void updateLocations() {
+    private void updateLocations(String orderBy) {
 
         DefaultListModel<Location> model = new DefaultListModel<>();
         lstLocations.setModel(model);
-        for (Location location : hc.getList(location)) {
+        for (Location location : hc.getOrderedList(location, orderBy)) {
             model.addElement(location);
         }
     }
@@ -51,7 +51,10 @@ public class LocationsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        popupMenu1 = new java.awt.PopupMenu();
+        locationsMenu = new javax.swing.JPopupMenu();
+        mnuName = new javax.swing.JMenuItem();
+        mnuLocality = new javax.swing.JMenuItem();
+        mnuCountry = new javax.swing.JMenuItem();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstLocations = new javax.swing.JList<>();
         txtLocationName = new javax.swing.JTextField();
@@ -72,7 +75,35 @@ public class LocationsPanel extends javax.swing.JPanel {
         lblError = new javax.swing.JLabel();
         lblTitle6 = new javax.swing.JLabel();
 
-        popupMenu1.setLabel("popupMenu1");
+        locationsMenu.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        locationsMenu.setToolTipText("");
+
+        mnuName.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mnuName.setText("po nazivu");
+        mnuName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuNameActionPerformed(evt);
+            }
+        });
+        locationsMenu.add(mnuName);
+
+        mnuLocality.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mnuLocality.setText("po mjestu");
+        mnuLocality.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuLocalityActionPerformed(evt);
+            }
+        });
+        locationsMenu.add(mnuLocality);
+
+        mnuCountry.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mnuCountry.setText("po državi");
+        mnuCountry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCountryActionPerformed(evt);
+            }
+        });
+        locationsMenu.add(mnuCountry);
 
         setBackground(new java.awt.Color(60, 60, 70));
         setMinimumSize(new java.awt.Dimension(700, 500));
@@ -82,6 +113,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         lstLocations.setBackground(new java.awt.Color(120, 120, 120));
         lstLocations.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstLocations.setForeground(new java.awt.Color(255, 255, 255));
+        lstLocations.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstLocations.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstLocationsValueChanged(evt);
@@ -328,7 +360,7 @@ public class LocationsPanel extends javax.swing.JPanel {
                 || txtLocationLocality.getText().equals("")
                 || txtLocationCountry.getText().equals("")) {
 
-            lblError.setText(StringUtil.INPUT_ERROR);
+            lblError.setText(TxtUtil.INPUT_ERROR);
 
         } else {
 
@@ -338,7 +370,7 @@ public class LocationsPanel extends javax.swing.JPanel {
             location.setCountry(txtLocationCountry.getText());
 
             hc.save(location);
-            updateLocations();
+            updateLocations(orderedBy);
             lblError.setText("");
             location = new Location();
         }
@@ -355,7 +387,7 @@ public class LocationsPanel extends javax.swing.JPanel {
                     || txtLocationLocality.getText().equals("")
                     || txtLocationCountry.getText().equals("")) {
 
-                lblError.setText(StringUtil.INPUT_ERROR);
+                lblError.setText(TxtUtil.INPUT_ERROR);
 
             } else {
 
@@ -365,7 +397,7 @@ public class LocationsPanel extends javax.swing.JPanel {
                 location.setCountry(txtLocationCountry.getText());
 
                 hc.save(location);
-                updateLocations();
+                updateLocations(orderedBy);
                 lblError.setText("");
                 location = new Location();
             }
@@ -385,7 +417,7 @@ public class LocationsPanel extends javax.swing.JPanel {
             txtLocationCountry.setText("");
 
             lblMap.setIcon(null);
-            updateLocations();
+            updateLocations(orderedBy);
             lblError.setText("");
             location = new Location();
 
@@ -395,7 +427,7 @@ public class LocationsPanel extends javax.swing.JPanel {
     private void btnNewLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewLocationActionPerformed
 
         lstLocations.setSelectedIndex(-1);
-        
+
         txtLocationName.setText("");
         txtLocationAddress.setText("");
         txtLocationLocality.setText("");
@@ -405,6 +437,21 @@ public class LocationsPanel extends javax.swing.JPanel {
         lblMap.setIcon(null);
         location = new Location();
     }//GEN-LAST:event_btnNewLocationActionPerformed
+
+    private void mnuNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuNameActionPerformed
+        orderedBy = "name";
+        updateLocations(orderedBy);
+    }//GEN-LAST:event_mnuNameActionPerformed
+
+    private void mnuLocalityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLocalityActionPerformed
+        orderedBy = "locality";
+        updateLocations(orderedBy);
+    }//GEN-LAST:event_mnuLocalityActionPerformed
+
+    private void mnuCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCountryActionPerformed
+        orderedBy = "country";
+        updateLocations(orderedBy);
+    }//GEN-LAST:event_mnuCountryActionPerformed
 
     public void applyTheme() {
 
@@ -440,13 +487,15 @@ public class LocationsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle2;
     private javax.swing.JLabel lblTitle4;
     private javax.swing.JLabel lblTitle6;
+    private javax.swing.JPopupMenu locationsMenu;
     private javax.swing.JList<Location> lstLocations;
-    private java.awt.PopupMenu popupMenu1;
+    private javax.swing.JMenuItem mnuCountry;
+    private javax.swing.JMenuItem mnuLocality;
+    private javax.swing.JMenuItem mnuName;
     private javax.swing.JTextField txtLocationAddress;
     private javax.swing.JTextField txtLocationCountry;
     private javax.swing.JTextField txtLocationLocality;
     private javax.swing.JTextField txtLocationName;
     // End of variables declaration//GEN-END:variables
 
-   
 }

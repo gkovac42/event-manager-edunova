@@ -15,12 +15,7 @@ import java.text.DecimalFormat;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.font.encoding.Encoding;
 
 /**
  *
@@ -41,7 +36,6 @@ public class PdfMaker {
             document.addPage(page);
             PDType0Font font = PDType0Font.load(document, new File("ARIALUNI.ttf"));
             
-
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
             contentStream.beginText();
             contentStream.setFont(font, fontSize);

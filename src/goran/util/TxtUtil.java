@@ -9,7 +9,7 @@ package goran.util;
  *
  * @author Goran
  */
-public class StringUtil {
+public class TxtUtil {
     
     public static final String ADD_CUSTOMER = "DODAJ NOVOG KORISNIKA";
     public static final String EDIT_CUSTOMER = "UREDI KORISNIKA";
