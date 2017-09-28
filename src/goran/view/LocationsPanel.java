@@ -114,6 +114,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         lstLocations.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstLocations.setForeground(new java.awt.Color(255, 255, 255));
         lstLocations.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstLocations.setFocusable(false);
         lstLocations.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstLocationsValueChanged(evt);
@@ -184,6 +185,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         btnZoomOut.setBorderPainted(false);
         btnZoomOut.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         btnZoomOut.setIconTextGap(0);
+        btnZoomOut.setOpaque(false);
         btnZoomOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnZoomOutActionPerformed(evt);
@@ -199,6 +201,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         btnZoomIn.setBorderPainted(false);
         btnZoomIn.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         btnZoomIn.setIconTextGap(0);
+        btnZoomIn.setOpaque(false);
         btnZoomIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnZoomInActionPerformed(evt);
@@ -248,7 +251,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         btnNewLocation.setBackground(new java.awt.Color(0, 0, 0));
         btnNewLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnNewLocation.setForeground(new java.awt.Color(255, 255, 255));
-        btnNewLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_cancel.png"))); // NOI18N
+        btnNewLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_new.png"))); // NOI18N
         btnNewLocation.setBorder(null);
         btnNewLocation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

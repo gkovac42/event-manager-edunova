@@ -15,11 +15,11 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    private EventsPanel pnlEvents;
-    private ReviewPanel pnlReview;
-    private CustomersPanel pnlCustomers;
-    private LocationsPanel pnlLocations;
-    private OrdersPanel pnlOrders;
+    public static EventsPanel pnlEvents;
+    public static ReviewPanel pnlReview;
+    public static CustomersPanel pnlCustomers;
+    public static LocationsPanel pnlLocations;
+    public static OrdersPanel pnlOrders;
     private AbsoluteConstraints panelPosition;
     
     private int theme = Theme.DARK;
@@ -254,7 +254,7 @@ public class MainFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-   private void setActivePanel(JPanel panel) {
+   public static void setActivePanel(JPanel panel) {
 
         pnlEvents.setVisible(false);
         pnlReview.setVisible(false);
@@ -265,7 +265,8 @@ public class MainFrame extends javax.swing.JFrame {
         panel.setVisible(true);
 
     }
-        
+   
+       
     private void btnReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewActionPerformed
         pnlReview.updateTickets();
         pnlReview.updateOrders();

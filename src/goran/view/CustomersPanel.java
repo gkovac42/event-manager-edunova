@@ -31,7 +31,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     }
 
     public Customer getCustomer() {
-        return customer;
+        return ctrlCustomer.getList(customer).get(tblCustomers.convertRowIndexToModel(tblCustomers.getSelectedRow()));
     }
     
     private void updateCustomers() {
@@ -121,6 +121,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         tblCustomers = new javax.swing.JTable();
         cmbFindBy = new javax.swing.JComboBox<>();
         btnExportToExcel = new javax.swing.JButton();
+        btnOrder = new javax.swing.JButton();
 
         frameCustomersUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameCustomersUtil.setAlwaysOnTop(true);
@@ -376,7 +377,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         btnExportToExcel.setBackground(new java.awt.Color(0, 0, 0));
         btnExportToExcel.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnExportToExcel.setForeground(new java.awt.Color(255, 255, 255));
-        btnExportToExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/title_add_event.png"))); // NOI18N
+        btnExportToExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_save.png"))); // NOI18N
         btnExportToExcel.setText("EXCEL");
         btnExportToExcel.setBorder(null);
         btnExportToExcel.setFocusPainted(false);
@@ -386,7 +387,22 @@ public class CustomersPanel extends javax.swing.JPanel {
                 btnExportToExcelActionPerformed(evt);
             }
         });
-        add(btnExportToExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 450, 110, 40));
+        add(btnExportToExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 110, 40));
+
+        btnOrder.setBackground(new java.awt.Color(0, 0, 0));
+        btnOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnOrder.setForeground(new java.awt.Color(255, 255, 255));
+        btnOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_orders.png"))); // NOI18N
+        btnOrder.setText("NARUČI");
+        btnOrder.setBorder(null);
+        btnOrder.setFocusPainted(false);
+        btnOrder.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrderActionPerformed(evt);
+            }
+        });
+        add(btnOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 450, 160, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindCustomerActionPerformed
@@ -481,6 +497,12 @@ public class CustomersPanel extends javax.swing.JPanel {
         ExcelMaker.customersToExcel(ctrlCustomer.getOrderedList(customer, "LastName"));
     }//GEN-LAST:event_btnExportToExcelActionPerformed
 
+    private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
+        
+        MainFrame.pnlOrders.jumpToCustomer(getCustomer());
+        MainFrame.setActivePanel(MainFrame.pnlOrders);
+    }//GEN-LAST:event_btnOrderActionPerformed
+
     public void applyTheme() {
 
         setBackground(Theme.color2);
@@ -515,6 +537,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnEditCustomer;
     private javax.swing.JButton btnExportToExcel;
     private javax.swing.JButton btnFindCustomer;
+    private javax.swing.JButton btnOrder;
     private javax.swing.JButton btnRemoveCustomer;
     private javax.swing.JComboBox<String> cmbFindBy;
     private javax.swing.JFrame frameCustomersUtil;

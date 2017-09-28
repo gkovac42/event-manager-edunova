@@ -10,7 +10,6 @@ import goran.model.Order;
 import goran.model.Ticket;
 import goran.util.ExcelMaker;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,6 +35,16 @@ public class ReviewPanel extends javax.swing.JPanel {
         updateOrders();
     }
 
+    public Order getOrder() {
+        order = ctrlOrder.getList(order).get(tblOrders.convertRowIndexToModel(tblOrders.getSelectedRow()));
+        return order;
+    }
+
+    public Ticket getTicket() {
+        ticket = ctrlTicket.getOrderedList(ticket, "name").get(tblTickets.convertRowIndexToModel(tblTickets.getSelectedRow()));
+        return ticket;
+    }
+
     public void updateTickets() {
 
         DefaultTableModel model = (DefaultTableModel) tblTickets.getModel();
@@ -49,6 +58,7 @@ public class ReviewPanel extends javax.swing.JPanel {
             rowData[3] = ticket.getEvent();
             model.addRow(rowData);
         }
+        tblTickets.repaint();
 
     }
 
@@ -116,6 +126,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         paneOrders = new javax.swing.JScrollPane();
         tblOrders = new javax.swing.JTable();
         btnExportToExcel = new javax.swing.JButton();
+        btnExportToExcel1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(60, 60, 70));
         setMinimumSize(new java.awt.Dimension(700, 500));
@@ -146,6 +157,11 @@ public class ReviewPanel extends javax.swing.JPanel {
         tblTickets.setRowHeight(24);
         tblTickets.getColumnModel().getColumn(0).setPreferredWidth(250);
         tblTickets.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tblTickets.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTicketsMouseClicked(evt);
+            }
+        });
         paneTickets.setViewportView(tblTickets);
 
         add(paneTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 380));
@@ -178,7 +194,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         btnOrders.setBackground(new java.awt.Color(0, 0, 0));
         btnOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnOrders.setForeground(new java.awt.Color(255, 255, 255));
-        btnOrders.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/title_add_event.png"))); // NOI18N
+        btnOrders.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_orders.png"))); // NOI18N
         btnOrders.setText("NARUDŽBE");
         btnOrders.setBorder(null);
         btnOrders.setFocusPainted(false);
@@ -193,7 +209,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         btnTickets.setBackground(new java.awt.Color(0, 0, 0));
         btnTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnTickets.setForeground(new java.awt.Color(255, 255, 255));
-        btnTickets.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/title_add_ticket.png"))); // NOI18N
+        btnTickets.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_tickets.png"))); // NOI18N
         btnTickets.setText("ULAZNICE");
         btnTickets.setBorder(null);
         btnTickets.setFocusPainted(false);
@@ -236,7 +252,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         btnExportToExcel.setBackground(new java.awt.Color(0, 0, 0));
         btnExportToExcel.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnExportToExcel.setForeground(new java.awt.Color(255, 255, 255));
-        btnExportToExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/title_add_event.png"))); // NOI18N
+        btnExportToExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_save.png"))); // NOI18N
         btnExportToExcel.setText("EXCEL");
         btnExportToExcel.setBorder(null);
         btnExportToExcel.setFocusPainted(false);
@@ -247,6 +263,21 @@ public class ReviewPanel extends javax.swing.JPanel {
             }
         });
         add(btnExportToExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 450, 110, 40));
+
+        btnExportToExcel1.setBackground(new java.awt.Color(0, 0, 0));
+        btnExportToExcel1.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnExportToExcel1.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportToExcel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_jump_to.png"))); // NOI18N
+        btnExportToExcel1.setText("PREGLEDAJ");
+        btnExportToExcel1.setBorder(null);
+        btnExportToExcel1.setFocusPainted(false);
+        btnExportToExcel1.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnExportToExcel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportToExcel1ActionPerformed(evt);
+            }
+        });
+        add(btnExportToExcel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 450, 140, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
@@ -282,8 +313,27 @@ public class ReviewPanel extends javax.swing.JPanel {
     private void btnExportToExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportToExcelActionPerformed
         if (paneTickets.isVisible()) {
             ExcelMaker.ticketsToExcel(ctrlTicket.getOrderedList(ticket, "name"));
-        } else ExcelMaker.ordersToExcel(ctrlOrder.getList(order));
+        } else {
+            ExcelMaker.ordersToExcel(ctrlOrder.getList(order));
+        }
     }//GEN-LAST:event_btnExportToExcelActionPerformed
+
+    private void tblTicketsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTicketsMouseClicked
+
+    }//GEN-LAST:event_tblTicketsMouseClicked
+
+    private void btnExportToExcel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportToExcel1ActionPerformed
+        if (paneOrders.isVisible()) {
+        
+        MainFrame.pnlOrders.jumpToOrder(getOrder());
+        MainFrame.setActivePanel(MainFrame.pnlOrders);
+        
+        } else {
+            
+            MainFrame.pnlEvents.jumpToEvent(getTicket().getEvent(), getTicket());
+            MainFrame.setActivePanel(MainFrame.pnlEvents);
+        }
+    }//GEN-LAST:event_btnExportToExcel1ActionPerformed
 
     public void applyTheme() {
 
@@ -302,6 +352,7 @@ public class ReviewPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExportToExcel;
+    private javax.swing.JButton btnExportToExcel1;
     private javax.swing.JButton btnFind;
     private javax.swing.JButton btnOrders;
     private javax.swing.JButton btnTickets;

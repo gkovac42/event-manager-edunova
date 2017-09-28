@@ -23,22 +23,17 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
  */
 public class PdfMaker {
 
-    public PdfMaker() {
-
-    }
-
     public static void createPdf(Order order) {
 
-        int fontSize = 16;
         try (PDDocument document = new PDDocument()) {
 
             PDPage page = new PDPage();
             document.addPage(page);
             PDType0Font font = PDType0Font.load(document, new File("ARIALUNI.ttf"));
-            
+
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
             contentStream.beginText();
-            contentStream.setFont(font, fontSize);
+            contentStream.setFont(font, 16);
             contentStream.setLeading(14.5f);
             contentStream.newLineAtOffset(25, 725);
             contentStream.showText(order.toString());
@@ -68,10 +63,16 @@ public class PdfMaker {
                     "Exception while trying to create simple document - " + ioEx);
         }
 
+        openPdf(order);
+
+    }
+
+    public static void openPdf(Order order) {
+
         if (Desktop.isDesktopSupported()) {
             try {
-                File myFile = new File(order.getId() + ".pdf");
-                Desktop.getDesktop().open(myFile);
+                File f = new File(order.getId() + ".pdf");
+                Desktop.getDesktop().open(f);
             } catch (IOException ex) {
                 // no application registered for PDFs
             }

@@ -45,6 +45,14 @@ public class OrdersPanel extends javax.swing.JPanel {
         updateTickets();
     }
 
+    public void jumpToCustomer(Customer c) {
+        cmbCustomer.setSelectedItem(c);
+    }
+
+    public void jumpToOrder(Order o) {
+        lstOrders.setSelectedValue(o, true);
+    }
+
     public void updateCustomers() {
 
         DefaultComboBoxModel<Customer> model = new DefaultComboBoxModel<>();
@@ -110,36 +118,20 @@ public class OrdersPanel extends javax.swing.JPanel {
         return exTicket;
     }
 
-    private void findCustomers() {
+    private void emptyCart() {
 
-        String findBy = "";
-
-        switch (cmbFindBy.getSelectedItem().toString()) {
-            case "IME":
-                findBy = "firstName";
-                break;
-            case "PREZIME":
-                findBy = "lastName";
-                break;
-            case "E-MAIL":
-                findBy = "email";
-                break;
-            case "ADRESA":
-                findBy = "address";
-                break;
-            case "MJESTO":
-                findBy = "locality";
-                break;
-
+        DefaultListModel<Ticket> model = (DefaultListModel) lstTickets.getModel();
+        for (Ticket t1 : order.getTickets()) {
+            for (int i = 0; i < model.getSize(); i++) {
+                if (t1.getName().equals(model.get(i).getName())) {
+                    model.get(i).setQuantity(model.get(i).getQuantity() + t1.getQuantity());
+                    ctrlTicket.save(model.get(i));
+                    break;
+                }
+            }
         }
+        lstTickets.repaint();
 
-        DefaultComboBoxModel<Customer> model = new DefaultComboBoxModel<>();
-        cmbCustomer.setModel(model);
-
-        for (Customer customer : ctrlCustomer.find(customer, findBy, txtFindCustomer.getText())) {
-
-            model.addElement(customer);
-        }
     }
 
     /**
@@ -149,7 +141,6 @@ public class OrdersPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTitle9 = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -169,9 +160,6 @@ public class OrdersPanel extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         btnNewOrder = new javax.swing.JButton();
         cmbCustomer = new javax.swing.JComboBox<>();
-        txtFindCustomer = new javax.swing.JTextField();
-        cmbFindBy = new javax.swing.JComboBox<>();
-        btnFindCustomer = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         lstOrders = new javax.swing.JList<>();
         txtFindOrder = new javax.swing.JTextField();
@@ -181,37 +169,34 @@ public class OrdersPanel extends javax.swing.JPanel {
         lblTitle11 = new javax.swing.JLabel();
         btnPlus = new javax.swing.JButton();
         btnMinus = new javax.swing.JButton();
+        btnViewPdf = new javax.swing.JButton();
+        lblTitle12 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(60, 60, 70));
         setPreferredSize(new java.awt.Dimension(700, 500));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblTitle9.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        lblTitle9.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle9.setText("KORISNIK");
-        add(lblTitle9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 250, 30));
-
         lblEmail.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblEmail.setForeground(new java.awt.Color(255, 255, 255));
-        add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, 220, 30));
+        add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 220, 30));
 
         jLabel16.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("MJESTO");
-        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 60, 30));
+        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 60, 30));
 
         jLabel8.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("E-MAIL");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 60, 30));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 60, 30));
 
         lblAddress.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblAddress.setForeground(new java.awt.Color(255, 255, 255));
-        add(lblAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 220, 30));
+        add(lblAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 220, 30));
 
         lblLocality.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblLocality.setForeground(new java.awt.Color(255, 255, 255));
-        add(lblLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, 220, 30));
+        add(lblLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 220, 30));
 
         lstTickets.setBackground(new java.awt.Color(120, 120, 120));
         lstTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -224,7 +209,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(lstTickets);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 370, 180));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 370, 210));
 
         lstOrderTickets.setBackground(new java.awt.Color(120, 120, 120));
         lstOrderTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -237,12 +222,12 @@ public class OrdersPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(lstOrderTickets);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 370, 160));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 370, 120));
 
         btnAdd.setBackground(new java.awt.Color(0, 0, 0));
         btnAdd.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_down.png"))); // NOI18N
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_add_order.png"))); // NOI18N
         btnAdd.setText("DODAJ");
         btnAdd.setBorder(null);
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -250,17 +235,17 @@ public class OrdersPanel extends javax.swing.JPanel {
                 btnAddActionPerformed(evt);
             }
         });
-        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, 100, 40));
+        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 90, 40));
 
         lblOrder.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         lblOrder.setForeground(new java.awt.Color(255, 255, 255));
         lblOrder.setText("NOVA NARUDŽBA");
-        add(lblOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 250, 30));
+        add(lblOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 250, 30));
 
         btnRemove.setBackground(new java.awt.Color(0, 0, 0));
         btnRemove.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnRemove.setForeground(new java.awt.Color(255, 255, 255));
-        btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_up.png"))); // NOI18N
+        btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_remove_order.png"))); // NOI18N
         btnRemove.setText("UKLONI");
         btnRemove.setBorder(null);
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
@@ -268,7 +253,7 @@ public class OrdersPanel extends javax.swing.JPanel {
                 btnRemoveActionPerformed(evt);
             }
         });
-        add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 100, 40));
+        add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 210, 90, 40));
 
         txtQuantity.setBackground(new java.awt.Color(120, 120, 120));
         txtQuantity.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
@@ -280,48 +265,48 @@ public class OrdersPanel extends javax.swing.JPanel {
                 txtQuantityActionPerformed(evt);
             }
         });
-        add(txtQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 220, 50, 40));
+        add(txtQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 160, 70, 40));
 
         jLabel12.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("UKUPNO:");
-        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 450, -1, 40));
+        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 160, -1, 40));
 
         lblTotalPrice.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTotalPrice.setForeground(new java.awt.Color(255, 255, 255));
         lblTotalPrice.setText("0.00kn");
-        add(lblTotalPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 450, 80, 40));
+        add(lblTotalPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 160, 100, 40));
 
         btnFinishOrder.setBackground(new java.awt.Color(0, 0, 0));
         btnFinishOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnFinishOrder.setForeground(new java.awt.Color(255, 255, 255));
-        btnFinishOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_confirm.png"))); // NOI18N
-        btnFinishOrder.setText("ZAVRŠI NARUDŽBU");
+        btnFinishOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_finish_order.png"))); // NOI18N
+        btnFinishOrder.setText("ZAVRŠI");
         btnFinishOrder.setBorder(null);
         btnFinishOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFinishOrderActionPerformed(evt);
             }
         });
-        add(btnFinishOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, 210, 40));
+        add(btnFinishOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 170, 40));
 
         jLabel11.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("ADRESA");
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 60, 30));
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 60, 30));
 
         btnNewOrder.setBackground(new java.awt.Color(0, 0, 0));
         btnNewOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnNewOrder.setForeground(new java.awt.Color(255, 255, 255));
-        btnNewOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_cancel.png"))); // NOI18N
-        btnNewOrder.setText("NOVA NARUDŽ.");
+        btnNewOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_new.png"))); // NOI18N
+        btnNewOrder.setText("NOVA N.");
         btnNewOrder.setBorder(null);
         btnNewOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNewOrderActionPerformed(evt);
             }
         });
-        add(btnNewOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 150, 40));
+        add(btnNewOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 100, 40));
 
         cmbCustomer.setBackground(new java.awt.Color(120, 120, 120));
         cmbCustomer.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -330,43 +315,7 @@ public class OrdersPanel extends javax.swing.JPanel {
                 cmbCustomerActionPerformed(evt);
             }
         });
-        add(cmbCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 290, 40));
-
-        txtFindCustomer.setBackground(new java.awt.Color(120, 120, 120));
-        txtFindCustomer.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
-        txtFindCustomer.setForeground(new java.awt.Color(255, 255, 255));
-        txtFindCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFindCustomerbtnFindCustomerActionPerformed(evt);
-            }
-        });
-        add(txtFindCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 140, 40));
-
-        cmbFindBy.setBackground(new java.awt.Color(120, 120, 120));
-        cmbFindBy.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        cmbFindBy.setForeground(new java.awt.Color(255, 255, 255));
-        cmbFindBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PREZIME", "IME", "E-MAIL", "ADRESA", "MJESTO" }));
-        cmbFindBy.setMinimumSize(new java.awt.Dimension(90, 25));
-        cmbFindBy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbFindByActionPerformed(evt);
-            }
-        });
-        add(cmbFindBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 450, 100, 40));
-
-        btnFindCustomer.setBackground(new java.awt.Color(0, 0, 0));
-        btnFindCustomer.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnFindCustomer.setForeground(new java.awt.Color(255, 255, 255));
-        btnFindCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
-        btnFindCustomer.setBorder(null);
-        btnFindCustomer.setFocusPainted(false);
-        btnFindCustomer.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnFindCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindCustomerActionPerformed(evt);
-            }
-        });
-        add(btnFindCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 450, 40, 40));
+        add(cmbCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 290, 30));
 
         lstOrders.setBackground(new java.awt.Color(120, 120, 120));
         lstOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -384,7 +333,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         });
         jScrollPane4.setViewportView(lstOrders);
 
-        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 300, 130));
+        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 300, 160));
 
         txtFindOrder.setBackground(new java.awt.Color(120, 120, 120));
         txtFindOrder.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
@@ -394,7 +343,7 @@ public class OrdersPanel extends javax.swing.JPanel {
                 btnFindOrderActionPerformed(evt);
             }
         });
-        add(txtFindOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 250, 40));
+        add(txtFindOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 250, 40));
 
         btnFindOrder.setBackground(new java.awt.Color(0, 0, 0));
         btnFindOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -408,29 +357,29 @@ public class OrdersPanel extends javax.swing.JPanel {
                 btnFindOrderActionPerformed(evt);
             }
         });
-        add(btnFindOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 40, 40));
+        add(btnFindOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 450, 40, 40));
 
         lblTitle10.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle10.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle10.setText("NARUDŽBE");
-        add(lblTitle10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 250, 30));
+        lblTitle10.setText("RASPOLOŽIVE ULAZNICE");
+        add(lblTitle10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, 250, 30));
 
         btnNewOrder2.setBackground(new java.awt.Color(0, 0, 0));
         btnNewOrder2.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnNewOrder2.setForeground(new java.awt.Color(255, 255, 255));
-        btnNewOrder2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_remove.png"))); // NOI18N
-        btnNewOrder2.setText("STORNIRAJ");
+        btnNewOrder2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_cancel_order.png"))); // NOI18N
+        btnNewOrder2.setText("PONIŠTI");
         btnNewOrder2.setBorder(null);
         btnNewOrder2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNewOrder2ActionPerformed(evt);
             }
         });
-        add(btnNewOrder2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 140, 40));
+        add(btnNewOrder2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 100, 40));
 
         lblTitle11.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle11.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle11.setText("ULAZNICE");
+        lblTitle11.setText("KOŠARICA");
         add(lblTitle11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 250, 30));
 
         btnPlus.setBackground(new java.awt.Color(0, 0, 0));
@@ -443,7 +392,7 @@ public class OrdersPanel extends javax.swing.JPanel {
                 btnPlusActionPerformed(evt);
             }
         });
-        add(btnPlus, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 220, 40, 40));
+        add(btnPlus, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 50, 40));
 
         btnMinus.setBackground(new java.awt.Color(0, 0, 0));
         btnMinus.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -455,7 +404,25 @@ public class OrdersPanel extends javax.swing.JPanel {
                 btnMinusActionPerformed(evt);
             }
         });
-        add(btnMinus, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 220, 40, 40));
+        add(btnMinus, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 50, 40));
+
+        btnViewPdf.setBackground(new java.awt.Color(0, 0, 0));
+        btnViewPdf.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnViewPdf.setForeground(new java.awt.Color(255, 255, 255));
+        btnViewPdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_jump_to.png"))); // NOI18N
+        btnViewPdf.setText("PDF");
+        btnViewPdf.setBorder(null);
+        btnViewPdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewPdfActionPerformed(evt);
+            }
+        });
+        add(btnViewPdf, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 80, 40));
+
+        lblTitle12.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTitle12.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitle12.setText("POVIJEST NARUDŽBI");
+        add(lblTitle12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 250, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -576,11 +543,21 @@ public class OrdersPanel extends javax.swing.JPanel {
             lblOrder.setText("NOVA NARUDŽBA");
             cmbCustomer.setSelectedIndex(0);
             order = new Order();
+            btnAdd.setEnabled(true);
+            btnRemove.setEnabled(true);
 
         } else {
+            
+            if (lblOrder.getText().equals("NOVA NARUDŽBA") && lstOrderTickets.getModel().getSize() > 0) {
+                
+                emptyCart();
+            }
+
             order = lstOrders.getSelectedValue();
             lblOrder.setText("NARUDŽBA #" + order.getId());
             cmbCustomer.setSelectedItem(order.getCustomer());
+            btnAdd.setEnabled(false);
+            btnRemove.setEnabled(false);
         }
 
         updateOrderTickets();
@@ -590,50 +567,17 @@ public class OrdersPanel extends javax.swing.JPanel {
 
     private void btnNewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewOrderActionPerformed
 
-        Thread t = new Thread(() -> {
+        if (lblOrder.getText().equals("NOVA NARUDŽBA")) {
 
-            if (lblOrder.getText().equals("NOVA NARUDŽBA")) {
-                DefaultListModel<Ticket> model = (DefaultListModel) lstTickets.getModel();
-                for (Ticket t1 : order.getTickets()) {
-                    for (int i = 0; i < model.getSize(); i++) {
-                        if (t1.getName().equals(model.get(i).getName())) {
-                            model.get(i).setQuantity(model.get(i).getQuantity() + t1.getQuantity());
-                            ctrlTicket.save(model.get(i));
-                            break;
-                        }
-                    }
-                }
-            }
-            updateOrders();
-            order = new Order();
-            updateOrderTickets();
-            lstTickets.repaint();
-            calcTotalPrice();
-        });
-        t.start();
+            emptyCart();
+        }
+
+        updateOrders();
+        order = new Order();
+        updateOrderTickets();
+        calcTotalPrice();
+
     }//GEN-LAST:event_btnNewOrderActionPerformed
-
-    private void txtFindCustomerbtnFindCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindCustomerbtnFindCustomerActionPerformed
-
-        if (txtFindCustomer.getText().equals("")) {
-            updateCustomers();
-        } else {
-            findCustomers();
-        }
-    }//GEN-LAST:event_txtFindCustomerbtnFindCustomerActionPerformed
-
-    private void cmbFindByActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFindByActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbFindByActionPerformed
-
-    private void btnFindCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindCustomerActionPerformed
-
-        if (txtFindCustomer.getText().equals("")) {
-            updateCustomers();
-        } else {
-            findCustomers();
-        }
-    }//GEN-LAST:event_btnFindCustomerActionPerformed
 
     private void btnNewOrder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewOrder2ActionPerformed
 
@@ -692,6 +636,14 @@ public class OrdersPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnMinusActionPerformed
 
+    private void btnViewPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPdfActionPerformed
+        if (lstOrders.getSelectedIndex() == -1) {
+
+        } else {
+            PdfMaker.openPdf(order);
+        }
+    }//GEN-LAST:event_btnViewPdfActionPerformed
+
     public void applyTheme() {
         setBackground(Theme.color2);
         btnAdd.setBackground(Theme.color3);
@@ -716,7 +668,6 @@ public class OrdersPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnFindCustomer;
     private javax.swing.JButton btnFindOrder;
     private javax.swing.JButton btnFinishOrder;
     private javax.swing.JButton btnMinus;
@@ -724,8 +675,8 @@ public class OrdersPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnNewOrder2;
     private javax.swing.JButton btnPlus;
     private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnViewPdf;
     private javax.swing.JComboBox<Customer> cmbCustomer;
-    private javax.swing.JComboBox<String> cmbFindBy;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel16;
@@ -739,12 +690,11 @@ public class OrdersPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblOrder;
     private javax.swing.JLabel lblTitle10;
     private javax.swing.JLabel lblTitle11;
-    private javax.swing.JLabel lblTitle9;
+    private javax.swing.JLabel lblTitle12;
     private javax.swing.JLabel lblTotalPrice;
     private javax.swing.JList<Ticket> lstOrderTickets;
     private javax.swing.JList<goran.model.Order> lstOrders;
     private javax.swing.JList<Ticket> lstTickets;
-    private javax.swing.JTextField txtFindCustomer;
     private javax.swing.JTextField txtFindOrder;
     private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables

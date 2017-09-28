@@ -102,6 +102,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="selectionMode" type="int" value="0"/>
+            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="lstLocationsValueChanged"/>
@@ -244,6 +245,7 @@
         <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="horizontalTextPosition" type="int" value="10"/>
         <Property name="iconTextGap" type="int" value="0"/>
+        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnZoomOutActionPerformed"/>
@@ -274,6 +276,7 @@
         <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="horizontalTextPosition" type="int" value="10"/>
         <Property name="iconTextGap" type="int" value="0"/>
+        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnZoomInActionPerformed"/>
@@ -380,7 +383,7 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/goran/resources/icons/btn_cancel.png"/>
+          <Image iconType="3" name="/goran/resources/icons/btn_new.png"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>
