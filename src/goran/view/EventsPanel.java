@@ -92,10 +92,15 @@ public class EventsPanel extends javax.swing.JPanel {
         }
     }
 
-    public void jumpToEvent(Event e, Ticket t) {
+    public void jumpToTicket(Event e, Ticket t) {
 
         lstEvents.setSelectedValue(e, true);
         lstTickets.setSelectedValue(t, true);
+    }
+
+    public void jumpToEvent(Event e) {
+
+        lstEvents.setSelectedValue(e, true);
     }
 
     /**

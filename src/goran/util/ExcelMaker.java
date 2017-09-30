@@ -6,6 +6,7 @@
 package goran.util;
 
 import goran.model.Customer;
+import goran.model.Event;
 import goran.model.Order;
 import goran.model.Ticket;
 import java.io.File;
@@ -57,7 +58,7 @@ public class ExcelMaker {
             cell.setCellValue("Event");
 
             for (Ticket t : tickets) {
-                
+
                 kolona = 0;
                 row = wb.getSheetAt(0).createRow(red++);
                 cell = row.createCell(kolona++);
@@ -77,7 +78,7 @@ public class ExcelMaker {
             e.printStackTrace();
         }
     }
-    
+
     public static void ordersToExcel(List<Order> orders) {
 
         String filepath = getFilepath("Narudžbe " + new SimpleDateFormat("dd.MM.yy").format(new Date()));
@@ -109,7 +110,7 @@ public class ExcelMaker {
             cell.setCellValue("Vrijednost");
 
             for (Order o : orders) {
-                
+
                 kolona = 0;
                 row = wb.getSheetAt(0).createRow(red++);
                 cell = row.createCell(kolona++);
@@ -129,7 +130,64 @@ public class ExcelMaker {
             e.printStackTrace();
         }
     }
-    
+
+    public static void eventsToExcel(List<Event> events) {
+
+        String filepath = getFilepath("Eventi " + new SimpleDateFormat("dd.MM.yy").format(new Date()));
+
+        if (filepath == null) {
+
+            return;
+        }
+
+        try {
+            HSSFWorkbook wb = new HSSFWorkbook();
+
+            // setting sheet name later
+            Row row;
+            Cell cell;
+            int red = 0;
+            int kolona;
+
+            wb.createSheet("Eventi");
+            kolona = 0;
+            row = wb.getSheetAt(0).createRow(red++);
+            cell = row.createCell(kolona++);
+            cell.setCellValue("Naziv");
+            cell = row.createCell(kolona++);
+            cell.setCellValue("Lokacija");
+            cell = row.createCell(kolona++);
+            cell.setCellValue("Mjesto");
+            cell = row.createCell(kolona);
+            cell.setCellValue("Datum");
+
+            for (Event e : events) {
+
+                kolona = 0;
+                row = wb.getSheetAt(0).createRow(red++);
+                cell = row.createCell(kolona++);
+                cell.setCellValue(e.getName());
+                cell = row.createCell(kolona++);
+                if (e.getLocation() != null) {
+                    cell.setCellValue(e.getLocation().getName());
+                }
+                cell = row.createCell(kolona++);
+                if (e.getLocation() != null) {
+                    cell.setCellValue(e.getLocation().getLocality());
+                }
+                cell = row.createCell(kolona);
+                if (e.getStartDate() != null) {
+                    cell.setCellValue(new SimpleDateFormat("dd.MM.yy").format(e.getDateCreated()));
+                }
+            }
+
+            writeFile(wb, filepath);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void customersToExcel(List<Customer> customers) {
 
         String filepath = getFilepath("Korisnici " + new SimpleDateFormat("dd.MM.yy").format(new Date()));
@@ -163,7 +221,7 @@ public class ExcelMaker {
             cell.setCellValue("E-mail");
 
             for (Customer c : customers) {
-                
+
                 kolona = 0;
                 row = wb.getSheetAt(0).createRow(red++);
                 cell = row.createCell(kolona++);

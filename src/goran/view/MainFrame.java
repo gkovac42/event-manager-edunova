@@ -270,6 +270,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewActionPerformed
         pnlReview.updateTickets();
         pnlReview.updateOrders();
+        pnlReview.updateEvents();
         setActivePanel(pnlReview);
     }//GEN-LAST:event_btnReviewActionPerformed
 
