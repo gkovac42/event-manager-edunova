@@ -23,7 +23,7 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
  */
 public class PdfMaker {
 
-    public static void createPdf(Order order) {
+    public static void savePdf(Order order) {
 
         try (PDDocument document = new PDDocument()) {
 
@@ -62,8 +62,6 @@ public class PdfMaker {
             err.println(
                     "Exception while trying to create simple document - " + ioEx);
         }
-
-        openPdf(order);
 
     }
 

@@ -8,6 +8,7 @@ package goran.view;
 import goran.util.TxtUtil;
 import goran.controller.GoogleMapsController;
 import goran.controller.HibernateController;
+import goran.controller.InputController;
 import goran.model.Location;
 import javax.swing.DefaultListModel;
 
@@ -52,9 +53,10 @@ public class LocationsPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         locationsMenu = new javax.swing.JPopupMenu();
-        mnuName = new javax.swing.JMenuItem();
-        mnuLocality = new javax.swing.JMenuItem();
-        mnuCountry = new javax.swing.JMenuItem();
+        mnuLocality = new javax.swing.JRadioButtonMenuItem();
+        mnuNam = new javax.swing.JRadioButtonMenuItem();
+        mnuDateCreated = new javax.swing.JRadioButtonMenuItem();
+        menuButtonGroup = new javax.swing.ButtonGroup();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstLocations = new javax.swing.JList<>();
         txtLocationName = new javax.swing.JTextField();
@@ -78,17 +80,9 @@ public class LocationsPanel extends javax.swing.JPanel {
         locationsMenu.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         locationsMenu.setToolTipText("");
 
-        mnuName.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mnuName.setText("po nazivu");
-        mnuName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuNameActionPerformed(evt);
-            }
-        });
-        locationsMenu.add(mnuName);
-
-        mnuLocality.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mnuLocality.setText("po mjestu");
+        menuButtonGroup.add(mnuLocality);
+        mnuLocality.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuLocality.setText("Po mjestu");
         mnuLocality.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuLocalityActionPerformed(evt);
@@ -96,14 +90,26 @@ public class LocationsPanel extends javax.swing.JPanel {
         });
         locationsMenu.add(mnuLocality);
 
-        mnuCountry.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mnuCountry.setText("po državi");
-        mnuCountry.addActionListener(new java.awt.event.ActionListener() {
+        menuButtonGroup.add(mnuNam);
+        mnuNam.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuNam.setText("Po nazivu");
+        mnuNam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuCountryActionPerformed(evt);
+                mnuNamActionPerformed(evt);
             }
         });
-        locationsMenu.add(mnuCountry);
+        locationsMenu.add(mnuNam);
+
+        menuButtonGroup.add(mnuDateCreated);
+        mnuDateCreated.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuDateCreated.setSelected(true);
+        mnuDateCreated.setText("Po unosu");
+        mnuDateCreated.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuDateCreatedActionPerformed(evt);
+            }
+        });
+        locationsMenu.add(mnuDateCreated);
 
         setBackground(new java.awt.Color(60, 60, 70));
         setMinimumSize(new java.awt.Dimension(700, 500));
@@ -358,26 +364,22 @@ public class LocationsPanel extends javax.swing.JPanel {
 
     private void btnAddLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLocationActionPerformed
 
-        if (txtLocationName.getText().equals("")
-                || txtLocationAddress.getText().equals("")
-                || txtLocationLocality.getText().equals("")
-                || txtLocationCountry.getText().equals("")) {
+        location.setName(txtLocationName.getText());
+        location.setAddress(txtLocationAddress.getText());
+        location.setLocality(txtLocationLocality.getText());
+        location.setCountry(txtLocationCountry.getText());
+
+        if (InputController.locationInputError(location)) {
 
             lblError.setText(TxtUtil.INPUT_ERROR);
 
         } else {
-
-            location.setName(txtLocationName.getText());
-            location.setAddress(txtLocationAddress.getText());
-            location.setLocality(txtLocationLocality.getText());
-            location.setCountry(txtLocationCountry.getText());
 
             hc.save(location);
             updateLocations(orderedBy);
             lblError.setText("");
             location = new Location();
         }
-
     }//GEN-LAST:event_btnAddLocationActionPerformed
 
     private void btnEditLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditLocationActionPerformed
@@ -385,19 +387,16 @@ public class LocationsPanel extends javax.swing.JPanel {
         if (lstLocations.getSelectedIndex() == -1) {
         } else {
 
-            if (txtLocationName.getText().equals("")
-                    || txtLocationAddress.getText().equals("")
-                    || txtLocationLocality.getText().equals("")
-                    || txtLocationCountry.getText().equals("")) {
+            location.setName(txtLocationName.getText());
+            location.setAddress(txtLocationAddress.getText());
+            location.setLocality(txtLocationLocality.getText());
+            location.setCountry(txtLocationCountry.getText());
+
+            if (InputController.locationInputError(location)) {
 
                 lblError.setText(TxtUtil.INPUT_ERROR);
 
             } else {
-
-                location.setName(txtLocationName.getText());
-                location.setAddress(txtLocationAddress.getText());
-                location.setLocality(txtLocationLocality.getText());
-                location.setCountry(txtLocationCountry.getText());
 
                 hc.save(location);
                 updateLocations(orderedBy);
@@ -441,20 +440,20 @@ public class LocationsPanel extends javax.swing.JPanel {
         location = new Location();
     }//GEN-LAST:event_btnNewLocationActionPerformed
 
-    private void mnuNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuNameActionPerformed
-        orderedBy = "name";
-        updateLocations(orderedBy);
-    }//GEN-LAST:event_mnuNameActionPerformed
-
     private void mnuLocalityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLocalityActionPerformed
         orderedBy = "locality";
         updateLocations(orderedBy);
     }//GEN-LAST:event_mnuLocalityActionPerformed
 
-    private void mnuCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCountryActionPerformed
-        orderedBy = "country";
+    private void mnuNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuNamActionPerformed
+        orderedBy = "name";
         updateLocations(orderedBy);
-    }//GEN-LAST:event_mnuCountryActionPerformed
+    }//GEN-LAST:event_mnuNamActionPerformed
+
+    private void mnuDateCreatedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDateCreatedActionPerformed
+        orderedBy = "dateCreated";
+        updateLocations(orderedBy);
+    }//GEN-LAST:event_mnuDateCreatedActionPerformed
 
     public void applyTheme() {
 
@@ -483,6 +482,8 @@ public class LocationsPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnRemoveLocation;
     private javax.swing.JButton btnZoomIn;
     private javax.swing.JButton btnZoomOut;
+    private javax.swing.JPopupMenu eventsMenu;
+    private javax.swing.JPopupMenu eventsMenu1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblMap;
@@ -492,9 +493,12 @@ public class LocationsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle6;
     private javax.swing.JPopupMenu locationsMenu;
     private javax.swing.JList<Location> lstLocations;
-    private javax.swing.JMenuItem mnuCountry;
-    private javax.swing.JMenuItem mnuLocality;
-    private javax.swing.JMenuItem mnuName;
+    private javax.swing.ButtonGroup menuButtonGroup;
+    private javax.swing.JRadioButtonMenuItem mnuDateCreated;
+    private javax.swing.JRadioButtonMenuItem mnuLocality;
+    private javax.swing.JRadioButtonMenuItem mnuNam;
+    private javax.swing.JRadioButtonMenuItem mnuName;
+    private javax.swing.JRadioButtonMenuItem mnuName1;
     private javax.swing.JTextField txtLocationAddress;
     private javax.swing.JTextField txtLocationCountry;
     private javax.swing.JTextField txtLocationLocality;

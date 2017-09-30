@@ -9,6 +9,7 @@ import com.github.lgooddatepicker.components.DatePicker;
 import goran.util.TxtUtil;
 import goran.controller.GoogleMapsController;
 import goran.controller.HibernateController;
+import goran.controller.InputController;
 import goran.model.Event;
 import goran.model.Location;
 import goran.model.Ticket;
@@ -35,16 +36,16 @@ public class EventsPanel extends javax.swing.JPanel {
     private GoogleMapsController ctrlMap;
     private DatePicker startDatePicker, endDatePicker;
     private SimpleDateFormat sdf;
-    
+
     private String orderedBy;
 
     public EventsPanel() {
 
         initComponents();
         initDateComponents();
-        
+
         orderedBy = "name";
-        
+
         event = new Event();
         location = new Location();
         ticket = new Ticket();
@@ -52,9 +53,9 @@ public class EventsPanel extends javax.swing.JPanel {
         ctrlTicket = new HibernateController<>();
         ctrlLocation = new HibernateController<>();
         ctrlMap = new GoogleMapsController();
-        
+
         lstEvents.setComponentPopupMenu(eventsMenu);
-        
+
         updateEvents(orderedBy);
     }
 
@@ -90,9 +91,9 @@ public class EventsPanel extends javax.swing.JPanel {
             model.addElement(location);
         }
     }
-    
+
     public void jumpToEvent(Event e, Ticket t) {
-        
+
         lstEvents.setSelectedValue(e, true);
         lstTickets.setSelectedValue(t, true);
     }
@@ -150,9 +151,11 @@ public class EventsPanel extends javax.swing.JPanel {
         lblDateTimeUtil = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         eventsMenu = new javax.swing.JPopupMenu();
-        mnuName = new javax.swing.JMenuItem();
-        mnuLocation = new javax.swing.JMenuItem();
-        mnuDate = new javax.swing.JMenuItem();
+        mnuName = new javax.swing.JRadioButtonMenuItem();
+        mnuDate = new javax.swing.JRadioButtonMenuItem();
+        mnuLocation = new javax.swing.JRadioButtonMenuItem();
+        mnuDateCreated = new javax.swing.JRadioButtonMenuItem();
+        menuButtonGroup = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstTickets = new javax.swing.JList<>();
         btnEditEvent = new javax.swing.JButton();
@@ -521,8 +524,9 @@ public class EventsPanel extends javax.swing.JPanel {
         eventsMenu.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         eventsMenu.setToolTipText("");
 
-        mnuName.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mnuName.setText("po nazivu");
+        menuButtonGroup.add(mnuName);
+        mnuName.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuName.setText("Po nazivu");
         mnuName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuNameActionPerformed(evt);
@@ -530,8 +534,20 @@ public class EventsPanel extends javax.swing.JPanel {
         });
         eventsMenu.add(mnuName);
 
-        mnuLocation.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mnuLocation.setText("po lokaciji");
+        menuButtonGroup.add(mnuDate);
+        mnuDate.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuDate.setSelected(true);
+        mnuDate.setText("Po datumu");
+        mnuDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuDateActionPerformed(evt);
+            }
+        });
+        eventsMenu.add(mnuDate);
+
+        menuButtonGroup.add(mnuLocation);
+        mnuLocation.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuLocation.setText("Po lokaciji");
         mnuLocation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuLocationActionPerformed(evt);
@@ -539,14 +555,15 @@ public class EventsPanel extends javax.swing.JPanel {
         });
         eventsMenu.add(mnuLocation);
 
-        mnuDate.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        mnuDate.setText("po datumu");
-        mnuDate.addActionListener(new java.awt.event.ActionListener() {
+        menuButtonGroup.add(mnuDateCreated);
+        mnuDateCreated.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuDateCreated.setText("Po unosu");
+        mnuDateCreated.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuDateActionPerformed(evt);
+                mnuDateCreatedActionPerformed(evt);
             }
         });
-        eventsMenu.add(mnuDate);
+        eventsMenu.add(mnuDateCreated);
 
         setBackground(new java.awt.Color(60, 60, 70));
         setMinimumSize(new java.awt.Dimension(700, 500));
@@ -767,7 +784,7 @@ public class EventsPanel extends javax.swing.JPanel {
         if (lstEvents.getSelectedIndex() == -1) {
 
         } else {
-            
+
             for (Ticket t : event.getTickets()) {
                 ctrlTicket.delete(t);
             }
@@ -793,7 +810,9 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void btnConfirmEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEventActionPerformed
 
-        if (txtEventName.getText().equals("")) {
+        event.setName(txtEventName.getText());
+
+        if (InputController.eventInputError(event)) {
 
             lblErrorEvent.setText(TxtUtil.INPUT_ERROR);
 
@@ -806,7 +825,6 @@ public class EventsPanel extends javax.swing.JPanel {
             frameEventsUtil.dispose();
             lstEvents.setSelectedValue(event, true);
         }
-
     }//GEN-LAST:event_btnConfirmEventActionPerformed
 
     private void btnCancelEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelEventActionPerformed
@@ -819,8 +837,7 @@ public class EventsPanel extends javax.swing.JPanel {
 
         if (lstEvents.getSelectedIndex() == -1) {
 
-            
-            DefaultListModel<Ticket> model = (DefaultListModel <Ticket>) lstTickets.getModel();
+            DefaultListModel<Ticket> model = (DefaultListModel<Ticket>) lstTickets.getModel();
             model.removeAllElements();
             lblMap.setIcon(null);
             lblEventLocation.setText(TxtUtil.ADD_EVENT_LOCATION);
@@ -864,18 +881,17 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void btnConfirmTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmTicketActionPerformed
 
-        if (txtTicketName.getText().equals("") || txtTicketPrice.getText().equals("") || txtTicketQuantity.getText().equals("")) {
+        try {
+            ticket.setName(txtTicketName.getText());
+            ticket.setPrice(Double.parseDouble(txtTicketPrice.getText()));
+            ticket.setQuantity(Integer.parseInt(txtTicketQuantity.getText()));
+            ticket.setEvent(lstEvents.getSelectedValue());
 
-            lblErrorTicket.setText(TxtUtil.INPUT_ERROR);
+            if (InputController.ticketInputError(ticket, txtTicketPrice.getText(), txtTicketQuantity.getText())) {
 
-        } else {
+                lblErrorTicket.setText(TxtUtil.INPUT_ERROR);
 
-            try {
-
-                ticket.setName(txtTicketName.getText());
-                ticket.setPrice(Double.parseDouble(txtTicketPrice.getText()));
-                ticket.setQuantity(Integer.parseInt(txtTicketQuantity.getText()));
-                ticket.setEvent(lstEvents.getSelectedValue());
+            } else {
 
                 if (lblTicketsUtil.getText().equals(TxtUtil.ADD_TICKET)) {
                     event.getTickets().add(ticket);
@@ -886,9 +902,9 @@ public class EventsPanel extends javax.swing.JPanel {
                 updateEventTickets();
                 frameTicketsUtil.dispose();
 
-            } catch (NumberFormatException numberFormatException) {
-                lblErrorTicket.setText(TxtUtil.NUMBER_ERROR);
             }
+        } catch (NumberFormatException numberFormatException) {
+            lblErrorTicket.setText(TxtUtil.NUMBER_ERROR);
         }
     }//GEN-LAST:event_btnConfirmTicketActionPerformed
 
@@ -1053,15 +1069,20 @@ public class EventsPanel extends javax.swing.JPanel {
         updateEvents(orderedBy);
     }//GEN-LAST:event_mnuNameActionPerformed
 
+    private void mnuDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDateActionPerformed
+        orderedBy = "startDate";
+        updateEvents(orderedBy);
+     }//GEN-LAST:event_mnuDateActionPerformed
+
     private void mnuLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLocationActionPerformed
         orderedBy = "location";
         updateEvents(orderedBy);
     }//GEN-LAST:event_mnuLocationActionPerformed
 
-    private void mnuDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDateActionPerformed
-        orderedBy = "startDate";
+    private void mnuDateCreatedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDateCreatedActionPerformed
+        orderedBy = "dateCreated";
         updateEvents(orderedBy);
-    }//GEN-LAST:event_mnuDateActionPerformed
+    }//GEN-LAST:event_mnuDateCreatedActionPerformed
 
     public void applyTheme() {
 
@@ -1113,7 +1134,7 @@ public class EventsPanel extends javax.swing.JPanel {
         txtTicketName.setForeground(Theme.font1);
         txtTicketPrice.setForeground(Theme.font1);
         txtTicketQuantity.setForeground(Theme.font1);
-        
+
         //Date Util
         pnlDateTimeUtilTitle.setBackground(Theme.color1);
         pnlDateTimeUtil.setBackground(Theme.color2);
@@ -1174,9 +1195,11 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JList<Event> lstEvents;
     private javax.swing.JList<Location> lstLocations;
     private javax.swing.JList<Ticket> lstTickets;
-    private javax.swing.JMenuItem mnuDate;
-    private javax.swing.JMenuItem mnuLocation;
-    private javax.swing.JMenuItem mnuName;
+    private javax.swing.ButtonGroup menuButtonGroup;
+    private javax.swing.JRadioButtonMenuItem mnuDate;
+    private javax.swing.JRadioButtonMenuItem mnuDateCreated;
+    private javax.swing.JRadioButtonMenuItem mnuLocation;
+    private javax.swing.JRadioButtonMenuItem mnuName;
     private javax.swing.JPanel pnlDateTimeUtil;
     private javax.swing.JPanel pnlDateTimeUtilTitle;
     private javax.swing.JPanel pnlEventsUtilMain;
@@ -1193,7 +1216,6 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtTicketQuantity;
     // End of variables declaration//GEN-END:variables
 
-    
     private void initDateComponents() {
 
         startDatePicker = new DatePicker();

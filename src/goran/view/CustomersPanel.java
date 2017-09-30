@@ -6,6 +6,7 @@
 package goran.view;
 
 import goran.controller.HibernateController;
+import goran.controller.InputController;
 import goran.util.TxtUtil;
 import goran.model.Customer;
 import goran.util.ExcelMaker;
@@ -33,7 +34,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     public Customer getCustomer() {
         return ctrlCustomer.getList(customer).get(tblCustomers.convertRowIndexToModel(tblCustomers.getSelectedRow()));
     }
-    
+
     private void updateCustomers() {
 
         DefaultTableModel model = (DefaultTableModel) tblCustomers.getModel();
@@ -367,11 +368,6 @@ public class CustomersPanel extends javax.swing.JPanel {
         cmbFindBy.setForeground(new java.awt.Color(255, 255, 255));
         cmbFindBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PREZIME", "IME", "E-MAIL", "ADRESA", "MJESTO" }));
         cmbFindBy.setMinimumSize(new java.awt.Dimension(90, 25));
-        cmbFindBy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbFindByActionPerformed(evt);
-            }
-        });
         add(cmbFindBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 110, 40));
 
         btnExportToExcel.setBackground(new java.awt.Color(0, 0, 0));
@@ -462,18 +458,17 @@ public class CustomersPanel extends javax.swing.JPanel {
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
 
-        if (txtFirstName.getText().equals("") || txtLastName.getText().equals("") || txtEmail.getText().equals("")
-                || txtAddress.getText().equals("") || txtLocality.getText().equals("")) {
+        customer.setFirstName(txtFirstName.getText());
+        customer.setLastName(txtLastName.getText());
+        customer.setEmail(txtEmail.getText());
+        customer.setAddress(txtAddress.getText());
+        customer.setLocality(txtLocality.getText());
+
+        if (InputController.customerInputError(customer)) {
 
             lblError.setText(TxtUtil.INPUT_ERROR);
 
         } else {
-
-            customer.setFirstName(txtFirstName.getText());
-            customer.setLastName(txtLastName.getText());
-            customer.setEmail(txtEmail.getText());
-            customer.setAddress(txtAddress.getText());
-            customer.setLocality(txtLocality.getText());
 
             ctrlCustomer.save(customer);
             updateCustomers();
@@ -489,16 +484,12 @@ public class CustomersPanel extends javax.swing.JPanel {
         frameCustomersUtil.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void cmbFindByActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFindByActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbFindByActionPerformed
-
     private void btnExportToExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportToExcelActionPerformed
         ExcelMaker.customersToExcel(ctrlCustomer.getOrderedList(customer, "LastName"));
     }//GEN-LAST:event_btnExportToExcelActionPerformed
 
     private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
-        
+
         MainFrame.pnlOrders.jumpToCustomer(getCustomer());
         MainFrame.setActivePanel(MainFrame.pnlOrders);
     }//GEN-LAST:event_btnOrderActionPerformed

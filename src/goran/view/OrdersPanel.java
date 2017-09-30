@@ -165,12 +165,13 @@ public class OrdersPanel extends javax.swing.JPanel {
         txtFindOrder = new javax.swing.JTextField();
         btnFindOrder = new javax.swing.JButton();
         lblTitle10 = new javax.swing.JLabel();
-        btnNewOrder2 = new javax.swing.JButton();
+        btnCancelOrder = new javax.swing.JButton();
         lblTitle11 = new javax.swing.JLabel();
         btnPlus = new javax.swing.JButton();
         btnMinus = new javax.swing.JButton();
         btnViewPdf = new javax.swing.JButton();
         lblTitle12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(60, 60, 70));
         setPreferredSize(new java.awt.Dimension(700, 500));
@@ -292,8 +293,8 @@ public class OrdersPanel extends javax.swing.JPanel {
 
         jLabel11.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("ADRESA");
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 60, 30));
+        jLabel11.setText("KUPAC");
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 80, 30));
 
         btnNewOrder.setBackground(new java.awt.Color(0, 0, 0));
         btnNewOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -315,7 +316,7 @@ public class OrdersPanel extends javax.swing.JPanel {
                 cmbCustomerActionPerformed(evt);
             }
         });
-        add(cmbCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 290, 30));
+        add(cmbCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 220, 30));
 
         lstOrders.setBackground(new java.awt.Color(120, 120, 120));
         lstOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -364,18 +365,18 @@ public class OrdersPanel extends javax.swing.JPanel {
         lblTitle10.setText("RASPOLOŽIVE ULAZNICE");
         add(lblTitle10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, 250, 30));
 
-        btnNewOrder2.setBackground(new java.awt.Color(0, 0, 0));
-        btnNewOrder2.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnNewOrder2.setForeground(new java.awt.Color(255, 255, 255));
-        btnNewOrder2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_cancel_order.png"))); // NOI18N
-        btnNewOrder2.setText("PONIŠTI");
-        btnNewOrder2.setBorder(null);
-        btnNewOrder2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelOrder.setBackground(new java.awt.Color(0, 0, 0));
+        btnCancelOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btnCancelOrder.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_cancel_order.png"))); // NOI18N
+        btnCancelOrder.setText("PONIŠTI");
+        btnCancelOrder.setBorder(null);
+        btnCancelOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewOrder2ActionPerformed(evt);
+                btnCancelOrderActionPerformed(evt);
             }
         });
-        add(btnNewOrder2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 100, 40));
+        add(btnCancelOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 100, 40));
 
         lblTitle11.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle11.setForeground(new java.awt.Color(255, 255, 255));
@@ -423,6 +424,11 @@ public class OrdersPanel extends javax.swing.JPanel {
         lblTitle12.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle12.setText("POVIJEST NARUDŽBI");
         add(lblTitle12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 250, 30));
+
+        jLabel13.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("ADRESA");
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 60, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -447,10 +453,7 @@ public class OrdersPanel extends javax.swing.JPanel {
 
             calcTotalPrice();
             lstTickets.setSelectedValue(t, true);
-
-            ctrlTicket.save(t);
             order.getTickets().remove(ordTicket);
-            ctrlTicket.delete(ordTicket);
 
             updateOrderTickets();
             lstOrderTickets.repaint();
@@ -482,7 +485,6 @@ public class OrdersPanel extends javax.swing.JPanel {
                 ordTicket.setQuantity(ordTicket.getQuantity() + Integer.parseInt(txtQuantity.getText()));
             }
             ordTicket.setDeleted(true);
-            ctrlTicket.save(ordTicket);
             updateOrderTickets();
 
             calcTotalPrice();
@@ -496,7 +498,8 @@ public class OrdersPanel extends javax.swing.JPanel {
             order.setCustomer(customer);
             ctrlTicket.saveList(order.getTickets());
             ctrlOrder.save(order);
-            PdfMaker.createPdf(order);
+            PdfMaker.savePdf(order);
+            PdfMaker.openPdf(order);
             updateOrders();
 
             order = new Order();
@@ -545,6 +548,7 @@ public class OrdersPanel extends javax.swing.JPanel {
             order = new Order();
             btnAdd.setEnabled(true);
             btnRemove.setEnabled(true);
+            btnFinishOrder.setEnabled(true);
 
         } else {
             
@@ -558,6 +562,7 @@ public class OrdersPanel extends javax.swing.JPanel {
             cmbCustomer.setSelectedItem(order.getCustomer());
             btnAdd.setEnabled(false);
             btnRemove.setEnabled(false);
+            btnFinishOrder.setEnabled(false);
         }
 
         updateOrderTickets();
@@ -579,7 +584,7 @@ public class OrdersPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnNewOrderActionPerformed
 
-    private void btnNewOrder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewOrder2ActionPerformed
+    private void btnCancelOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelOrderActionPerformed
 
         if (lstOrders.getSelectedIndex() != -1) {
 
@@ -602,7 +607,7 @@ public class OrdersPanel extends javax.swing.JPanel {
             lstTickets.repaint();
             calcTotalPrice();
         }
-    }//GEN-LAST:event_btnNewOrder2ActionPerformed
+    }//GEN-LAST:event_btnCancelOrderActionPerformed
 
     private void cmbCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCustomerActionPerformed
 
@@ -640,7 +645,13 @@ public class OrdersPanel extends javax.swing.JPanel {
         if (lstOrders.getSelectedIndex() == -1) {
 
         } else {
+            try {
             PdfMaker.openPdf(order);
+                
+            } catch (Exception e) {
+                PdfMaker.savePdf(order);
+                PdfMaker.openPdf(order);
+            }
         }
     }//GEN-LAST:event_btnViewPdfActionPerformed
 
@@ -668,17 +679,18 @@ public class OrdersPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnCancelOrder;
     private javax.swing.JButton btnFindOrder;
     private javax.swing.JButton btnFinishOrder;
     private javax.swing.JButton btnMinus;
     private javax.swing.JButton btnNewOrder;
-    private javax.swing.JButton btnNewOrder2;
     private javax.swing.JButton btnPlus;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnViewPdf;
     private javax.swing.JComboBox<Customer> cmbCustomer;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane2;
