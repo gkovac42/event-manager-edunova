@@ -502,6 +502,8 @@ public class CustomersPanel extends javax.swing.JPanel {
         btnAddCustomer.setBackground(Theme.color3);
         btnRemoveCustomer.setBackground(Theme.color3);
         btnEditCustomer.setBackground(Theme.color3);
+        btnExportToExcel.setBackground(Theme.color3);
+        btnOrder.setBackground(Theme.color3);
         btnFindCustomer.setBackground(Theme.color3);
         txtFindCustomer.setBackground(Theme.color4);
         tblCustomers.setBackground(Theme.color4);

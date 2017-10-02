@@ -752,6 +752,11 @@ public class OrdersPanel extends javax.swing.JPanel {
         btnAdd.setBackground(Theme.color3);
         btnRemove.setBackground(Theme.color3);
         btnFinishOrder.setBackground(Theme.color3);
+        btnPlus.setBackground(Theme.color3);
+        btnMinus.setBackground(Theme.color3);
+        btnNewOrder.setBackground(Theme.color3);
+        btnCancelOrder.setBackground(Theme.color3);
+        btnViewPdf.setBackground(Theme.color3);
         cmbCustomer.setBackground(Theme.color4);
         cmbCustomer.setForeground(Theme.font1);
         lstOrders.setBackground(Theme.color4);

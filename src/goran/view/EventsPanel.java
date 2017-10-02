@@ -1050,9 +1050,12 @@ public class EventsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelDateTimeActionPerformed
 
     private void btnAddTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTimeActionPerformed
+        if (lstEvents.getSelectedIndex() == -1) {
 
-        frameDateUtil.setVisible(true);
-        frameDateUtil.setLocationRelativeTo(this);
+        } else {
+            frameDateUtil.setVisible(true);
+            frameDateUtil.setLocationRelativeTo(this);
+        }
 
     }//GEN-LAST:event_btnAddTimeActionPerformed
 

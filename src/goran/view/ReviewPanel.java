@@ -502,6 +502,11 @@ public class ReviewPanel extends javax.swing.JPanel {
         btnTickets.setBackground(Theme.color3);
         tblOrders.setBackground(Theme.color4);
         tblTickets.setForeground(Theme.font1);
+        tblEvents.setBackground(Theme.color4);
+        tblEvents.setForeground(Theme.font1);
+        btnOrders.setBackground(Theme.color3);
+        btnJumpTo.setBackground(Theme.color3);
+        btnExportToExcel.setBackground(Theme.color3);
 
     }
 
