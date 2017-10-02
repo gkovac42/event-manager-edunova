@@ -5,6 +5,8 @@
  */
 package goran.view;
 
+import goran.util.MotionPanel;
+import goran.util.Theme;
 import com.github.lgooddatepicker.components.DatePicker;
 import goran.util.TxtUtil;
 import goran.controller.GoogleMapsController;
@@ -37,14 +39,14 @@ public class EventsPanel extends javax.swing.JPanel {
     private DatePicker startDatePicker, endDatePicker;
     private SimpleDateFormat sdf;
 
-    private String orderedBy;
+    private String sortEvents;
 
     public EventsPanel() {
 
         initComponents();
         initDateComponents();
 
-        orderedBy = "name";
+        sortEvents = "name";
 
         event = new Event();
         location = new Location();
@@ -55,8 +57,9 @@ public class EventsPanel extends javax.swing.JPanel {
         ctrlMap = new GoogleMapsController();
 
         lstEvents.setComponentPopupMenu(eventsMenu);
+        menuButtonGroup.setSelected(mnuName.getModel(), true);
 
-        updateEvents(orderedBy);
+        updateEvents(sortEvents);
     }
 
     private void updateEvents(String orderBy) {
@@ -795,7 +798,7 @@ public class EventsPanel extends javax.swing.JPanel {
             }
 
             ctrlEvent.delete(event);
-            updateEvents(orderedBy);
+            updateEvents(sortEvents);
 
         }
     }//GEN-LAST:event_btnRemoveEventActionPerformed
@@ -825,7 +828,7 @@ public class EventsPanel extends javax.swing.JPanel {
 
             event.setName(txtEventName.getText());
             ctrlEvent.save(event);
-            updateEvents(orderedBy);
+            updateEvents(sortEvents);
             lblErrorEvent.setText("");
             frameEventsUtil.dispose();
             lstEvents.setSelectedValue(event, true);
@@ -1057,7 +1060,7 @@ public class EventsPanel extends javax.swing.JPanel {
 
         if (txtFindEvent.getText().equals("")) {
 
-            updateEvents(orderedBy);
+            updateEvents(sortEvents);
 
         } else {
 
@@ -1070,23 +1073,23 @@ public class EventsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnFindEventActionPerformed
 
     private void mnuNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuNameActionPerformed
-        orderedBy = "name";
-        updateEvents(orderedBy);
+        sortEvents = "name";
+        updateEvents(sortEvents);
     }//GEN-LAST:event_mnuNameActionPerformed
 
     private void mnuDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDateActionPerformed
-        orderedBy = "startDate";
-        updateEvents(orderedBy);
+        sortEvents = "startDate";
+        updateEvents(sortEvents);
      }//GEN-LAST:event_mnuDateActionPerformed
 
     private void mnuLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLocationActionPerformed
-        orderedBy = "location";
-        updateEvents(orderedBy);
+        sortEvents = "location";
+        updateEvents(sortEvents);
     }//GEN-LAST:event_mnuLocationActionPerformed
 
     private void mnuDateCreatedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDateCreatedActionPerformed
-        orderedBy = "dateCreated";
-        updateEvents(orderedBy);
+        sortEvents = "dateCreated";
+        updateEvents(sortEvents);
     }//GEN-LAST:event_mnuDateCreatedActionPerformed
 
     public void applyTheme() {

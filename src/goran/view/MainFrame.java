@@ -5,6 +5,8 @@
  */
 package goran.view;
 
+import goran.util.MotionPanel;
+import goran.util.Theme;
 import java.io.IOException;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -352,7 +354,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdersActionPerformed
         pnlOrders.updateCustomers();
-        pnlOrders.updateTickets();
+        pnlOrders.updateTickets("name");
         setActivePanel(pnlOrders);
     }//GEN-LAST:event_btnOrdersActionPerformed
      

@@ -5,6 +5,7 @@
  */
 package goran.view;
 
+import goran.util.Theme;
 import goran.controller.HibernateController;
 import goran.model.Event;
 import goran.model.Order;

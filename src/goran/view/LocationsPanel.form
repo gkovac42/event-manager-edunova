@@ -14,20 +14,6 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <MenuItem class="javax.swing.JRadioButtonMenuItem" name="mnuLocality">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="menuButtonGroup"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Lucida Sans" size="14" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Po mjestu"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuLocalityActionPerformed"/>
-          </Events>
-        </MenuItem>
         <MenuItem class="javax.swing.JRadioButtonMenuItem" name="mnuNam">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
@@ -40,6 +26,20 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuNamActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JRadioButtonMenuItem" name="mnuLocality">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="menuButtonGroup"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Lucida Sans" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Po mjestu"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuLocalityActionPerformed"/>
           </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JRadioButtonMenuItem" name="mnuDateCreated">

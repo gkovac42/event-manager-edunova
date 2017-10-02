@@ -5,6 +5,8 @@
  */
 package goran.view;
 
+import goran.util.MotionPanel;
+import goran.util.Theme;
 import goran.controller.HibernateController;
 import goran.controller.InputController;
 import goran.util.TxtUtil;

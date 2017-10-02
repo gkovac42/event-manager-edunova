@@ -5,6 +5,7 @@
  */
 package goran.view;
 
+import goran.util.Theme;
 import goran.controller.HibernateController;
 import goran.model.Order;
 import goran.model.Ticket;
@@ -28,6 +29,8 @@ public class OrdersPanel extends javax.swing.JPanel {
     private HibernateController<Customer> ctrlCustomer;
     private HibernateController<Ticket> ctrlTicket;
     private HibernateController<Order> ctrlOrder;
+    private String sortTickets;
+    private String sortOrders;
 
     public OrdersPanel() {
 
@@ -39,10 +42,18 @@ public class OrdersPanel extends javax.swing.JPanel {
         ctrlCustomer = new HibernateController<>();
         ctrlTicket = new HibernateController<>();
         ctrlOrder = new HibernateController<>();
+        
+        sortTickets = "name";
+        sortOrders = "id";
+        
+        lstTickets.setComponentPopupMenu(ticketsMenu);
+        ticketsMenuButtonGroup.setSelected(mnuName.getModel(), true);
+        lstOrders.setComponentPopupMenu(ordersMenu);
+        ordersMenuButtonGroup.setSelected(mnuId.getModel(), true);
 
-        updateOrders();
+        updateOrders(sortOrders);
         updateCustomers();
-        updateTickets();
+        updateTickets(sortTickets);
     }
 
     public void jumpToCustomer(Customer c) {
@@ -62,11 +73,11 @@ public class OrdersPanel extends javax.swing.JPanel {
         }
     }
 
-    public void updateTickets() {
+    public void updateTickets(String sortBy) {
 
         DefaultListModel<Ticket> model = new DefaultListModel<>();
         lstTickets.setModel(model);
-        for (Ticket ticket : ctrlTicket.getOrderedList(ticket, "name")) {
+        for (Ticket ticket : ctrlTicket.getOrderedList(ticket, sortBy)) {
             model.addElement(ticket);
         }
         lstTickets.repaint();
@@ -81,11 +92,11 @@ public class OrdersPanel extends javax.swing.JPanel {
         }
     }
 
-    private void updateOrders() {
+    private void updateOrders(String sortBy) {
 
         DefaultListModel<Order> model = new DefaultListModel<>();
         lstOrders.setModel(model);
-        for (Order order : ctrlOrder.getOrderedList(order, "id")) {
+        for (Order order : ctrlOrder.getOrderedList(order, sortBy)) {
             model.addElement(order);
         }
     }
@@ -141,6 +152,17 @@ public class OrdersPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ordersMenu = new javax.swing.JPopupMenu();
+        mnuId = new javax.swing.JRadioButtonMenuItem();
+        mnuDateCreated = new javax.swing.JRadioButtonMenuItem();
+        mnuCustomer = new javax.swing.JRadioButtonMenuItem();
+        ticketsMenu = new javax.swing.JPopupMenu();
+        mnuName = new javax.swing.JRadioButtonMenuItem();
+        mnuDate = new javax.swing.JRadioButtonMenuItem();
+        mnuPrice = new javax.swing.JRadioButtonMenuItem();
+        mnuQuantity = new javax.swing.JRadioButtonMenuItem();
+        ticketsMenuButtonGroup = new javax.swing.ButtonGroup();
+        ordersMenuButtonGroup = new javax.swing.ButtonGroup();
         lblEmail = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -162,8 +184,6 @@ public class OrdersPanel extends javax.swing.JPanel {
         cmbCustomer = new javax.swing.JComboBox<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         lstOrders = new javax.swing.JList<>();
-        txtFindOrder = new javax.swing.JTextField();
-        btnFindOrder = new javax.swing.JButton();
         lblTitle10 = new javax.swing.JLabel();
         btnCancelOrder = new javax.swing.JButton();
         lblTitle11 = new javax.swing.JLabel();
@@ -172,6 +192,83 @@ public class OrdersPanel extends javax.swing.JPanel {
         btnViewPdf = new javax.swing.JButton();
         lblTitle12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+
+        ordersMenu.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        ordersMenu.setToolTipText("");
+
+        ordersMenuButtonGroup.add(mnuId);
+        mnuId.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuId.setText("Po šifri");
+        mnuId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuIdActionPerformed(evt);
+            }
+        });
+        ordersMenu.add(mnuId);
+
+        ordersMenuButtonGroup.add(mnuDateCreated);
+        mnuDateCreated.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuDateCreated.setText("Po datumu");
+        mnuDateCreated.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuDateCreatedActionPerformed(evt);
+            }
+        });
+        ordersMenu.add(mnuDateCreated);
+
+        ordersMenuButtonGroup.add(mnuCustomer);
+        mnuCustomer.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuCustomer.setText("Po kupcu");
+        mnuCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCustomerActionPerformed(evt);
+            }
+        });
+        ordersMenu.add(mnuCustomer);
+
+        ticketsMenu.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        ticketsMenu.setToolTipText("");
+
+        ticketsMenuButtonGroup.add(mnuName);
+        mnuName.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuName.setText("Po nazivu");
+        mnuName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuNameActionPerformed(evt);
+            }
+        });
+        ticketsMenu.add(mnuName);
+
+        ticketsMenuButtonGroup.add(mnuDate);
+        mnuDate.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuDate.setText("Po datumu");
+        mnuDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuDateActionPerformed(evt);
+            }
+        });
+        ticketsMenu.add(mnuDate);
+
+        ticketsMenuButtonGroup.add(mnuPrice);
+        mnuPrice.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuPrice.setSelected(true);
+        mnuPrice.setText("Po cijeni");
+        mnuPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPriceActionPerformed(evt);
+            }
+        });
+        ticketsMenu.add(mnuPrice);
+
+        ticketsMenuButtonGroup.add(mnuQuantity);
+        mnuQuantity.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        mnuQuantity.setText("Po količini");
+        mnuQuantity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuQuantityActionPerformed(evt);
+            }
+        });
+        ticketsMenu.add(mnuQuantity);
 
         setBackground(new java.awt.Color(60, 60, 70));
         setPreferredSize(new java.awt.Dimension(700, 500));
@@ -316,7 +413,7 @@ public class OrdersPanel extends javax.swing.JPanel {
                 cmbCustomerActionPerformed(evt);
             }
         });
-        add(cmbCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 220, 30));
+        add(cmbCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 230, 30));
 
         lstOrders.setBackground(new java.awt.Color(120, 120, 120));
         lstOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -334,31 +431,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         });
         jScrollPane4.setViewportView(lstOrders);
 
-        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 300, 160));
-
-        txtFindOrder.setBackground(new java.awt.Color(120, 120, 120));
-        txtFindOrder.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
-        txtFindOrder.setForeground(new java.awt.Color(255, 255, 255));
-        txtFindOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindOrderActionPerformed(evt);
-            }
-        });
-        add(txtFindOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 250, 40));
-
-        btnFindOrder.setBackground(new java.awt.Color(0, 0, 0));
-        btnFindOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnFindOrder.setForeground(new java.awt.Color(255, 255, 255));
-        btnFindOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
-        btnFindOrder.setBorder(null);
-        btnFindOrder.setFocusPainted(false);
-        btnFindOrder.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnFindOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindOrderActionPerformed(evt);
-            }
-        });
-        add(btnFindOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 450, 40, 40));
+        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 300, 210));
 
         lblTitle10.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle10.setForeground(new java.awt.Color(255, 255, 255));
@@ -380,7 +453,7 @@ public class OrdersPanel extends javax.swing.JPanel {
 
         lblTitle11.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle11.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle11.setText("KOŠARICA");
+        lblTitle11.setText("NARUČENE ULAZNICE");
         add(lblTitle11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 250, 30));
 
         btnPlus.setBackground(new java.awt.Color(0, 0, 0));
@@ -500,7 +573,7 @@ public class OrdersPanel extends javax.swing.JPanel {
             ctrlOrder.save(order);
             PdfMaker.savePdf(order);
             PdfMaker.openPdf(order);
-            updateOrders();
+            updateOrders(sortOrders);
 
             order = new Order();
             cmbCustomer.setSelectedIndex(0);
@@ -520,22 +593,6 @@ public class OrdersPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_lstOrderTicketsValueChanged
 
-    private void btnFindOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindOrderActionPerformed
-
-        if (txtFindOrder.getText().equals("")) {
-
-            updateOrders();
-
-        } else {
-
-            DefaultListModel<Order> model = new DefaultListModel<>();
-            lstOrders.setModel(model);
-            for (Order order : ctrlOrder.find(order, "id", txtFindOrder.getText())) {
-                model.addElement(order);
-            }
-        }
-    }//GEN-LAST:event_btnFindOrderActionPerformed
-
     private void lstOrdersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstOrdersMouseClicked
 
     }//GEN-LAST:event_lstOrdersMouseClicked
@@ -551,9 +608,9 @@ public class OrdersPanel extends javax.swing.JPanel {
             btnFinishOrder.setEnabled(true);
 
         } else {
-            
+
             if (lblOrder.getText().equals("NOVA NARUDŽBA") && lstOrderTickets.getModel().getSize() > 0) {
-                
+
                 emptyCart();
             }
 
@@ -577,7 +634,7 @@ public class OrdersPanel extends javax.swing.JPanel {
             emptyCart();
         }
 
-        updateOrders();
+        updateOrders(sortOrders);
         order = new Order();
         updateOrderTickets();
         calcTotalPrice();
@@ -601,7 +658,7 @@ public class OrdersPanel extends javax.swing.JPanel {
             }
 
             ctrlOrder.delete(order);
-            updateOrders();
+            updateOrders(sortOrders);
             order = new Order();
             updateOrderTickets();
             lstTickets.repaint();
@@ -646,8 +703,8 @@ public class OrdersPanel extends javax.swing.JPanel {
 
         } else {
             try {
-            PdfMaker.openPdf(order);
-                
+                PdfMaker.openPdf(order);
+
             } catch (Exception e) {
                 PdfMaker.savePdf(order);
                 PdfMaker.openPdf(order);
@@ -655,11 +712,45 @@ public class OrdersPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnViewPdfActionPerformed
 
+    private void mnuCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCustomerActionPerformed
+        sortOrders = "customer";
+        updateOrders(sortOrders);
+    }//GEN-LAST:event_mnuCustomerActionPerformed
+
+    private void mnuIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIdActionPerformed
+        sortOrders = "id";
+        updateOrders(sortOrders);
+    }//GEN-LAST:event_mnuIdActionPerformed
+
+    private void mnuDateCreatedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDateCreatedActionPerformed
+        sortOrders = "dateCreated";
+        updateOrders(sortOrders);
+    }//GEN-LAST:event_mnuDateCreatedActionPerformed
+
+    private void mnuNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuNameActionPerformed
+        sortTickets = "name";
+        updateTickets(sortTickets);
+    }//GEN-LAST:event_mnuNameActionPerformed
+
+    private void mnuPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPriceActionPerformed
+        sortTickets = "price";
+        updateTickets(sortTickets);
+    }//GEN-LAST:event_mnuPriceActionPerformed
+
+    private void mnuDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDateActionPerformed
+        sortTickets = "dateCreated";
+        updateTickets(sortTickets);
+    }//GEN-LAST:event_mnuDateActionPerformed
+
+    private void mnuQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuQuantityActionPerformed
+        sortTickets = "quantity";
+        updateTickets(sortTickets);
+    }//GEN-LAST:event_mnuQuantityActionPerformed
+
     public void applyTheme() {
         setBackground(Theme.color2);
         btnAdd.setBackground(Theme.color3);
         btnRemove.setBackground(Theme.color3);
-        btnFindOrder.setBackground(Theme.color3);
         btnFinishOrder.setBackground(Theme.color3);
         cmbCustomer.setBackground(Theme.color4);
         cmbCustomer.setForeground(Theme.font1);
@@ -669,8 +760,6 @@ public class OrdersPanel extends javax.swing.JPanel {
         lstOrderTickets.setForeground(Theme.font1);
         lstTickets.setBackground(Theme.color4);
         lstTickets.setForeground(Theme.font1);
-        txtFindOrder.setBackground(Theme.color4);
-        txtFindOrder.setForeground(Theme.font1);
         txtQuantity.setBackground(Theme.color4);
         txtQuantity.setForeground(Theme.font1);
 
@@ -680,7 +769,6 @@ public class OrdersPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancelOrder;
-    private javax.swing.JButton btnFindOrder;
     private javax.swing.JButton btnFinishOrder;
     private javax.swing.JButton btnMinus;
     private javax.swing.JButton btnNewOrder;
@@ -707,7 +795,17 @@ public class OrdersPanel extends javax.swing.JPanel {
     private javax.swing.JList<Ticket> lstOrderTickets;
     private javax.swing.JList<goran.model.Order> lstOrders;
     private javax.swing.JList<Ticket> lstTickets;
-    private javax.swing.JTextField txtFindOrder;
+    private javax.swing.JRadioButtonMenuItem mnuCustomer;
+    private javax.swing.JRadioButtonMenuItem mnuDate;
+    private javax.swing.JRadioButtonMenuItem mnuDateCreated;
+    private javax.swing.JRadioButtonMenuItem mnuId;
+    private javax.swing.JRadioButtonMenuItem mnuName;
+    private javax.swing.JRadioButtonMenuItem mnuPrice;
+    private javax.swing.JRadioButtonMenuItem mnuQuantity;
+    private javax.swing.JPopupMenu ordersMenu;
+    private javax.swing.ButtonGroup ordersMenuButtonGroup;
+    private javax.swing.JPopupMenu ticketsMenu;
+    private javax.swing.ButtonGroup ticketsMenuButtonGroup;
     private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
 }
