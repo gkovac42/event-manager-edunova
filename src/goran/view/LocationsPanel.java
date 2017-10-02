@@ -312,7 +312,7 @@ public class LocationsPanel extends javax.swing.JPanel {
             txtLocationCountry.setText(location.getCountry());
             txtLocationName.setText(location.getName());
 
-            mapControl.downloadMap(location.getLat(), location.getLng(), 16, lblMap);
+            mapControl.openOrDownloadMap(location, 16, lblMap);
 
             lblError.setText("");
         }
@@ -334,7 +334,7 @@ public class LocationsPanel extends javax.swing.JPanel {
             location.setLat(mapData[0]);
             location.setLng(mapData[1]);
 
-            mapControl.downloadMap(location.getLat(), location.getLng(), 16, lblMap);
+            mapControl.openOrDownloadMap(location, 16, lblMap);
 
             txtLocationAddress.setText(mapData[3] + " " + mapData[2]);
             txtLocationLocality.setText(mapData[4]);
@@ -349,7 +349,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         try {
 
             mapZoom--;
-            mapControl.downloadMap(location.getLat(), location.getLng(), mapZoom, lblMap);
+            mapControl.openOrDownloadMap(location, mapZoom, lblMap);
 
         } catch (Exception e) {
         }
@@ -360,7 +360,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         try {
 
             mapZoom++;
-            mapControl.downloadMap(location.getLat(), location.getLng(), mapZoom, lblMap);
+            mapControl.openOrDownloadMap(location, mapZoom, lblMap);
 
         } catch (Exception e) {
         }

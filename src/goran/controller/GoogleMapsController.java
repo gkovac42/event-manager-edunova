@@ -10,6 +10,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import goran.model.Location;
+import java.awt.Image;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,6 +23,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageOutputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -101,21 +110,48 @@ public class GoogleMapsController {
         return null;
     }
 
-    public void downloadMap(String lat, String lng, int zoomLevel, JLabel lblMap) {
+    public void openOrDownloadMap(Location location, int zoomLevel, JLabel lblMap) {
 
         Thread t = new Thread(() -> {
-            
-            String imageUrl = "http://maps.googleapis.com/maps/api/staticmap?center="
-                    + lat + ",%20" + lng + "&zoom=" + zoomLevel + "&size=" + lblMap.getWidth()+ "x" + lblMap.getHeight()
-                    + "&scale=1&markers=" + lat + ",%20" + lng + "&sensor=true";
+
             try {
-                
-                URL url = new URL(imageUrl);
-                lblMap.setIcon(new ImageIcon(new ImageIcon(url).getImage().
-                        getScaledInstance(lblMap.getWidth(), lblMap.getHeight(), java.awt.Image.SCALE_SMOOTH)));
-                
-            } catch (MalformedURLException ex) {
+                File sourceImage = new File(location.getId() + ".png");
+                Image image = ImageIO.read(sourceImage);
+                lblMap.setIcon(new ImageIcon(image.getScaledInstance(lblMap.getWidth(), lblMap.getHeight(), Image.SCALE_SMOOTH)));
+            } catch (Exception e) {
+
+                String imageUrl = "http://maps.googleapis.com/maps/api/staticmap?center="
+                        + location.getLat() + ",%20" + location.getLng() + "&zoom=" + zoomLevel + "&size=" + lblMap.getWidth() + "x" + lblMap.getHeight()
+                        + "&scale=1&markers=" + location.getLat() + ",%20" + location.getLng() + "&sensor=true";
+                try {
+
+                    URL url = new URL(imageUrl);
+                    InputStream in = new BufferedInputStream(url.openStream());
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    byte[] buf = new byte[1024];
+                    int n = 0;
+                    while (-1 != (n = in.read(buf))) {
+                        out.write(buf, 0, n);
+                    }
+                    out.close();
+                    in.close();
+                    byte[] response = out.toByteArray();
+
+                    FileOutputStream fos = new FileOutputStream(location.getId() + ".png");
+                    fos.write(response);
+                    fos.close();
+
+                    File sourceImage = new File(location.getId() + ".png");
+                    Image image = ImageIO.read(sourceImage);
+
+                    lblMap.setIcon(new ImageIcon(image.getScaledInstance(lblMap.getWidth(), lblMap.getHeight(), Image.SCALE_SMOOTH)));
+
+                } catch (MalformedURLException ex) {
+                } catch (IOException ex) {
+                    Logger.getLogger(GoogleMapsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+
         });
 
         t.start();

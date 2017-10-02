@@ -864,7 +864,7 @@ public class EventsPanel extends javax.swing.JPanel {
             } else {
 
                 lblEventLocation.setText(event.getLocation().toString());
-                ctrlMap.downloadMap(event.getLocation().getLat(), event.getLocation().getLng(), 14, lblMap);
+                ctrlMap.openOrDownloadMap(event.getLocation(), 14, lblMap);
             }
 
             if (event.getStartDate() == null) {
@@ -995,7 +995,7 @@ public class EventsPanel extends javax.swing.JPanel {
 
             event.setLocation(location);
             ctrlEvent.save(event);
-            ctrlMap.downloadMap(location.getLat(), location.getLng(), 14, lblMap);
+            ctrlMap.openOrDownloadMap(location, 14, lblMap);
 
             lblEventLocation.setText(location.toString());
 
