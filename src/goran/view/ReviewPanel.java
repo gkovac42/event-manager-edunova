@@ -237,11 +237,6 @@ public class ReviewPanel extends javax.swing.JPanel {
         tblTickets.setRowHeight(24);
         tblTickets.getColumnModel().getColumn(0).setPreferredWidth(250);
         tblTickets.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        tblTickets.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblTicketsMouseClicked(evt);
-            }
-        });
         paneTickets.setViewportView(tblTickets);
 
         add(paneTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 380));
@@ -459,10 +454,6 @@ public class ReviewPanel extends javax.swing.JPanel {
             ExcelMaker.eventsToExcel(ctrlEvent.getOrderedList(event, "name"));
         }
     }//GEN-LAST:event_btnExportToExcelActionPerformed
-
-    private void tblTicketsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTicketsMouseClicked
-
-    }//GEN-LAST:event_tblTicketsMouseClicked
 
     private void btnJumpToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJumpToActionPerformed
         if (paneOrders.isVisible()) {

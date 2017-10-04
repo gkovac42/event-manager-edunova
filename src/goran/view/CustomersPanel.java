@@ -12,6 +12,8 @@ import goran.controller.InputController;
 import goran.util.TxtUtil;
 import goran.model.Customer;
 import goran.util.ExcelMaker;
+import goran.NaseljaRH;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Goran
  */
 public class CustomersPanel extends javax.swing.JPanel {
-
+    
     private Customer customer;
     private HibernateController<Customer> ctrlCustomer;
 
@@ -31,18 +33,26 @@ public class CustomersPanel extends javax.swing.JPanel {
         customer = new Customer();
         ctrlCustomer = new HibernateController<>();
         updateCustomers();
+        updateMjesta();
     }
-
+    
     public Customer getCustomer() {
         return ctrlCustomer.getList(customer).get(tblCustomers.convertRowIndexToModel(tblCustomers.getSelectedRow()));
     }
-
+    
+    private void updateMjesta() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cmbMjesta.getModel();
+        for (String mjesto : NaseljaRH.naselja) {
+            model.addElement(mjesto);
+        }
+    }
+    
     private void updateCustomers() {
-
+        
         DefaultTableModel model = (DefaultTableModel) tblCustomers.getModel();
         model.setRowCount(0);
         Object rowData[] = new Object[5];
-
+        
         for (Customer customer : ctrlCustomer.getList(customer)) {
             rowData[0] = customer.getFirstName();
             rowData[1] = customer.getLastName();
@@ -52,15 +62,15 @@ public class CustomersPanel extends javax.swing.JPanel {
             model.addRow(rowData);
         }
     }
-
+    
     private void findCustomers() {
-
+        
         DefaultTableModel model = (DefaultTableModel) tblCustomers.getModel();
         model.setRowCount(0);
         Object rowData[] = new Object[5];
-
+        
         String findBy = "";
-
+        
         switch (cmbFindBy.getSelectedItem().toString()) {
             case "IME":
                 findBy = "firstName";
@@ -77,9 +87,9 @@ public class CustomersPanel extends javax.swing.JPanel {
             case "MJESTO":
                 findBy = "locality";
                 break;
-
+            
         }
-
+        
         for (Customer customer : ctrlCustomer.find(customer, findBy, txtFindCustomer.getText())) {
             rowData[0] = customer.getFirstName();
             rowData[1] = customer.getLastName();
@@ -99,7 +109,6 @@ public class CustomersPanel extends javax.swing.JPanel {
 
         frameCustomersUtil = new javax.swing.JFrame();
         pnlUtil = new javax.swing.JPanel();
-        txtLocality = new javax.swing.JTextField();
         btnConfirm = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         txtFirstName = new javax.swing.JTextField();
@@ -112,6 +121,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         lblError = new javax.swing.JLabel();
+        cmbMjesta = new javax.swing.JComboBox<>();
         pnlUtilTitle = new MotionPanel(frameCustomersUtil);
         lblCustomersUtil = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -136,16 +146,6 @@ public class CustomersPanel extends javax.swing.JPanel {
         pnlUtil.setBackground(new java.awt.Color(60, 60, 70));
         pnlUtil.setPreferredSize(new java.awt.Dimension(550, 380));
         pnlUtil.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtLocality.setBackground(new java.awt.Color(153, 153, 153));
-        txtLocality.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
-        txtLocality.setForeground(new java.awt.Color(255, 255, 255));
-        txtLocality.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmActionPerformed(evt);
-            }
-        });
-        pnlUtil.add(txtLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 300, 40));
 
         btnConfirm.setBackground(new java.awt.Color(0, 0, 0));
         btnConfirm.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -225,7 +225,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("IME");
-        pnlUtil.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, 40));
+        pnlUtil.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 80, 40));
 
         jLabel9.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -245,6 +245,15 @@ public class CustomersPanel extends javax.swing.JPanel {
         lblError.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblError.setForeground(new java.awt.Color(255, 0, 0));
         pnlUtil.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 170, 40));
+
+        cmbMjesta.setBackground(new java.awt.Color(120, 120, 120));
+        cmbMjesta.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        cmbMjesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMjestaActionPerformed(evt);
+            }
+        });
+        pnlUtil.add(cmbMjesta, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 300, 40));
 
         frameCustomersUtil.getContentPane().add(pnlUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 400, 310));
 
@@ -404,7 +413,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindCustomerActionPerformed
-
+        
         if (txtFindCustomer.getText().equals("")) {
             updateCustomers();
         } else {
@@ -413,65 +422,71 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnFindCustomerActionPerformed
 
     private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
-
+        
         lblCustomersUtil.setText(TxtUtil.ADD_CUSTOMER);
         txtFirstName.setText("");
         txtLastName.setText("");
         txtEmail.setText("");
         txtAddress.setText("");
-        txtLocality.setText("");
-
+        cmbMjesta.setSelectedItem(null);
+        
         frameCustomersUtil.setVisible(true);
         frameCustomersUtil.setLocationRelativeTo(this);
     }//GEN-LAST:event_btnAddCustomerActionPerformed
 
     private void btnEditCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCustomerActionPerformed
-
+        
         try {
-
+            
             customer = ctrlCustomer.getList(customer).get(tblCustomers.convertRowIndexToModel(tblCustomers.getSelectedRow()));
-
+            
             lblCustomersUtil.setText(TxtUtil.EDIT_CUSTOMER);
             txtFirstName.setText(customer.getFirstName());
             txtLastName.setText(customer.getLastName());
             txtEmail.setText(customer.getEmail());
             txtAddress.setText(customer.getAddress());
-            txtLocality.setText(customer.getLocality());
-
+            //txtLocality.setText(cmbMjesta.getSelectedItem());
+            DefaultComboBoxModel model = (DefaultComboBoxModel) cmbMjesta.getModel();
+            for (int i = 0; i < model.getSize(); i++) {
+                if (model.getElementAt(i).equals(customer.getLocality())) {
+                    cmbMjesta.setSelectedItem(model.getElementAt(i));
+                }
+            }
+            
             frameCustomersUtil.setVisible(true);
             frameCustomersUtil.setLocationRelativeTo(this);
-
+            
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnEditCustomerActionPerformed
 
     private void btnRemoveCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveCustomerActionPerformed
-
+        
         try {
-
+            
             customer = ctrlCustomer.getList(customer).get(tblCustomers.convertRowIndexToModel(tblCustomers.getSelectedRow()));
             ctrlCustomer.delete(customer);
             updateCustomers();
             customer = new Customer();
-
+            
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnRemoveCustomerActionPerformed
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
-
+        
         customer.setFirstName(txtFirstName.getText());
         customer.setLastName(txtLastName.getText());
         customer.setEmail(txtEmail.getText());
         customer.setAddress(txtAddress.getText());
-        customer.setLocality(txtLocality.getText());
-
+        customer.setLocality(cmbMjesta.getSelectedItem().toString());
+        
         if (InputController.customerInputError(customer)) {
-
+            
             lblError.setText(TxtUtil.INPUT_ERROR);
-
+            
         } else {
-
+            
             ctrlCustomer.save(customer);
             updateCustomers();
             lblError.setText("");
@@ -481,7 +496,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-
+        
         lblError.setText("");
         frameCustomersUtil.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
@@ -491,13 +506,18 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnExportToExcelActionPerformed
 
     private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
-
+        
         MainFrame.pnlOrders.jumpToCustomer(getCustomer());
         MainFrame.setActivePanel(MainFrame.pnlOrders);
     }//GEN-LAST:event_btnOrderActionPerformed
 
-    public void applyTheme() {
+    private void cmbMjestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMjestaActionPerformed
+        
 
+    }//GEN-LAST:event_cmbMjestaActionPerformed
+    
+    public void applyTheme() {
+        
         setBackground(Theme.color2);
         btnAddCustomer.setBackground(Theme.color3);
         btnRemoveCustomer.setBackground(Theme.color3);
@@ -514,7 +534,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         txtLastName.setBackground(Theme.color4);
         txtAddress.setBackground(Theme.color4);
         txtEmail.setBackground(Theme.color4);
-        txtLocality.setBackground(Theme.color4);
+        //txtLocality.setBackground(Theme.color4);
         btnConfirm.setBackground(Theme.color3);
         btnCancel.setBackground(Theme.color3);
         txtFindCustomer.setForeground(Theme.font1);
@@ -522,7 +542,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         txtLastName.setForeground(Theme.font1);
         txtEmail.setForeground(Theme.font1);
         txtAddress.setForeground(Theme.font1);
-        txtLocality.setForeground(Theme.font1);
+        //txtLocality.setForeground(Theme.font1);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -535,6 +555,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnOrder;
     private javax.swing.JButton btnRemoveCustomer;
     private javax.swing.JComboBox<String> cmbFindBy;
+    private javax.swing.JComboBox<String> cmbMjesta;
     private javax.swing.JFrame frameCustomersUtil;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -553,6 +574,5 @@ public class CustomersPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtFindCustomer;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;
-    private javax.swing.JTextField txtLocality;
     // End of variables declaration//GEN-END:variables
 }

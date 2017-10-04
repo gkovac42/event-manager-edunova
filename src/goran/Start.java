@@ -5,9 +5,8 @@
  */
 package goran;
 
-import goran.view.LoadingFrame;
 import goran.view.MainFrame;
-import java.awt.event.WindowEvent;
+import goran.view.StartFrame;
 
 /**
  *
@@ -17,23 +16,6 @@ public class Start {
 
     public Start() {
 
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
         //new LoadData();
         new MainFrame().setVisible(true);
 
@@ -41,17 +23,18 @@ public class Start {
 
     public static void main(String[] args) {
 
-        LoadingFrame loading = new LoadingFrame();
-        loading.setVisible(true);
-
         try {
-        new Start();
-        
-        } catch (Exception e) {
-            System.exit(0);
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
         }
-        
-        loading.dispose();
+
+        new StartFrame().setVisible(true);
+
     }
 
 }

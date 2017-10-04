@@ -26,7 +26,6 @@ import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageOutputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 

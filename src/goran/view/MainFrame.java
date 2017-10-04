@@ -7,7 +7,9 @@ package goran.view;
 
 import goran.util.MotionPanel;
 import goran.util.Theme;
+import java.awt.Color;
 import java.io.IOException;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
@@ -29,6 +31,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         
         initComponents();
+        getRootPane().setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.DARK_GRAY));
         panelPosition = new AbsoluteConstraints(100, 40, 700, 560);
         pnlEvents = new EventsPanel();
         getContentPane().add(pnlEvents, panelPosition); 
