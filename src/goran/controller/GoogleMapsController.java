@@ -48,6 +48,7 @@ public class GoogleMapsController {
                     + ",+" + URLEncoder.encode(location.getLocality(), "UTF-8")
                     + ",+" + URLEncoder.encode(location.getCountry(), "UTF-8")
                     + "&key=" + API_KEY;
+            
 
         } catch (UnsupportedEncodingException ex) {
         }
@@ -109,12 +110,12 @@ public class GoogleMapsController {
         return null;
     }
 
-    public void openOrDownloadMap(Location location, int zoomLevel, JLabel lblMap) {
-
+    public void openOrDownloadMap(Location location, int zoomLevel, JLabel lblMap, String type) {
+        
         Thread t = new Thread(() -> {
 
             try {
-                File sourceImage = new File(location.getId() + ".png");
+                File sourceImage = new File("data/maps/" + location.getId() + type + ".png");
                 Image image = ImageIO.read(sourceImage);
                 lblMap.setIcon(new ImageIcon(image.getScaledInstance(lblMap.getWidth(), lblMap.getHeight(), Image.SCALE_SMOOTH)));
             } catch (Exception e) {
@@ -122,6 +123,7 @@ public class GoogleMapsController {
                 String imageUrl = "http://maps.googleapis.com/maps/api/staticmap?center="
                         + location.getLat() + ",%20" + location.getLng() + "&zoom=" + zoomLevel + "&size=" + lblMap.getWidth() + "x" + lblMap.getHeight()
                         + "&scale=1&markers=" + location.getLat() + ",%20" + location.getLng() + "&sensor=true";
+                
                 try {
 
                     URL url = new URL(imageUrl);
@@ -136,11 +138,11 @@ public class GoogleMapsController {
                     in.close();
                     byte[] response = out.toByteArray();
 
-                    FileOutputStream fos = new FileOutputStream(location.getId() + ".png");
+                    FileOutputStream fos = new FileOutputStream("data/maps/" + location.getId() + type + ".png");
                     fos.write(response);
                     fos.close();
 
-                    File sourceImage = new File(location.getId() + ".png");
+                    File sourceImage = new File("data/maps/" + location.getId() + type + ".png");
                     Image image = ImageIO.read(sourceImage);
 
                     lblMap.setIcon(new ImageIcon(image.getScaledInstance(lblMap.getWidth(), lblMap.getHeight(), Image.SCALE_SMOOTH)));

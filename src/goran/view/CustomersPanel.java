@@ -13,6 +13,8 @@ import goran.util.TxtUtil;
 import goran.model.Customer;
 import goran.util.ExcelMaker;
 import goran.NaseljaRH;
+import java.util.ArrayList;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,12 +26,18 @@ public class CustomersPanel extends javax.swing.JPanel {
     
     private Customer customer;
     private HibernateController<Customer> ctrlCustomer;
+    
+    ArrayList<String> listMjesta = new ArrayList<>();
 
     /**
      * Creates new form CustomerPanel
      */
     public CustomersPanel() {
         initComponents();
+        frameCustomersUtil.getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color1, Theme.color2));
+        
+        listMjesta = (ArrayList<String>) NaseljaRH.naselja;
+        
         customer = new Customer();
         ctrlCustomer = new HibernateController<>();
         updateCustomers();
@@ -512,7 +520,6 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnOrderActionPerformed
 
     private void cmbMjestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMjestaActionPerformed
-        
 
     }//GEN-LAST:event_cmbMjestaActionPerformed
     

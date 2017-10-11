@@ -6,7 +6,7 @@
 package goran.util;
 
 import goran.model.Order;
-import goran.model.Ticket;
+import goran.model.OrderedTicket;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +25,7 @@ public class PdfMaker {
 
     public static void savePdf(Order order) {
 
+        //String FILEPATH = System.getProperty("user.dir") + "\\orders_pdf\\" + order.getId() + ".pdf";
         try (PDDocument document = new PDDocument()) {
 
             PDPage page = new PDPage();
@@ -46,8 +47,9 @@ public class PdfMaker {
             contentStream.showText("--------------------------------------------------");
             contentStream.newLine();
 
-            for (Ticket t : order.getTickets()) {
-                contentStream.showText(t.getName() + " x" + t.getQuantity() + " = " + new DecimalFormat("#.00").format(t.getTotalPrice()) + "kn");
+            for (OrderedTicket t : order.getTickets()) {
+                contentStream.showText(t.getTicket().getName() + " x" + t.getQuantity() + " = "
+                        + new DecimalFormat("#.00").format(t.getTicket().getTotalPrice()) + "kn");
                 contentStream.newLine();
             }
 
@@ -57,7 +59,7 @@ public class PdfMaker {
 
             contentStream.endText();
             contentStream.close();  // Stream must be closed before saving document.
-            document.save(order.getId() + ".pdf");
+            document.save("data/pdf/" + order.getId() + ".pdf");
         } catch (IOException ioEx) {
             err.println(
                     "Exception while trying to create simple document - " + ioEx);
@@ -69,7 +71,7 @@ public class PdfMaker {
 
         if (Desktop.isDesktopSupported()) {
             try {
-                File f = new File(order.getId() + ".pdf");
+                File f = new File("data/pdf/" + order.getId() + ".pdf");
                 Desktop.getDesktop().open(f);
             } catch (IOException ex) {
                 // no application registered for PDFs

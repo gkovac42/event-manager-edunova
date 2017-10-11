@@ -5,9 +5,9 @@
  */
 package goran.view;
 
+import goran.util.HibernateUtil;
 import goran.util.MotionPanel;
 import goran.util.Theme;
-import java.awt.Color;
 import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -31,7 +31,6 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         
         initComponents();
-        getRootPane().setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.DARK_GRAY));
         panelPosition = new AbsoluteConstraints(100, 40, 700, 560);
         pnlEvents = new EventsPanel();
         getContentPane().add(pnlEvents, panelPosition); 
@@ -43,6 +42,7 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(pnlLocations, panelPosition);
         pnlOrders = new OrdersPanel();
         getContentPane().add(pnlOrders, panelPosition);
+        lblUserName.setText(StartFrame.getUsername() + ")");
         
         setActivePanel(pnlEvents);
     }
@@ -62,6 +62,8 @@ public class MainFrame extends javax.swing.JFrame {
         lblTitle = new javax.swing.JLabel();
         lblMinimize = new javax.swing.JLabel();
         btnGit = new javax.swing.JButton();
+        lblUserName = new javax.swing.JLabel();
+        lblTitle2 = new javax.swing.JLabel();
         pnlSide = new MotionPanel(this);
         btnEvents = new javax.swing.JButton();
         btnReview = new javax.swing.JButton();
@@ -166,6 +168,15 @@ public class MainFrame extends javax.swing.JFrame {
         });
         pnlTitle.add(btnGit, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, 100, 20));
 
+        lblUserName.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblUserName.setForeground(new java.awt.Color(255, 255, 255));
+        pnlTitle.add(lblUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 150, 40));
+
+        lblTitle2.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTitle2.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitle2.setText("(KORISNIK :");
+        pnlTitle.add(lblTitle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 90, 40));
+
         getContentPane().add(pnlTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 40));
 
         pnlSide.setBackground(new java.awt.Color(0, 0, 0));
@@ -209,7 +220,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnCustomers.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnCustomers.setForeground(new java.awt.Color(255, 255, 255));
         btnCustomers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/menu_users.png"))); // NOI18N
-        btnCustomers.setText("KORISNICI");
+        btnCustomers.setText("OSOBE");
         btnCustomers.setBorder(null);
         btnCustomers.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCustomers.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -270,7 +281,6 @@ public class MainFrame extends javax.swing.JFrame {
         panel.setVisible(true);
 
     }
-   
        
     private void btnReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewActionPerformed
         pnlReview.updateTickets();
@@ -339,7 +349,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblLightSwitchMouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        
+        HibernateUtil.getSession().close();
     }//GEN-LAST:event_formWindowClosed
 
     private void btnLocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocationsActionPerformed
@@ -367,6 +377,7 @@ public class MainFrame extends javax.swing.JFrame {
         lblMinimize.setBackground(Theme.color1);
         lblClose.setBackground(Theme.color1);
         lblLightSwitch.setBackground(Theme.color1);
+        getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color1, Theme.color2));
 
         pnlSide.setBackground(Theme.color3);
         btnEvents.setBackground(Theme.color3);
@@ -397,6 +408,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblLightSwitch;
     private javax.swing.JLabel lblMinimize;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblTitle2;
+    private javax.swing.JLabel lblUserName;
     private javax.swing.JPanel pnlSide;
     private javax.swing.JPanel pnlTitle;
     // End of variables declaration//GEN-END:variables

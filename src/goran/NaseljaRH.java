@@ -44,13 +44,14 @@ public class NaseljaRH {
             
             for (int i = 0; i < mjesta.size(); i++) {
                 JsonObject mjesto = mjesta.get(i).getAsJsonObject();
-                String naziv = mjesto.get("mjesto").getAsString();
+                String naziv = mjesto.get("mjesto").getAsString() + "(" + mjesto.get("postanskiBroj") + ")";
+                naziv = naziv.replace("\"", "");
                 NaseljaRH.naselja.add(naziv);
+                System.out.println(naziv);
                 
             }
-            for (String s : NaseljaRH.naselja) {
-                System.out.println(s);
-            }
+            
+            
             
         } catch (MalformedURLException ex) {
             Logger.getLogger(NaseljaRH.class.getName()).log(Level.SEVERE, null, ex);

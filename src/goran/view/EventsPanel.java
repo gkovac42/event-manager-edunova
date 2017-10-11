@@ -20,7 +20,10 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
@@ -38,15 +41,13 @@ public class EventsPanel extends javax.swing.JPanel {
     private GoogleMapsController ctrlMap;
     private DatePicker startDatePicker, endDatePicker;
     private SimpleDateFormat sdf;
-
     private String sortEvents;
 
     public EventsPanel() {
 
         initComponents();
         initDateComponents();
-
-        sortEvents = "name";
+        drawBorders();
 
         event = new Event();
         location = new Location();
@@ -59,6 +60,10 @@ public class EventsPanel extends javax.swing.JPanel {
         lstEvents.setComponentPopupMenu(eventsMenu);
         menuButtonGroup.setSelected(mnuName.getModel(), true);
 
+        addEventSearchListener();
+        addLocationSearchListener();
+
+        sortEvents = "name";
         updateEvents(sortEvents);
     }
 
@@ -145,7 +150,7 @@ public class EventsPanel extends javax.swing.JPanel {
         lblErrorLocation = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         lstLocations = new javax.swing.JList<>();
-        btnFindLocation = new javax.swing.JButton();
+        lblSearch1 = new javax.swing.JLabel();
         pnlLocationsUtilTitle = new MotionPanel(frameLocationsUtil);
         lblLocations = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -183,7 +188,7 @@ public class EventsPanel extends javax.swing.JPanel {
         lblMap = new javax.swing.JLabel();
         lblTitle7 = new javax.swing.JLabel();
         txtFindEvent = new javax.swing.JTextField();
-        btnFindEvent = new javax.swing.JButton();
+        lblSearch = new javax.swing.JLabel();
 
         frameEventsUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameEventsUtil.setAlwaysOnTop(true);
@@ -418,7 +423,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnFindLocationActionPerformed(evt);
             }
         });
-        pnlLocationsUtilMain.add(txtFindLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 320, 40));
+        pnlLocationsUtilMain.add(txtFindLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 340, 40));
 
         lblErrorLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblErrorLocation.setForeground(new java.awt.Color(255, 0, 0));
@@ -431,19 +436,9 @@ public class EventsPanel extends javax.swing.JPanel {
 
         pnlLocationsUtilMain.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 380, 260));
 
-        btnFindLocation.setBackground(new java.awt.Color(0, 0, 0));
-        btnFindLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnFindLocation.setForeground(new java.awt.Color(255, 255, 255));
-        btnFindLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
-        btnFindLocation.setBorder(null);
-        btnFindLocation.setFocusPainted(false);
-        btnFindLocation.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnFindLocation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindLocationActionPerformed(evt);
-            }
-        });
-        pnlLocationsUtilMain.add(btnFindLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 50, 40));
+        lblSearch1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSearch1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
+        pnlLocationsUtilMain.add(lblSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 40, 40));
 
         frameLocationsUtil.getContentPane().add(pnlLocationsUtilMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 400, 380));
 
@@ -741,7 +736,7 @@ public class EventsPanel extends javax.swing.JPanel {
         lblTitle6.setText("OPŠIRNIJE");
         add(lblTitle6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 220, 30));
 
-        lblMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblMap.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.darkGray));
         add(lblMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 350, 360));
 
         lblTitle7.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -757,21 +752,11 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnFindEventActionPerformed(evt);
             }
         });
-        add(txtFindEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 260, 40));
+        add(txtFindEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 280, 40));
 
-        btnFindEvent.setBackground(new java.awt.Color(0, 0, 0));
-        btnFindEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnFindEvent.setForeground(new java.awt.Color(255, 255, 255));
-        btnFindEvent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
-        btnFindEvent.setBorder(null);
-        btnFindEvent.setFocusPainted(false);
-        btnFindEvent.setPreferredSize(new java.awt.Dimension(80, 80));
-        btnFindEvent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindEventActionPerformed(evt);
-            }
-        });
-        add(btnFindEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 50, 40));
+        lblSearch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
+        add(lblSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 40, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditEventActionPerformed
@@ -864,7 +849,7 @@ public class EventsPanel extends javax.swing.JPanel {
             } else {
 
                 lblEventLocation.setText(event.getLocation().toString());
-                ctrlMap.openOrDownloadMap(event.getLocation(), 14, lblMap);
+                ctrlMap.openOrDownloadMap(event.getLocation(), 14, lblMap, "S");
             }
 
             if (event.getStartDate() == null) {
@@ -995,7 +980,7 @@ public class EventsPanel extends javax.swing.JPanel {
 
             event.setLocation(location);
             ctrlEvent.save(event);
-            ctrlMap.openOrDownloadMap(location, 14, lblMap);
+            ctrlMap.openOrDownloadMap(location, 14, lblMap, "S");
 
             lblEventLocation.setText(location.toString());
 
@@ -1107,7 +1092,6 @@ public class EventsPanel extends javax.swing.JPanel {
         btnAddTicketToEvent.setBackground(Theme.color3);
         btnRemoveTicket.setBackground(Theme.color3);
         btnEditTicket.setBackground(Theme.color3);
-        btnFindEvent.setBackground(Theme.color3);
         lstEvents.setBackground(Theme.color4);
         lstEvents.setForeground(Theme.font1);
         lstTickets.setBackground(Theme.color4);
@@ -1128,7 +1112,6 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlLocationsUtilMain.setBackground(Theme.color2);
         btnConfirmLocation.setBackground(Theme.color3);
         btnCancelLocation.setBackground(Theme.color3);
-        btnFindLocation.setBackground(Theme.color3);
         lstLocations.setBackground(Theme.color4);
         lstLocations.setForeground(Theme.font1);
         txtFindLocation.setBackground(Theme.color4);
@@ -1168,8 +1151,6 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnConfirmTicket;
     private javax.swing.JButton btnEditEvent;
     private javax.swing.JButton btnEditTicket;
-    private javax.swing.JButton btnFindEvent;
-    private javax.swing.JButton btnFindLocation;
     private javax.swing.JButton btnRemoveEvent;
     private javax.swing.JButton btnRemoveTicket;
     private javax.swing.JPopupMenu eventsMenu;
@@ -1199,6 +1180,8 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblEventsUtil;
     private javax.swing.JLabel lblLocations;
     private javax.swing.JLabel lblMap;
+    private javax.swing.JLabel lblSearch;
+    private javax.swing.JLabel lblSearch1;
     private javax.swing.JLabel lblTicketsUtil;
     private javax.swing.JLabel lblTitle5;
     private javax.swing.JLabel lblTitle6;
@@ -1239,5 +1222,73 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlDateTimeUtil.add(startDatePicker, new AbsoluteConstraints(10, 30));
         pnlDateTimeUtil.add(endDatePicker, new AbsoluteConstraints(10, 100));
         sdf = new SimpleDateFormat("dd.MM.yyyy");
+    }
+
+    private void addEventSearchListener() {
+
+        txtFindEvent.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                DefaultListModel<Event> model = new DefaultListModel<>();
+                lstEvents.setModel(model);
+                for (Event event : ctrlEvent.find(event, sortEvents, txtFindEvent.getText())) {
+                    model.addElement(event);
+
+                }
+
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                DefaultListModel<Event> model = new DefaultListModel<>();
+                lstEvents.setModel(model);
+                for (Event event : ctrlEvent.find(event, sortEvents, txtFindEvent.getText())) {
+                    model.addElement(event);
+
+                }
+
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+    }
+
+    private void addLocationSearchListener() {
+
+        txtFindLocation.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                DefaultListModel<Location> model = new DefaultListModel<>();
+                lstLocations.setModel(model);
+                for (Location location : ctrlLocation.find(location, "name", txtFindLocation.getText())) {
+                    model.addElement(location);
+                }
+
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                DefaultListModel<Location> model = new DefaultListModel<>();
+                lstLocations.setModel(model);
+                for (Location location : ctrlLocation.find(location, "name", txtFindLocation.getText())) {
+                    model.addElement(location);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+    }
+
+    private void drawBorders() {
+        frameEventsUtil.getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color1, Theme.color2));
+        frameLocationsUtil.getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color1, Theme.color2));
+        frameDateUtil.getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color1, Theme.color2));
+        frameTicketsUtil.getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color1, Theme.color2));
     }
 }

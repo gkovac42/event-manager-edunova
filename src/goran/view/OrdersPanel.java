@@ -10,6 +10,7 @@ import goran.controller.HibernateController;
 import goran.model.Order;
 import goran.model.Ticket;
 import goran.model.Customer;
+import goran.model.OrderedTicket;
 import goran.util.PdfMaker;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -25,9 +26,10 @@ public class OrdersPanel extends javax.swing.JPanel {
     private Order order;
     private Customer customer;
     private Ticket ticket;
-    private Ticket ordTicket;
+    private OrderedTicket ordTicket;
     private HibernateController<Customer> ctrlCustomer;
     private HibernateController<Ticket> ctrlTicket;
+    private HibernateController<OrderedTicket> ctrlOrdTicket;
     private HibernateController<Order> ctrlOrder;
     private String sortTickets;
     private String sortOrders;
@@ -41,11 +43,12 @@ public class OrdersPanel extends javax.swing.JPanel {
         ticket = new Ticket();
         ctrlCustomer = new HibernateController<>();
         ctrlTicket = new HibernateController<>();
+        ctrlOrdTicket = new HibernateController<>();
         ctrlOrder = new HibernateController<>();
-        
+
         sortTickets = "name";
         sortOrders = "id";
-        
+
         lstTickets.setComponentPopupMenu(ticketsMenu);
         ticketsMenuButtonGroup.setSelected(mnuName.getModel(), true);
         lstOrders.setComponentPopupMenu(ordersMenu);
@@ -85,9 +88,9 @@ public class OrdersPanel extends javax.swing.JPanel {
 
     private void updateOrderTickets() {
 
-        DefaultListModel<Ticket> model = new DefaultListModel<>();
+        DefaultListModel<OrderedTicket> model = new DefaultListModel<>();
         lstOrderTickets.setModel(model);
-        for (Ticket ticket : order.getTickets()) {
+        for (OrderedTicket ticket : order.getTickets()) {
             model.addElement(ticket);
         }
     }
@@ -103,11 +106,11 @@ public class OrdersPanel extends javax.swing.JPanel {
 
     private void calcTotalPrice() {
 
-        DefaultListModel<Ticket> model = (DefaultListModel<Ticket>) lstOrderTickets.getModel();
+        DefaultListModel<OrderedTicket> model = (DefaultListModel<OrderedTicket>) lstOrderTickets.getModel();
         Double tp = 0.0;
 
         for (int i = 0; i < model.getSize(); i++) {
-            tp += (model.get(i).getPrice() * model.get(i).getQuantity());
+            tp += (model.get(i).getTicket().getPrice() * model.get(i).getQuantity());
         }
 
         if (tp == 0.0) {
@@ -117,11 +120,11 @@ public class OrdersPanel extends javax.swing.JPanel {
         }
     }
 
-    private Ticket getExistingTicket(Ticket ticket, List<Ticket> tickets) {
+    private OrderedTicket getExistingTicket(Ticket ticket, List<OrderedTicket> tickets) {
 
-        Ticket exTicket = null;
+        OrderedTicket exTicket = null;
         for (int i = 0; i < tickets.size(); i++) {
-            if (tickets.get(i).getName().equals(ticket.getName())) {
+            if (tickets.get(i).getTicket().getName().equals(ticket.getName())) {
                 exTicket = tickets.get(i);
                 break;
             }
@@ -132,9 +135,9 @@ public class OrdersPanel extends javax.swing.JPanel {
     private void emptyCart() {
 
         DefaultListModel<Ticket> model = (DefaultListModel) lstTickets.getModel();
-        for (Ticket t1 : order.getTickets()) {
+        for (OrderedTicket t1 : order.getTickets()) {
             for (int i = 0; i < model.getSize(); i++) {
-                if (t1.getName().equals(model.get(i).getName())) {
+                if (t1.getTicket().equals(model.get(i))) {
                     model.get(i).setQuantity(model.get(i).getQuantity() + t1.getQuantity());
                     ctrlTicket.save(model.get(i));
                     break;
@@ -142,7 +145,6 @@ public class OrdersPanel extends javax.swing.JPanel {
             }
         }
         lstTickets.repaint();
-
     }
 
     /**
@@ -300,11 +302,6 @@ public class OrdersPanel extends javax.swing.JPanel {
         lstTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstTickets.setForeground(new java.awt.Color(255, 255, 255));
         lstTickets.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lstTickets.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstTicketsValueChanged(evt);
-            }
-        });
         jScrollPane3.setViewportView(lstTickets);
 
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 370, 210));
@@ -313,11 +310,6 @@ public class OrdersPanel extends javax.swing.JPanel {
         lstOrderTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstOrderTickets.setForeground(new java.awt.Color(255, 255, 255));
         lstOrderTickets.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lstOrderTickets.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstOrderTicketsValueChanged(evt);
-            }
-        });
         jScrollPane2.setViewportView(lstOrderTickets);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 370, 120));
@@ -419,11 +411,6 @@ public class OrdersPanel extends javax.swing.JPanel {
         lstOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lstOrders.setForeground(new java.awt.Color(255, 255, 255));
         lstOrders.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lstOrders.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstOrdersMouseClicked(evt);
-            }
-        });
         lstOrders.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstOrdersValueChanged(evt);
@@ -513,7 +500,7 @@ public class OrdersPanel extends javax.swing.JPanel {
             DefaultListModel<Ticket> m = (DefaultListModel) lstTickets.getModel();
             Ticket t = null;
             for (int i = 0; i < m.getSize(); i++) {
-                if (m.get(i).getName().equals(ordTicket.getName())) {
+                if (m.get(i).equals(ordTicket.getTicket())) {
                     t = m.get(i);
                     break;
                 }
@@ -548,10 +535,8 @@ public class OrdersPanel extends javax.swing.JPanel {
             ordTicket = getExistingTicket(ticket, order.getTickets());
 
             if (ordTicket == null) {
-                ordTicket = new Ticket();
-                ordTicket.setName(ticket.getName());
-                ordTicket.setEvent(ticket.getEvent());
-                ordTicket.setPrice(ticket.getPrice());
+                ordTicket = new OrderedTicket();
+                ordTicket.setTicket(ticket);
                 ordTicket.setQuantity(Integer.parseInt(txtQuantity.getText()));
                 order.getTickets().add(ordTicket);
             } else {
@@ -569,7 +554,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         Thread t = new Thread(() -> {
 
             order.setCustomer(customer);
-            ctrlTicket.saveList(order.getTickets());
+            ctrlOrdTicket.saveList(order.getTickets());
             ctrlOrder.save(order);
             PdfMaker.savePdf(order);
             PdfMaker.openPdf(order);
@@ -584,18 +569,6 @@ public class OrdersPanel extends javax.swing.JPanel {
         t.start();
 
     }//GEN-LAST:event_btnFinishOrderActionPerformed
-
-    private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtQuantityActionPerformed
-
-    private void lstOrderTicketsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstOrderTicketsValueChanged
-
-    }//GEN-LAST:event_lstOrderTicketsValueChanged
-
-    private void lstOrdersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstOrdersMouseClicked
-
-    }//GEN-LAST:event_lstOrdersMouseClicked
 
     private void lstOrdersValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstOrdersValueChanged
 
@@ -647,9 +620,9 @@ public class OrdersPanel extends javax.swing.JPanel {
 
             DefaultListModel<Ticket> model = (DefaultListModel) lstTickets.getModel();
 
-            for (Ticket t : order.getTickets()) {
+            for (OrderedTicket t : order.getTickets()) {
                 for (int i = 0; i < model.getSize(); i++) {
-                    if (t.getName().equals(model.get(i).getName())) {
+                    if (t.getTicket().getName().equals(model.get(i).getName())) {
                         model.get(i).setQuantity(model.get(i).getQuantity() + t.getQuantity());
                         ctrlTicket.save(model.get(i));
                         break;
@@ -681,10 +654,6 @@ public class OrdersPanel extends javax.swing.JPanel {
             lblEmail.setText(customer.getEmail());
         }
     }//GEN-LAST:event_cmbCustomerActionPerformed
-
-    private void lstTicketsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstTicketsValueChanged
-
-    }//GEN-LAST:event_lstTicketsValueChanged
 
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
 
@@ -747,6 +716,10 @@ public class OrdersPanel extends javax.swing.JPanel {
         updateTickets(sortTickets);
     }//GEN-LAST:event_mnuQuantityActionPerformed
 
+    private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtQuantityActionPerformed
+
     public void applyTheme() {
         setBackground(Theme.color2);
         btnAdd.setBackground(Theme.color3);
@@ -797,7 +770,7 @@ public class OrdersPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle11;
     private javax.swing.JLabel lblTitle12;
     private javax.swing.JLabel lblTotalPrice;
-    private javax.swing.JList<Ticket> lstOrderTickets;
+    private javax.swing.JList<OrderedTicket> lstOrderTickets;
     private javax.swing.JList<goran.model.Order> lstOrders;
     private javax.swing.JList<Ticket> lstTickets;
     private javax.swing.JRadioButtonMenuItem mnuCustomer;

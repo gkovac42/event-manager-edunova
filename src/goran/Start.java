@@ -5,7 +5,6 @@
  */
 package goran;
 
-import goran.view.MainFrame;
 import goran.view.StartFrame;
 
 /**
@@ -13,13 +12,6 @@ import goran.view.StartFrame;
  * @author Goran
  */
 public class Start {
-
-    public Start() {
-
-        //new LoadData();
-        new MainFrame().setVisible(true);
-
-    }
 
     public static void main(String[] args) {
 
@@ -34,6 +26,8 @@ public class Start {
         }
 
         new StartFrame().setVisible(true);
+        //new LoadData();
+        new NaseljaRH();
 
     }
 

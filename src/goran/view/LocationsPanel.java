@@ -68,8 +68,6 @@ public class LocationsPanel extends javax.swing.JPanel {
         txtLocationLocality = new javax.swing.JTextField();
         txtLocationCountry = new javax.swing.JTextField();
         btnFindOnMap = new javax.swing.JButton();
-        btnZoomOut = new javax.swing.JButton();
-        btnZoomIn = new javax.swing.JButton();
         btnAddLocation = new javax.swing.JButton();
         btnEditLocation = new javax.swing.JButton();
         btnRemoveLocation = new javax.swing.JButton();
@@ -187,38 +185,6 @@ public class LocationsPanel extends javax.swing.JPanel {
         });
         add(btnFindOnMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 290, 40));
 
-        btnZoomOut.setBackground(new java.awt.Color(0, 0, 0));
-        btnZoomOut.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnZoomOut.setForeground(new java.awt.Color(255, 255, 255));
-        btnZoomOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_remove.png"))); // NOI18N
-        btnZoomOut.setBorder(null);
-        btnZoomOut.setBorderPainted(false);
-        btnZoomOut.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        btnZoomOut.setIconTextGap(0);
-        btnZoomOut.setOpaque(false);
-        btnZoomOut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnZoomOutActionPerformed(evt);
-            }
-        });
-        add(btnZoomOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 440, 40, 40));
-
-        btnZoomIn.setBackground(new java.awt.Color(0, 0, 0));
-        btnZoomIn.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnZoomIn.setForeground(new java.awt.Color(255, 255, 255));
-        btnZoomIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_add.png"))); // NOI18N
-        btnZoomIn.setBorder(null);
-        btnZoomIn.setBorderPainted(false);
-        btnZoomIn.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        btnZoomIn.setIconTextGap(0);
-        btnZoomIn.setOpaque(false);
-        btnZoomIn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnZoomInActionPerformed(evt);
-            }
-        });
-        add(btnZoomIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, 40, 40));
-
         btnAddLocation.setBackground(new java.awt.Color(0, 0, 0));
         btnAddLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnAddLocation.setForeground(new java.awt.Color(255, 255, 255));
@@ -270,7 +236,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         });
         add(btnNewLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 170, 50, 40));
 
-        lblMap.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lblMap.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.darkGray));
         lblMap.setPreferredSize(new java.awt.Dimension(460, 460));
         add(lblMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 680, 270));
 
@@ -312,7 +278,7 @@ public class LocationsPanel extends javax.swing.JPanel {
             txtLocationCountry.setText(location.getCountry());
             txtLocationName.setText(location.getName());
 
-            mapControl.openOrDownloadMap(location, 16, lblMap);
+            mapControl.openOrDownloadMap(location, 16, lblMap, "L");
 
             lblError.setText("");
         }
@@ -334,7 +300,7 @@ public class LocationsPanel extends javax.swing.JPanel {
             location.setLat(mapData[0]);
             location.setLng(mapData[1]);
 
-            mapControl.openOrDownloadMap(location, 16, lblMap);
+            mapControl.openOrDownloadMap(location, 16, lblMap, "L");
 
             txtLocationAddress.setText(mapData[3] + " " + mapData[2]);
             txtLocationLocality.setText(mapData[4]);
@@ -343,28 +309,6 @@ public class LocationsPanel extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnFindOnMapActionPerformed
-
-    private void btnZoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomOutActionPerformed
-
-        try {
-
-            mapZoom--;
-            mapControl.openOrDownloadMap(location, mapZoom, lblMap);
-
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnZoomOutActionPerformed
-
-    private void btnZoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomInActionPerformed
-
-        try {
-
-            mapZoom++;
-            mapControl.openOrDownloadMap(location, mapZoom, lblMap);
-
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnZoomInActionPerformed
 
     private void btnAddLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLocationActionPerformed
 
@@ -467,8 +411,6 @@ public class LocationsPanel extends javax.swing.JPanel {
         btnRemoveLocation.setBackground(Theme.color3);
         btnNewLocation.setBackground(Theme.color3);
         btnFindOnMap.setBackground(Theme.color3);
-        btnZoomIn.setBackground(Theme.color3);
-        btnZoomOut.setBackground(Theme.color3);
         txtLocationName.setBackground(Theme.color4);
         txtLocationAddress.setBackground(Theme.color4);
         txtLocationLocality.setBackground(Theme.color4);
@@ -484,8 +426,6 @@ public class LocationsPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnFindOnMap;
     private javax.swing.JButton btnNewLocation;
     private javax.swing.JButton btnRemoveLocation;
-    private javax.swing.JButton btnZoomIn;
-    private javax.swing.JButton btnZoomOut;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblMap;

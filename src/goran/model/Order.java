@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -24,11 +25,11 @@ public class Order extends goran.model.Entity implements Serializable {
 
     @ManyToOne
     private Customer customer;
-    @ManyToMany
-    private List<Ticket> tickets;
+    @OneToMany
+    private List<OrderedTicket> orderedTickets;
     
     public Order() {
-        tickets = new ArrayList<>();
+        orderedTickets = new ArrayList<>();
     }
 
     public Customer getCustomer() {
@@ -39,18 +40,18 @@ public class Order extends goran.model.Entity implements Serializable {
         this.customer = customer;
     }
 
-    public List<Ticket> getTickets() {
-        return tickets;
+    public List<OrderedTicket> getTickets() {
+        return orderedTickets;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+    public void setTickets(List<OrderedTicket> tickets) {
+        this.orderedTickets = tickets;
     }
 
     public String getTotalPrice() {
         double totalPrice = 0;
-        for (Ticket ticket : tickets) {
-            totalPrice += ticket.getPrice() * ticket.getQuantity();
+        for (OrderedTicket t : orderedTickets) {
+            totalPrice += t.getTicket().getPrice() * t.getQuantity();
         }
         return new DecimalFormat("#.00").format(totalPrice) + "kn";
     }

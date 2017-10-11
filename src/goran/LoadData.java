@@ -10,6 +10,7 @@ import goran.model.Customer;
 import goran.model.Event;
 import goran.model.Location;
 import goran.model.Order;
+import goran.model.OrderedTicket;
 import goran.model.Ticket;
 import java.util.List;
 
@@ -23,20 +24,21 @@ public class LoadData {
     private HibernateController<Event> ctrlEvent = new HibernateController<>();
     private HibernateController<Ticket> ctrlTicket = new HibernateController<>();
     private HibernateController<Order> ctrlOrder = new HibernateController<>();
+    private HibernateController<OrderedTicket> ctrlOrderedTicket = new HibernateController<>();
     private HibernateController<Location> ctrlLocation = new HibernateController<>();
 
     public LoadData() {
 
         loadLocations();
         loadEventsTickets();
-        loadCustomersOrders();
+        loadCustomers();
 
     }
 
     private void loadLocations() {
-        
+
         Location l;
-        
+
         for (int i = 0; i < 20; i++) {
             l = new Location();
             l.setName("Lokacija" + i);
@@ -45,12 +47,12 @@ public class LoadData {
             l.setCountry("Država" + i);
             l.setLat(String.valueOf(Math.random() * 100 + 1));
             l.setLng(String.valueOf(Math.random() * 100 + 1));
-            
+
             ctrlLocation.save(l);
-            
+
         }
     }
-    
+
     private void loadEventsTickets() {
 
         Event e;
@@ -79,13 +81,10 @@ public class LoadData {
 
         }
     }
-    
-    private void loadCustomersOrders() {
+
+    private void loadCustomers() {
 
         Customer c;
-        Order o;
-        
-        List<Ticket> tickets = ctrlTicket.getList(new Ticket());
 
         for (int i = 0; i < 100; i++) {
             c = new Customer();
@@ -96,17 +95,8 @@ public class LoadData {
             c.setEmail("email" + i + "@gmail.com");
 
             ctrlCustomer.save(c);
-            
-            for (int j = 0; j < 2; j++) {
-                o = new Order();
-                o.setCustomer(c);
-                o.getTickets().add(tickets.get(i));
-                o.getTickets().add(tickets.get(j));
-                
-                ctrlOrder.save(o);
-                
-            }
+
         }
     }
-    
+
 }
