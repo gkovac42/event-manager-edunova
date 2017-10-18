@@ -85,7 +85,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 if (t.isDeleted()) {
                     continue;
                 }
-                model.addElement(ticket);
+                model.addElement(t);
             }
         } catch (Exception e) {
         }
