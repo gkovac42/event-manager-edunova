@@ -10,6 +10,8 @@ import goran.util.HibernateUtil;
 import goran.util.MotionPanel;
 import goran.util.Theme;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
@@ -355,8 +357,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCloseMouseEntered
 
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
+        HibernateUtil.getSession().close();
+        try {
+            Runtime.getRuntime().exec("cmd /c Taskkill /IM mysqld.exe /F");
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.exit(0);
-
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void lblLightSwitchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLightSwitchMouseExited
@@ -387,6 +394,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         HibernateUtil.getSession().close();
+        try {
+            Runtime.getRuntime().exec("cmd /c Taskkill /IM mysqld.exe /F");
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowClosed
 
     private void btnLocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocationsActionPerformed
@@ -398,7 +410,6 @@ public class MainFrame extends javax.swing.JFrame {
         try {
             Runtime.getRuntime().exec("cmd /c start https://github.com/gkovac42/event-manager-edunova");
         } catch (IOException ex) {
-
         }
     }//GEN-LAST:event_btnGitActionPerformed
 

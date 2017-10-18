@@ -8,7 +8,16 @@ package goran.view;
 import goran.util.MotionPanel;
 import goran.util.Theme;
 import java.awt.Color;
+import java.awt.HeadlessException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
 import javax.swing.BorderFactory;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -17,11 +26,68 @@ import javax.swing.BorderFactory;
 public class StartFrame extends javax.swing.JFrame {
 
     public static String user;
+    public static Process mySQLprocess;
 
     public StartFrame() {
         initComponents();
-        getRootPane().setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.DARK_GRAY));
+
+        drawBorder();
         lblLoading.setVisible(false);
+
+        startMySQL(getMySQLPath());
+    }
+
+    private String getMySQLPath() {
+
+        String path = "";
+        Properties properties = new Properties();
+
+        try {
+
+            FileInputStream in = new FileInputStream("properties");
+            properties.load(in);
+            in.close();
+
+            path = properties.getProperty("mysql_path");
+            return path;
+
+        } catch (IOException iOException) {
+
+            try {
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("All files", "exe");
+
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(filter);
+                fileChooser.setDialogTitle("Odaberite datoteku MySQL servera (mysql\\bin)");
+                fileChooser.setSelectedFile(new File("mysqld.exe"));
+                int userSelection = fileChooser.showSaveDialog(null);
+
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    path = fileChooser.getSelectedFile().getAbsolutePath();
+                    properties.setProperty("mysql_path", path);
+                    FileOutputStream out = new FileOutputStream("properties");
+                    properties.store(out, "MySQL path added.");
+                    return path;
+
+                } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+                    System.exit(0);
+                }
+
+            } catch (HeadlessException | IOException ex) {
+            }
+
+            return null;
+        }
+    }
+
+    private void startMySQL(String path) {
+
+        try {
+            mySQLprocess = Runtime.getRuntime().exec("cmd /c start /B " + path);
+        } catch (IOException ex) {
+            new JOptionPane("Greška pri pokretanju MySQL servera!");
+            System.exit(0);
+        }
     }
 
     /**
@@ -268,4 +334,8 @@ public class StartFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+    private void drawBorder() {
+        getRootPane().setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.DARK_GRAY));
+    }
 }
