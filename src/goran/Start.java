@@ -5,6 +5,7 @@
  */
 package goran;
 
+import goran.util.NaseljaRH;
 import goran.view.StartFrame;
 
 /**

@@ -12,6 +12,9 @@ import goran.controller.HibernateController;
 import goran.controller.InputController;
 import goran.model.Location;
 import javax.swing.DefaultListModel;
+import javax.swing.border.EtchedBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -20,23 +23,27 @@ import javax.swing.DefaultListModel;
 public class LocationsPanel extends javax.swing.JPanel {
 
     private Location location;
-    private HibernateController<Location> hc;
+    private HibernateController<Location> ctrlLocation;
     private GoogleMapsController mapControl;
-    private int mapZoom;
+
     private String sortLocations;
+    private static final int MAP_ZOOM = 16;
+    private static final String MAP_TYPE = "L";
 
     public LocationsPanel() {
 
         initComponents();
+
+        location = new Location();
+        ctrlLocation = new HibernateController<>();
+        mapControl = new GoogleMapsController();
+        sortLocations = "name";
         
         lstLocations.setComponentPopupMenu(locationsMenu);
         menuButtonGroup.setSelected(mnuNam.getModel(), true);
-        location = new Location();
-        hc = new HibernateController<>();
-        mapControl = new GoogleMapsController();
-        sortLocations = "name";
-        mapZoom = 16;
         
+        addLocationSearchListener();
+
         updateLocations(sortLocations);
     }
 
@@ -44,9 +51,25 @@ public class LocationsPanel extends javax.swing.JPanel {
 
         DefaultListModel<Location> model = new DefaultListModel<>();
         lstLocations.setModel(model);
-        for (Location location : hc.getOrderedList(location, orderBy)) {
-            model.addElement(location);
+        for (Location l : ctrlLocation.getOrderedList(location, orderBy)) {
+            model.addElement(l);
         }
+    }
+
+    private void clearUserInput() {
+        txtLocationName.setText("");
+        txtLocationAddress.setText("");
+        txtLocationLocality.setText("");
+        txtLocationCountry.setText("");
+        lblError.setText("");
+        lblMap.setIcon(null);
+    }
+
+    private void getUserInput() {
+        location.setName(txtLocationName.getText());
+        location.setAddress(txtLocationAddress.getText());
+        location.setLocality(txtLocationLocality.getText());
+        location.setCountry(txtLocationCountry.getText());
     }
 
     /**
@@ -78,6 +101,8 @@ public class LocationsPanel extends javax.swing.JPanel {
         lblTitle4 = new javax.swing.JLabel();
         lblError = new javax.swing.JLabel();
         lblTitle6 = new javax.swing.JLabel();
+        txtFindLocation = new javax.swing.JTextField();
+        lblSearch1 = new javax.swing.JLabel();
 
         locationsMenu.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         locationsMenu.setToolTipText("");
@@ -130,7 +155,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(lstLocations);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 380, 150));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 320, 180));
 
         txtLocationName.setBackground(new java.awt.Color(120, 120, 120));
         txtLocationName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
@@ -140,7 +165,7 @@ public class LocationsPanel extends javax.swing.JPanel {
                 btnFindOnMapActionPerformed(evt);
             }
         });
-        add(txtLocationName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 210, 30));
+        add(txtLocationName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, 240, 40));
 
         txtLocationAddress.setBackground(new java.awt.Color(120, 120, 120));
         txtLocationAddress.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
@@ -150,7 +175,7 @@ public class LocationsPanel extends javax.swing.JPanel {
                 btnFindOnMapActionPerformed(evt);
             }
         });
-        add(txtLocationAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 210, 30));
+        add(txtLocationAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 240, 40));
 
         txtLocationLocality.setBackground(new java.awt.Color(120, 120, 120));
         txtLocationLocality.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
@@ -160,7 +185,7 @@ public class LocationsPanel extends javax.swing.JPanel {
                 btnFindOnMapActionPerformed(evt);
             }
         });
-        add(txtLocationLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 210, 30));
+        add(txtLocationLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, 240, 40));
 
         txtLocationCountry.setBackground(new java.awt.Color(120, 120, 120));
         txtLocationCountry.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
@@ -170,20 +195,20 @@ public class LocationsPanel extends javax.swing.JPanel {
                 btnFindOnMapActionPerformed(evt);
             }
         });
-        add(txtLocationCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 210, 30));
+        add(txtLocationCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 450, 240, 40));
 
         btnFindOnMap.setBackground(new java.awt.Color(0, 0, 0));
         btnFindOnMap.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnFindOnMap.setForeground(new java.awt.Color(255, 255, 255));
         btnFindOnMap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_locate.png"))); // NOI18N
-        btnFindOnMap.setText("PRONAĐI NA KARTI");
+        btnFindOnMap.setText("PRONAĐI");
         btnFindOnMap.setBorder(null);
         btnFindOnMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFindOnMapActionPerformed(evt);
             }
         });
-        add(btnFindOnMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 290, 40));
+        add(btnFindOnMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 160, 40));
 
         btnAddLocation.setBackground(new java.awt.Color(0, 0, 0));
         btnAddLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -196,7 +221,7 @@ public class LocationsPanel extends javax.swing.JPanel {
                 btnAddLocationActionPerformed(evt);
             }
         });
-        add(btnAddLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 170, 100, 40));
+        add(btnAddLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 100, 40));
 
         btnEditLocation.setBackground(new java.awt.Color(0, 0, 0));
         btnEditLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -209,7 +234,7 @@ public class LocationsPanel extends javax.swing.JPanel {
                 btnEditLocationActionPerformed(evt);
             }
         });
-        add(btnEditLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 100, 40));
+        add(btnEditLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 100, 40));
 
         btnRemoveLocation.setBackground(new java.awt.Color(0, 0, 0));
         btnRemoveLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -222,48 +247,58 @@ public class LocationsPanel extends javax.swing.JPanel {
                 btnRemoveLocationActionPerformed(evt);
             }
         });
-        add(btnRemoveLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, 100, 40));
+        add(btnRemoveLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 100, 40));
 
         btnNewLocation.setBackground(new java.awt.Color(0, 0, 0));
         btnNewLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnNewLocation.setForeground(new java.awt.Color(255, 255, 255));
         btnNewLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_new.png"))); // NOI18N
+        btnNewLocation.setText("NOVA LOKACIJA");
         btnNewLocation.setBorder(null);
         btnNewLocation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNewLocationActionPerformed(evt);
             }
         });
-        add(btnNewLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 170, 50, 40));
+        add(btnNewLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 450, 180, 40));
 
         lblMap.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.darkGray));
         lblMap.setPreferredSize(new java.awt.Dimension(460, 460));
-        add(lblMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 680, 270));
+        add(lblMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 350, 430));
 
         lblTitle1.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle1.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle1.setText("ADRESA");
-        add(lblTitle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 100, 30));
+        add(lblTitle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 70, 40));
 
         lblTitle2.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle2.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle2.setText("MJESTO");
-        add(lblTitle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 100, 30));
+        add(lblTitle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 70, 40));
 
         lblTitle4.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle4.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle4.setText("NAZIV");
-        add(lblTitle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 30));
+        add(lblTitle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 70, 40));
 
         lblError.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblError.setForeground(new java.awt.Color(255, 0, 0));
         lblError.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 240, 40));
+        add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 240, 40));
 
         lblTitle6.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle6.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle6.setText("DRŽAVA");
-        add(lblTitle6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 100, 30));
+        add(lblTitle6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 70, 40));
+
+        txtFindLocation.setBackground(new java.awt.Color(120, 120, 120));
+        txtFindLocation.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtFindLocation.setForeground(new java.awt.Color(255, 255, 255));
+        add(txtFindLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 280, 40));
+
+        lblSearch1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSearch1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
+        add(lblSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 40, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void lstLocationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstLocationsValueChanged
@@ -278,7 +313,7 @@ public class LocationsPanel extends javax.swing.JPanel {
             txtLocationCountry.setText(location.getCountry());
             txtLocationName.setText(location.getName());
 
-            mapControl.openOrDownloadMap(location, 16, lblMap, "L");
+            mapControl.openOrDownloadMap(location, MAP_ZOOM, lblMap, MAP_TYPE);
 
             lblError.setText("");
         }
@@ -290,17 +325,14 @@ public class LocationsPanel extends javax.swing.JPanel {
 
         try {
 
-            location.setName(txtLocationName.getText());
-            location.setAddress(txtLocationAddress.getText());
-            location.setLocality(txtLocationLocality.getText());
-            location.setCountry(txtLocationCountry.getText());
+            getUserInput();
 
             String[] mapData = mapControl.getGoogleMapsData(mapControl.generateUrl(location));
 
             location.setLat(mapData[0]);
             location.setLng(mapData[1]);
 
-            mapControl.openOrDownloadMap(location, 16, lblMap, "L");
+            mapControl.openOrDownloadMap(location, MAP_ZOOM, lblMap, "L");
 
             txtLocationAddress.setText(mapData[3] + " " + mapData[2]);
             txtLocationLocality.setText(mapData[4]);
@@ -312,10 +344,7 @@ public class LocationsPanel extends javax.swing.JPanel {
 
     private void btnAddLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLocationActionPerformed
 
-        location.setName(txtLocationName.getText());
-        location.setAddress(txtLocationAddress.getText());
-        location.setLocality(txtLocationLocality.getText());
-        location.setCountry(txtLocationCountry.getText());
+        getUserInput();
 
         if (InputController.locationInputError(location)) {
 
@@ -323,7 +352,7 @@ public class LocationsPanel extends javax.swing.JPanel {
 
         } else {
 
-            hc.save(location);
+            ctrlLocation.save(location);
             updateLocations(sortLocations);
             lblError.setText("");
             location = new Location();
@@ -335,10 +364,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         if (lstLocations.getSelectedIndex() == -1) {
         } else {
 
-            location.setName(txtLocationName.getText());
-            location.setAddress(txtLocationAddress.getText());
-            location.setLocality(txtLocationLocality.getText());
-            location.setCountry(txtLocationCountry.getText());
+            getUserInput();
 
             if (InputController.locationInputError(location)) {
 
@@ -346,7 +372,7 @@ public class LocationsPanel extends javax.swing.JPanel {
 
             } else {
 
-                hc.save(location);
+                ctrlLocation.save(location);
                 updateLocations(sortLocations);
                 lblError.setText("");
                 location = new Location();
@@ -359,16 +385,9 @@ public class LocationsPanel extends javax.swing.JPanel {
         if (lstLocations.getSelectedIndex() == -1) {
         } else {
 
-            hc.delete(location);
-
-            txtLocationName.setText("");
-            txtLocationAddress.setText("");
-            txtLocationLocality.setText("");
-            txtLocationCountry.setText("");
-
-            lblMap.setIcon(null);
+            clearUserInput();
+            ctrlLocation.delete(location);
             updateLocations(sortLocations);
-            lblError.setText("");
             location = new Location();
 
         }
@@ -376,15 +395,8 @@ public class LocationsPanel extends javax.swing.JPanel {
 
     private void btnNewLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewLocationActionPerformed
 
+        clearUserInput();
         lstLocations.setSelectedIndex(-1);
-
-        txtLocationName.setText("");
-        txtLocationAddress.setText("");
-        txtLocationLocality.setText("");
-        txtLocationCountry.setText("");
-
-        lblError.setText("");
-        lblMap.setIcon(null);
         location = new Location();
     }//GEN-LAST:event_btnNewLocationActionPerformed
 
@@ -403,6 +415,61 @@ public class LocationsPanel extends javax.swing.JPanel {
         updateLocations(sortLocations);
     }//GEN-LAST:event_mnuDateCreatedActionPerformed
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddLocation;
+    private javax.swing.JButton btnEditLocation;
+    private javax.swing.JButton btnFindOnMap;
+    private javax.swing.JButton btnNewLocation;
+    private javax.swing.JButton btnRemoveLocation;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblError;
+    private javax.swing.JLabel lblMap;
+    private javax.swing.JLabel lblSearch1;
+    private javax.swing.JLabel lblTitle1;
+    private javax.swing.JLabel lblTitle2;
+    private javax.swing.JLabel lblTitle4;
+    private javax.swing.JLabel lblTitle6;
+    private javax.swing.JPopupMenu locationsMenu;
+    private javax.swing.JList<Location> lstLocations;
+    private javax.swing.ButtonGroup menuButtonGroup;
+    private javax.swing.JRadioButtonMenuItem mnuDateCreated;
+    private javax.swing.JRadioButtonMenuItem mnuLocality;
+    private javax.swing.JRadioButtonMenuItem mnuNam;
+    private javax.swing.JTextField txtFindLocation;
+    private javax.swing.JTextField txtLocationAddress;
+    private javax.swing.JTextField txtLocationCountry;
+    private javax.swing.JTextField txtLocationLocality;
+    private javax.swing.JTextField txtLocationName;
+    // End of variables declaration//GEN-END:variables
+
+    private void addLocationSearchListener() {
+
+        txtFindLocation.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                DefaultListModel<Location> model = new DefaultListModel<>();
+                lstLocations.setModel(model);
+                for (Location location : ctrlLocation.find(location, sortLocations, txtFindLocation.getText())) {
+                    model.addElement(location);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                DefaultListModel<Location> model = new DefaultListModel<>();
+                lstLocations.setModel(model);
+                for (Location location : ctrlLocation.find(location, sortLocations, txtFindLocation.getText())) {
+                    model.addElement(location);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+    }
+
     public void applyTheme() {
 
         setBackground(Theme.color2);
@@ -415,34 +482,10 @@ public class LocationsPanel extends javax.swing.JPanel {
         txtLocationAddress.setBackground(Theme.color4);
         txtLocationLocality.setBackground(Theme.color4);
         txtLocationCountry.setBackground(Theme.color4);
+        txtFindLocation.setBackground(Theme.color4);
         lstLocations.setBackground(Theme.color4);
         lstLocations.setForeground(Theme.font1);
+        lblMap.setBorder(new EtchedBorder(Theme.color1, Theme.color2));
 
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddLocation;
-    private javax.swing.JButton btnEditLocation;
-    private javax.swing.JButton btnFindOnMap;
-    private javax.swing.JButton btnNewLocation;
-    private javax.swing.JButton btnRemoveLocation;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblError;
-    private javax.swing.JLabel lblMap;
-    private javax.swing.JLabel lblTitle1;
-    private javax.swing.JLabel lblTitle2;
-    private javax.swing.JLabel lblTitle4;
-    private javax.swing.JLabel lblTitle6;
-    private javax.swing.JPopupMenu locationsMenu;
-    private javax.swing.JList<Location> lstLocations;
-    private javax.swing.ButtonGroup menuButtonGroup;
-    private javax.swing.JRadioButtonMenuItem mnuDateCreated;
-    private javax.swing.JRadioButtonMenuItem mnuLocality;
-    private javax.swing.JRadioButtonMenuItem mnuNam;
-    private javax.swing.JTextField txtLocationAddress;
-    private javax.swing.JTextField txtLocationCountry;
-    private javax.swing.JTextField txtLocationLocality;
-    private javax.swing.JTextField txtLocationName;
-    // End of variables declaration//GEN-END:variables
-
 }

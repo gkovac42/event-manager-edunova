@@ -71,8 +71,8 @@ public class OrdersPanel extends javax.swing.JPanel {
 
         DefaultComboBoxModel<Customer> model = new DefaultComboBoxModel<>();
         cmbCustomer.setModel(model);
-        for (Customer customer : ctrlCustomer.getOrderedList(customer, "lastName")) {
-            model.addElement(customer);
+        for (Customer c : ctrlCustomer.getOrderedList(customer, "lastName")) {
+            model.addElement(c);
         }
     }
 
@@ -80,8 +80,8 @@ public class OrdersPanel extends javax.swing.JPanel {
 
         DefaultListModel<Ticket> model = new DefaultListModel<>();
         lstTickets.setModel(model);
-        for (Ticket ticket : ctrlTicket.getOrderedList(ticket, sortBy)) {
-            model.addElement(ticket);
+        for (Ticket t : ctrlTicket.getOrderedList(ticket, sortBy)) {
+            model.addElement(t);
         }
         lstTickets.repaint();
     }
@@ -90,8 +90,8 @@ public class OrdersPanel extends javax.swing.JPanel {
 
         DefaultListModel<OrderedTicket> model = new DefaultListModel<>();
         lstOrderTickets.setModel(model);
-        for (OrderedTicket ticket : order.getTickets()) {
-            model.addElement(ticket);
+        for (OrderedTicket t : order.getTickets()) {
+            model.addElement(t);
         }
     }
 
@@ -99,8 +99,8 @@ public class OrdersPanel extends javax.swing.JPanel {
 
         DefaultListModel<Order> model = new DefaultListModel<>();
         lstOrders.setModel(model);
-        for (Order order : ctrlOrder.getOrderedList(order, sortBy)) {
-            model.addElement(order);
+        for (Order o : ctrlOrder.getOrderedList(order, sortBy)) {
+            model.addElement(o);
         }
     }
 
@@ -278,25 +278,25 @@ public class OrdersPanel extends javax.swing.JPanel {
 
         lblEmail.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblEmail.setForeground(new java.awt.Color(255, 255, 255));
-        add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 220, 30));
+        add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 220, 40));
 
         jLabel16.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("MJESTO");
-        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 60, 30));
+        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 60, 40));
 
         jLabel8.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("E-MAIL");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 60, 30));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 60, 40));
 
         lblAddress.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblAddress.setForeground(new java.awt.Color(255, 255, 255));
-        add(lblAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 220, 30));
+        add(lblAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 220, 40));
 
         lblLocality.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblLocality.setForeground(new java.awt.Color(255, 255, 255));
-        add(lblLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 220, 30));
+        add(lblLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 220, 40));
 
         lstTickets.setBackground(new java.awt.Color(120, 120, 120));
         lstTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -350,11 +350,6 @@ public class OrdersPanel extends javax.swing.JPanel {
         txtQuantity.setForeground(new java.awt.Color(255, 255, 255));
         txtQuantity.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtQuantity.setText("1");
-        txtQuantity.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtQuantityActionPerformed(evt);
-            }
-        });
         add(txtQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 160, 70, 40));
 
         jLabel12.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -383,7 +378,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         jLabel11.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("KUPAC");
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 80, 30));
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 80, 40));
 
         btnNewOrder.setBackground(new java.awt.Color(0, 0, 0));
         btnNewOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -405,7 +400,7 @@ public class OrdersPanel extends javax.swing.JPanel {
                 cmbCustomerActionPerformed(evt);
             }
         });
-        add(cmbCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 230, 30));
+        add(cmbCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 230, 40));
 
         lstOrders.setBackground(new java.awt.Color(120, 120, 120));
         lstOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -488,7 +483,7 @@ public class OrdersPanel extends javax.swing.JPanel {
         jLabel13.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("ADRESA");
-        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 60, 30));
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 60, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -716,34 +711,6 @@ public class OrdersPanel extends javax.swing.JPanel {
         updateTickets(sortTickets);
     }//GEN-LAST:event_mnuQuantityActionPerformed
 
-    private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtQuantityActionPerformed
-
-    public void applyTheme() {
-        setBackground(Theme.color2);
-        btnAdd.setBackground(Theme.color3);
-        btnRemove.setBackground(Theme.color3);
-        btnFinishOrder.setBackground(Theme.color3);
-        btnPlus.setBackground(Theme.color3);
-        btnMinus.setBackground(Theme.color3);
-        btnNewOrder.setBackground(Theme.color3);
-        btnCancelOrder.setBackground(Theme.color3);
-        btnViewPdf.setBackground(Theme.color3);
-        cmbCustomer.setBackground(Theme.color4);
-        cmbCustomer.setForeground(Theme.font1);
-        lstOrders.setBackground(Theme.color4);
-        lstOrders.setForeground(Theme.font1);
-        lstOrderTickets.setBackground(Theme.color4);
-        lstOrderTickets.setForeground(Theme.font1);
-        lstTickets.setBackground(Theme.color4);
-        lstTickets.setForeground(Theme.font1);
-        txtQuantity.setBackground(Theme.color4);
-        txtQuantity.setForeground(Theme.font1);
-
-    }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancelOrder;
@@ -786,4 +753,24 @@ public class OrdersPanel extends javax.swing.JPanel {
     private javax.swing.ButtonGroup ticketsMenuButtonGroup;
     private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
+
+    public void applyTheme() {
+        setBackground(Theme.color2);
+        btnAdd.setBackground(Theme.color3);
+        btnRemove.setBackground(Theme.color3);
+        btnFinishOrder.setBackground(Theme.color3);
+        btnPlus.setBackground(Theme.color3);
+        btnMinus.setBackground(Theme.color3);
+        btnNewOrder.setBackground(Theme.color3);
+        btnCancelOrder.setBackground(Theme.color3);
+        btnViewPdf.setBackground(Theme.color3);
+        lstOrders.setBackground(Theme.color4);
+        lstOrders.setForeground(Theme.font1);
+        lstOrderTickets.setBackground(Theme.color4);
+        lstOrderTickets.setForeground(Theme.font1);
+        lstTickets.setBackground(Theme.color4);
+        lstTickets.setForeground(Theme.font1);
+        txtQuantity.setBackground(Theme.color4);
+        txtQuantity.setForeground(Theme.font1);
+    }
 }

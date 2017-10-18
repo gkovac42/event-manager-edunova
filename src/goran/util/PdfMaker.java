@@ -7,11 +7,13 @@ package goran.util;
 
 import goran.model.Order;
 import goran.model.OrderedTicket;
+import goran.view.StartFrame;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.System.err;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -23,16 +25,19 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
  */
 public class PdfMaker {
 
+    private static final String FONT_PATH = "data/ARIALUNI.ttf";
+    private static final String PDF_PATH = "data/pdf/";
+
     public static void savePdf(Order order) {
 
-        //String FILEPATH = System.getProperty("user.dir") + "\\orders_pdf\\" + order.getId() + ".pdf";
         try (PDDocument document = new PDDocument()) {
 
             PDPage page = new PDPage();
             document.addPage(page);
-            PDType0Font font = PDType0Font.load(document, new File("ARIALUNI.ttf"));
+            PDType0Font font = PDType0Font.load(document, new File(FONT_PATH));
 
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
             contentStream.beginText();
             contentStream.setFont(font, 16);
             contentStream.setLeading(14.5f);
@@ -40,7 +45,7 @@ public class PdfMaker {
             contentStream.showText(order.toString());
             contentStream.newLine();
             contentStream.newLine();
-            contentStream.showText("Korisnik: " + order.getCustomer().toString());
+            contentStream.showText("Kupac: " + order.getCustomer().toString());
             contentStream.newLine();
             contentStream.showText("Adresa: " + order.getCustomer().getAddress() + ", " + order.getCustomer().getLocality());
             contentStream.newLine();
@@ -56,10 +61,16 @@ public class PdfMaker {
             contentStream.showText("--------------------------------------------------");
             contentStream.newLine();
             contentStream.showText("UKUPNO: " + order.getTotalPrice());
+            contentStream.newLine();
+            contentStream.newLine();
+            contentStream.showText("Izradio: " + StartFrame.user + ", vrijeme: "
+                    + new SimpleDateFormat("HH:mm").format(order.getDateCreated()));
 
             contentStream.endText();
-            contentStream.close();  // Stream must be closed before saving document.
-            document.save("data/pdf/" + order.getId() + ".pdf");
+            contentStream.close();
+
+            document.save(PDF_PATH + order.getId() + ".pdf");
+
         } catch (IOException ioEx) {
             err.println(
                     "Exception while trying to create simple document - " + ioEx);
@@ -71,7 +82,7 @@ public class PdfMaker {
 
         if (Desktop.isDesktopSupported()) {
             try {
-                File f = new File("data/pdf/" + order.getId() + ".pdf");
+                File f = new File(PDF_PATH + order.getId() + ".pdf");
                 Desktop.getDesktop().open(f);
             } catch (IOException ex) {
                 // no application registered for PDFs

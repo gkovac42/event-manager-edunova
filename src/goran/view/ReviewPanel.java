@@ -38,6 +38,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         ctrlTicket = new HibernateController<>();
         ctrlOrder = new HibernateController<>();
         ctrlEvent = new HibernateController<>();
+
         paneEvents.setVisible(true);
         paneTickets.setVisible(false);
         paneOrders.setVisible(false);
@@ -45,7 +46,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         updateTickets();
         updateOrders();
         updateEvents();
-        
+
         lblTotal.setText("Ukupan broj evenata u bazi: " + tblEvents.getRowCount());
     }
 
@@ -58,7 +59,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         ticket = ctrlTicket.getOrderedList(ticket, "name").get(tblTickets.convertRowIndexToModel(tblTickets.getSelectedRow()));
         return ticket;
     }
-    
+
     public Event getEvent() {
         event = ctrlEvent.getOrderedList(event, "name").get(tblEvents.convertRowIndexToModel(tblEvents.getSelectedRow()));
         return event;
@@ -70,11 +71,11 @@ public class ReviewPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         Object rowData[] = new Object[4];
 
-        for (Ticket ticket : ctrlTicket.getOrderedList(ticket, "name")) {
-            rowData[0] = ticket.getName();
-            rowData[1] = ticket.getPrice() + "kn";
-            rowData[2] = ticket.getQuantity();
-            rowData[3] = ticket.getEvent();
+        for (Ticket t : ctrlTicket.getOrderedList(ticket, "name")) {
+            rowData[0] = t.getName();
+            rowData[1] = t.getPrice() + "kn";
+            rowData[2] = t.getQuantity();
+            rowData[3] = t.getEvent();
             model.addRow(rowData);
         }
     }
@@ -87,12 +88,12 @@ public class ReviewPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         Object rowData[] = new Object[4];
 
-        for (Order order : ctrlOrder.getOrderedList(order, "id")) {
+        for (Order o : ctrlOrder.getOrderedList(order, "id")) {
 
-            rowData[0] = order.getId();
-            rowData[1] = df.format(order.getDateCreated());
-            rowData[2] = order.getCustomer().toString();
-            rowData[3] = order.getTotalPrice();
+            rowData[0] = o.getId();
+            rowData[1] = df.format(o.getDateCreated());
+            rowData[2] = o.getCustomer().toString();
+            rowData[3] = o.getTotalPrice();
             model.addRow(rowData);
         }
     }
@@ -237,6 +238,11 @@ public class ReviewPanel extends javax.swing.JPanel {
         tblTickets.setRowHeight(24);
         tblTickets.getColumnModel().getColumn(0).setPreferredWidth(250);
         tblTickets.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tblTickets.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTicketsMouseClicked(evt);
+            }
+        });
         paneTickets.setViewportView(tblTickets);
 
         add(paneTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 380));
@@ -319,6 +325,11 @@ public class ReviewPanel extends javax.swing.JPanel {
         tblOrders.setRowHeight(24);
         tblOrders.getColumnModel().getColumn(0).setPreferredWidth(25);
         tblOrders.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tblOrders.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblOrdersMouseClicked(evt);
+            }
+        });
         paneOrders.setViewportView(tblOrders);
 
         add(paneOrders, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 380));
@@ -342,7 +353,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         btnJumpTo.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnJumpTo.setForeground(new java.awt.Color(255, 255, 255));
         btnJumpTo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_jump_to.png"))); // NOI18N
-        btnJumpTo.setText("IDI DO ODABRANOG");
+        btnJumpTo.setText("IDI DO");
         btnJumpTo.setBorder(null);
         btnJumpTo.setFocusPainted(false);
         btnJumpTo.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -351,7 +362,7 @@ public class ReviewPanel extends javax.swing.JPanel {
                 btnJumpToActionPerformed(evt);
             }
         });
-        add(btnJumpTo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 450, 190, 40));
+        add(btnJumpTo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, 90, 40));
 
         btnOrders.setBackground(new java.awt.Color(0, 0, 0));
         btnOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -423,6 +434,7 @@ public class ReviewPanel extends javax.swing.JPanel {
                 findEvents();
             }
         } else if (paneOrders.isVisible()) {
+
             if (txtFind.getText().matches("")) {
                 updateOrders();
             } else {
@@ -463,8 +475,8 @@ public class ReviewPanel extends javax.swing.JPanel {
         } else if (paneTickets.isVisible()) {
             MainFrame.pnlEvents.jumpToTicket(getTicket().getEvent(), getTicket());
             MainFrame.setActivePanel(MainFrame.pnlEvents);
-            
-        } else if(paneEvents.isVisible()) {
+
+        } else if (paneEvents.isVisible()) {
             MainFrame.pnlEvents.jumpToEvent(getEvent());
             MainFrame.setActivePanel(MainFrame.pnlEvents);
         }
@@ -478,8 +490,41 @@ public class ReviewPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnOrdersActionPerformed
 
     private void tblEventsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEventsMouseClicked
-        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            MainFrame.pnlEvents.jumpToEvent(getEvent());
+            MainFrame.setActivePanel(MainFrame.pnlEvents);
+        }
     }//GEN-LAST:event_tblEventsMouseClicked
+
+    private void tblTicketsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTicketsMouseClicked
+        if (evt.getClickCount() == 2) {
+            MainFrame.pnlEvents.jumpToTicket(getTicket().getEvent(), getTicket());
+            MainFrame.setActivePanel(MainFrame.pnlEvents);
+        }
+    }//GEN-LAST:event_tblTicketsMouseClicked
+
+    private void tblOrdersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOrdersMouseClicked
+        if (evt.getClickCount() == 2) {
+            MainFrame.pnlOrders.jumpToOrder(getOrder());
+            MainFrame.setActivePanel(MainFrame.pnlOrders);
+        }
+    }//GEN-LAST:event_tblOrdersMouseClicked
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEvents;
+    private javax.swing.JButton btnExportToExcel;
+    private javax.swing.JButton btnFind;
+    private javax.swing.JButton btnJumpTo;
+    private javax.swing.JButton btnOrders;
+    private javax.swing.JButton btnTickets;
+    private javax.swing.JLabel lblTotal;
+    private javax.swing.JScrollPane paneEvents;
+    private javax.swing.JScrollPane paneOrders;
+    private javax.swing.JScrollPane paneTickets;
+    private javax.swing.JTable tblEvents;
+    private javax.swing.JTable tblOrders;
+    private javax.swing.JTable tblTickets;
+    private javax.swing.JTextField txtFind;
+    // End of variables declaration//GEN-END:variables
 
     public void applyTheme() {
 
@@ -500,21 +545,4 @@ public class ReviewPanel extends javax.swing.JPanel {
         btnExportToExcel.setBackground(Theme.color3);
 
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEvents;
-    private javax.swing.JButton btnExportToExcel;
-    private javax.swing.JButton btnFind;
-    private javax.swing.JButton btnJumpTo;
-    private javax.swing.JButton btnOrders;
-    private javax.swing.JButton btnTickets;
-    private javax.swing.JLabel lblTotal;
-    private javax.swing.JScrollPane paneEvents;
-    private javax.swing.JScrollPane paneOrders;
-    private javax.swing.JScrollPane paneTickets;
-    private javax.swing.JTable tblEvents;
-    private javax.swing.JTable tblOrders;
-    private javax.swing.JTable tblTickets;
-    private javax.swing.JTextField txtFind;
-    // End of variables declaration//GEN-END:variables
 }

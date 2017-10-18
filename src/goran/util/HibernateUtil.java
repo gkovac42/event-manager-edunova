@@ -5,34 +5,36 @@
  */
 package goran.util;
 
-import org.hibernate.CacheMode;
+import java.io.File;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-/**
- *
- * @author tjakopec
- * Ovo je Singleton
- */
+
 public class HibernateUtil {
 
     private static Session session = null;
 
     protected HibernateUtil() {
-        // Exists only to defeat instantiation.
+       
     }
 
     public static Session getSession() {
         if (session == null) {
             try {
-                session = new Configuration().configure().buildSessionFactory().openSession();
-                session.setCacheMode(CacheMode.REFRESH);
+                
+                File f = new File("hibernate.cfg.xml");
+                SessionFactory sessionFactory = new Configuration().configure(f).buildSessionFactory();
+                session = sessionFactory.openSession();
+                
+                
             } catch (Throwable ex) {
-                // Make sure you log the exception, as it might be swallowed
+                
                 System.err.println("Initial SessionFactory creation failed." + ex);
                 throw new ExceptionInInitializerError(ex);
             }
         }
+        
         return session;
     }
 

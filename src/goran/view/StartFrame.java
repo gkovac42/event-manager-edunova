@@ -16,19 +16,12 @@ import javax.swing.BorderFactory;
  */
 public class StartFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form StartFrame
-     */
+    public static String user;
+
     public StartFrame() {
         initComponents();
         getRootPane().setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.DARK_GRAY));
         lblLoading.setVisible(false);
-    }
-    
-    private static String username;
-    
-    public static String getUsername() {
-        return username;
     }
 
     /**
@@ -217,7 +210,8 @@ public class StartFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCloseMouseExited
 
     private void lblMinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizeMouseClicked
-        this.setState(this.ICONIFIED);
+        this.setState(StartFrame.ICONIFIED);
+
     }//GEN-LAST:event_lblMinimizeMouseClicked
 
     private void lblMinimizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizeMouseEntered
@@ -233,16 +227,13 @@ public class StartFrame extends javax.swing.JFrame {
         if (txtUsername.getText().equals("edunova")) {
             if (new String(txtPassword.getPassword()).equals("edunova")) {
 
+                user = txtUsername.getText();
                 lblLoading.setVisible(true);
                 pnlLogin.setVisible(false);
-                username = txtUsername.getText();
 
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new MainFrame().setVisible(true);
-                        dispose();
-                    }
+                Thread t = new Thread(() -> {
+                    new MainFrame().setVisible(true);
+                    dispose();
                 });
                 t.start();
 

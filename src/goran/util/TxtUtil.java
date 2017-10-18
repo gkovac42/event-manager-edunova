@@ -21,7 +21,7 @@ public class TxtUtil {
     public static final String NUMBER_ERROR = "Neispravan unos!";
     public static final String EVENT_SELECTION_ERROR = "Odaberite event!";
     public static final String LOCATION_SELECTION_ERROR = "Odaberite lokaciju!";
-    public static final String ADD_EVENT_LOCATION = "DODAJ LOKACIJU EVENTA";
-    public static final String ADD_EVENT_DATE = "DODAJ DATUM I VRIJEME";
+    public static final String ADD_EVENT_LOCATION = "LOKACIJA NIJE ODREĐENA";
+    public static final String ADD_EVENT_DATE = "DATUM ODRŽAVANJA NIJE ODREĐEN";
     
 }

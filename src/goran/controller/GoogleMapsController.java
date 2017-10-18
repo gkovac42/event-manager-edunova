@@ -48,7 +48,6 @@ public class GoogleMapsController {
                     + ",+" + URLEncoder.encode(location.getLocality(), "UTF-8")
                     + ",+" + URLEncoder.encode(location.getCountry(), "UTF-8")
                     + "&key=" + API_KEY;
-            
 
         } catch (UnsupportedEncodingException ex) {
         }
@@ -111,19 +110,23 @@ public class GoogleMapsController {
     }
 
     public void openOrDownloadMap(Location location, int zoomLevel, JLabel lblMap, String type) {
-        
+
         Thread t = new Thread(() -> {
 
             try {
-                File sourceImage = new File("data/maps/" + location.getId() + type + ".png");
+                File sourceImage = null;
+                if (location.getId() != null) {
+                    sourceImage = new File("data/maps/" + location.getId() + type + ".png");
+                }
                 Image image = ImageIO.read(sourceImage);
                 lblMap.setIcon(new ImageIcon(image.getScaledInstance(lblMap.getWidth(), lblMap.getHeight(), Image.SCALE_SMOOTH)));
+
             } catch (Exception e) {
 
                 String imageUrl = "http://maps.googleapis.com/maps/api/staticmap?center="
                         + location.getLat() + ",%20" + location.getLng() + "&zoom=" + zoomLevel + "&size=" + lblMap.getWidth() + "x" + lblMap.getHeight()
                         + "&scale=1&markers=" + location.getLat() + ",%20" + location.getLng() + "&sensor=true";
-                
+
                 try {
 
                     URL url = new URL(imageUrl);

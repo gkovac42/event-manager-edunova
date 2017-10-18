@@ -5,11 +5,11 @@
  */
 package goran.view;
 
+import com.github.lgooddatepicker.components.CalendarPanel;
 import goran.util.HibernateUtil;
 import goran.util.MotionPanel;
 import goran.util.Theme;
 import java.io.IOException;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
@@ -25,15 +25,16 @@ public class MainFrame extends javax.swing.JFrame {
     public static LocationsPanel pnlLocations;
     public static OrdersPanel pnlOrders;
     private AbsoluteConstraints panelPosition;
-    
+
     private int theme = Theme.DARK;
-    
+
     public MainFrame() {
-        
+
         initComponents();
+
         panelPosition = new AbsoluteConstraints(100, 40, 700, 560);
         pnlEvents = new EventsPanel();
-        getContentPane().add(pnlEvents, panelPosition); 
+        getContentPane().add(pnlEvents, panelPosition);
         pnlReview = new ReviewPanel();
         getContentPane().add(pnlReview, panelPosition);
         pnlCustomers = new CustomersPanel();
@@ -42,8 +43,8 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(pnlLocations, panelPosition);
         pnlOrders = new OrdersPanel();
         getContentPane().add(pnlOrders, panelPosition);
-        lblUserName.setText(StartFrame.getUsername() + ")");
-        
+        lblUserName.setText(StartFrame.user + ")");
+
         setActivePanel(pnlEvents);
     }
 
@@ -55,6 +56,12 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        frameCalendar = new javax.swing.JFrame();
+        pnlCalendar = new javax.swing.JPanel();
+        lblErrorTicket = new javax.swing.JLabel();
+        pnlCalendarTitle = new MotionPanel(frameCalendar);
+        lblTicketsUtil = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         pnlTitle = new MotionPanel(this);
         lblIcon = new javax.swing.JLabel();
         lblLightSwitch = new javax.swing.JLabel();
@@ -70,6 +77,37 @@ public class MainFrame extends javax.swing.JFrame {
         btnCustomers = new javax.swing.JButton();
         btnLocations = new javax.swing.JButton();
         btnOrders = new javax.swing.JButton();
+
+        frameCalendar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        frameCalendar.setAlwaysOnTop(true);
+        frameCalendar.setUndecorated(true);
+        frameCalendar.setResizable(false);
+        frameCalendar.setSize(new java.awt.Dimension(400, 250));
+        frameCalendar.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pnlCalendar.setBackground(new java.awt.Color(60, 60, 70));
+        pnlCalendar.setPreferredSize(new java.awt.Dimension(550, 300));
+        pnlCalendar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblErrorTicket.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblErrorTicket.setForeground(new java.awt.Color(255, 0, 0));
+        pnlCalendar.add(lblErrorTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 40));
+
+        frameCalendar.getContentPane().add(pnlCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 400, 260));
+
+        pnlCalendarTitle.setBackground(new java.awt.Color(30, 30, 40));
+        pnlCalendarTitle.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblTicketsUtil.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        lblTicketsUtil.setForeground(new java.awt.Color(255, 255, 255));
+        lblTicketsUtil.setText("KALENDAR");
+        pnlCalendarTitle.add(lblTicketsUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 230, 40));
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/title_add_ticket.png"))); // NOI18N
+        pnlCalendarTitle.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 40));
+
+        frameCalendar.getContentPane().add(pnlCalendarTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 40));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -270,7 +308,7 @@ public class MainFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-   public static void setActivePanel(JPanel panel) {
+    public static void setActivePanel(JPanel panel) {
 
         pnlEvents.setVisible(false);
         pnlReview.setVisible(false);
@@ -279,9 +317,8 @@ public class MainFrame extends javax.swing.JFrame {
         pnlOrders.setVisible(false);
 
         panel.setVisible(true);
-
     }
-       
+
     private void btnReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewActionPerformed
         pnlReview.updateTickets();
         pnlReview.updateOrders();
@@ -306,7 +343,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMinimizeMouseEntered
 
     private void lblMinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizeMouseClicked
-        this.setState(this.ICONIFIED);        // TODO add your handling code here:
+        this.setState(MainFrame.ICONIFIED);
     }//GEN-LAST:event_lblMinimizeMouseClicked
 
     private void lblCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseExited
@@ -319,7 +356,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
         System.exit(0);
-        
+
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void lblLightSwitchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLightSwitchMouseExited
@@ -333,7 +370,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void lblLightSwitchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLightSwitchMouseClicked
 
         if (theme == Theme.DARK) {
-            
+
             theme = Theme.LIGHT;
             lblLightSwitch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/light_on.png")));
             Theme.setLightTheme();
@@ -344,7 +381,7 @@ public class MainFrame extends javax.swing.JFrame {
             lblLightSwitch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/light_off.png")));
             Theme.setDarkTheme();
         }
-        
+
         applyTheme();
     }//GEN-LAST:event_lblLightSwitchMouseClicked
 
@@ -361,7 +398,7 @@ public class MainFrame extends javax.swing.JFrame {
         try {
             Runtime.getRuntime().exec("cmd /c start https://github.com/gkovac42/event-manager-edunova");
         } catch (IOException ex) {
-            
+
         }
     }//GEN-LAST:event_btnGitActionPerformed
 
@@ -370,14 +407,13 @@ public class MainFrame extends javax.swing.JFrame {
         pnlOrders.updateTickets("name");
         setActivePanel(pnlOrders);
     }//GEN-LAST:event_btnOrdersActionPerformed
-     
+
     private void applyTheme() {
 
         pnlTitle.setBackground(Theme.color1);
         lblMinimize.setBackground(Theme.color1);
         lblClose.setBackground(Theme.color1);
         lblLightSwitch.setBackground(Theme.color1);
-        getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color1, Theme.color2));
 
         pnlSide.setBackground(Theme.color3);
         btnEvents.setBackground(Theme.color3);
@@ -392,10 +428,8 @@ public class MainFrame extends javax.swing.JFrame {
         pnlCustomers.applyTheme();
         pnlLocations.applyTheme();
         pnlOrders.applyTheme();
-        
     }
-    
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCustomers;
     private javax.swing.JButton btnEvents;
@@ -403,14 +437,21 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnLocations;
     private javax.swing.JButton btnOrders;
     private javax.swing.JButton btnReview;
+    private javax.swing.JFrame frameCalendar;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lblClose;
+    private javax.swing.JLabel lblErrorTicket;
     private javax.swing.JLabel lblIcon;
     private javax.swing.JLabel lblLightSwitch;
     private javax.swing.JLabel lblMinimize;
+    private javax.swing.JLabel lblTicketsUtil;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblTitle2;
     private javax.swing.JLabel lblUserName;
+    private javax.swing.JPanel pnlCalendar;
+    private javax.swing.JPanel pnlCalendarTitle;
     private javax.swing.JPanel pnlSide;
     private javax.swing.JPanel pnlTitle;
     // End of variables declaration//GEN-END:variables
+
 }

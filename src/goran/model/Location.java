@@ -85,7 +85,7 @@ public class Location extends Entity implements Serializable {
     
     @Override
     public String toString() {
-        return name+ ", " + locality;
+        return name+ " (" + locality + ")";
     }
     
 }

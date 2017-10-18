@@ -12,7 +12,7 @@ import goran.controller.InputController;
 import goran.util.TxtUtil;
 import goran.model.Customer;
 import goran.util.ExcelMaker;
-import goran.NaseljaRH;
+import goran.util.NaseljaRH;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -26,20 +26,20 @@ public class CustomersPanel extends javax.swing.JPanel {
     
     private Customer customer;
     private HibernateController<Customer> ctrlCustomer;
-    
-    ArrayList<String> listMjesta = new ArrayList<>();
+    ArrayList<String> naselja;
 
     /**
      * Creates new form CustomerPanel
      */
     public CustomersPanel() {
-        initComponents();
-        frameCustomersUtil.getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color1, Theme.color2));
         
-        listMjesta = (ArrayList<String>) NaseljaRH.naselja;
+        initComponents();
+        drawBorder();
         
         customer = new Customer();
         ctrlCustomer = new HibernateController<>();
+        naselja = (ArrayList<String>) NaseljaRH.popisNaselja;
+        
         updateCustomers();
         updateMjesta();
     }
@@ -49,9 +49,10 @@ public class CustomersPanel extends javax.swing.JPanel {
     }
     
     private void updateMjesta() {
-        DefaultComboBoxModel model = (DefaultComboBoxModel) cmbMjesta.getModel();
-        for (String mjesto : NaseljaRH.naselja) {
-            model.addElement(mjesto);
+        
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cmbNaselja.getModel();
+        for (String naselje : NaseljaRH.popisNaselja) {
+            model.addElement(naselje);
         }
     }
     
@@ -61,12 +62,12 @@ public class CustomersPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         Object rowData[] = new Object[5];
         
-        for (Customer customer : ctrlCustomer.getList(customer)) {
-            rowData[0] = customer.getFirstName();
-            rowData[1] = customer.getLastName();
-            rowData[2] = customer.getEmail();
-            rowData[3] = customer.getAddress();
-            rowData[4] = customer.getLocality();
+        for (Customer c : ctrlCustomer.getList(customer)) {
+            rowData[0] = c.getFirstName();
+            rowData[1] = c.getLastName();
+            rowData[2] = c.getEmail();
+            rowData[3] = c.getAddress();
+            rowData[4] = c.getLocality();
             model.addRow(rowData);
         }
     }
@@ -95,15 +96,14 @@ public class CustomersPanel extends javax.swing.JPanel {
             case "MJESTO":
                 findBy = "locality";
                 break;
-            
         }
         
-        for (Customer customer : ctrlCustomer.find(customer, findBy, txtFindCustomer.getText())) {
-            rowData[0] = customer.getFirstName();
-            rowData[1] = customer.getLastName();
-            rowData[2] = customer.getEmail();
-            rowData[3] = customer.getAddress();
-            rowData[4] = customer.getLocality();
+        for (Customer c : ctrlCustomer.find(customer, findBy, txtFindCustomer.getText())) {
+            rowData[0] = c.getFirstName();
+            rowData[1] = c.getLastName();
+            rowData[2] = c.getEmail();
+            rowData[3] = c.getAddress();
+            rowData[4] = c.getLocality();
             model.addRow(rowData);
         }
     }
@@ -129,7 +129,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         lblError = new javax.swing.JLabel();
-        cmbMjesta = new javax.swing.JComboBox<>();
+        cmbNaselja = new javax.swing.JComboBox<>();
         pnlUtilTitle = new MotionPanel(frameCustomersUtil);
         lblCustomersUtil = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -185,7 +185,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         });
         pnlUtil.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 100, 40));
 
-        txtFirstName.setBackground(new java.awt.Color(153, 153, 153));
+        txtFirstName.setBackground(new java.awt.Color(120, 120, 120));
         txtFirstName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtFirstName.setForeground(new java.awt.Color(255, 255, 255));
         txtFirstName.addActionListener(new java.awt.event.ActionListener() {
@@ -195,7 +195,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         });
         pnlUtil.add(txtFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 300, 40));
 
-        txtLastName.setBackground(new java.awt.Color(153, 153, 153));
+        txtLastName.setBackground(new java.awt.Color(120, 120, 120));
         txtLastName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtLastName.setForeground(new java.awt.Color(255, 255, 255));
         txtLastName.addActionListener(new java.awt.event.ActionListener() {
@@ -205,7 +205,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         });
         pnlUtil.add(txtLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 300, 40));
 
-        txtEmail.setBackground(new java.awt.Color(153, 153, 153));
+        txtEmail.setBackground(new java.awt.Color(120, 120, 120));
         txtEmail.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(255, 255, 255));
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
@@ -215,7 +215,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         });
         pnlUtil.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 300, 40));
 
-        txtAddress.setBackground(new java.awt.Color(153, 153, 153));
+        txtAddress.setBackground(new java.awt.Color(120, 120, 120));
         txtAddress.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtAddress.setForeground(new java.awt.Color(255, 255, 255));
         txtAddress.addActionListener(new java.awt.event.ActionListener() {
@@ -254,14 +254,9 @@ public class CustomersPanel extends javax.swing.JPanel {
         lblError.setForeground(new java.awt.Color(255, 0, 0));
         pnlUtil.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 170, 40));
 
-        cmbMjesta.setBackground(new java.awt.Color(120, 120, 120));
-        cmbMjesta.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        cmbMjesta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbMjestaActionPerformed(evt);
-            }
-        });
-        pnlUtil.add(cmbMjesta, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 300, 40));
+        cmbNaselja.setBackground(new java.awt.Color(120, 120, 120));
+        cmbNaselja.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        pnlUtil.add(cmbNaselja, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 300, 40));
 
         frameCustomersUtil.getContentPane().add(pnlUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 400, 310));
 
@@ -402,7 +397,7 @@ public class CustomersPanel extends javax.swing.JPanel {
                 btnExportToExcelActionPerformed(evt);
             }
         });
-        add(btnExportToExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 110, 40));
+        add(btnExportToExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 450, 110, 40));
 
         btnOrder.setBackground(new java.awt.Color(0, 0, 0));
         btnOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -417,7 +412,7 @@ public class CustomersPanel extends javax.swing.JPanel {
                 btnOrderActionPerformed(evt);
             }
         });
-        add(btnOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 450, 160, 40));
+        add(btnOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 160, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindCustomerActionPerformed
@@ -432,11 +427,12 @@ public class CustomersPanel extends javax.swing.JPanel {
     private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
         
         lblCustomersUtil.setText(TxtUtil.ADD_CUSTOMER);
+        
         txtFirstName.setText("");
         txtLastName.setText("");
         txtEmail.setText("");
         txtAddress.setText("");
-        cmbMjesta.setSelectedItem(null);
+        cmbNaselja.setSelectedItem(null);
         
         frameCustomersUtil.setVisible(true);
         frameCustomersUtil.setLocationRelativeTo(this);
@@ -446,18 +442,18 @@ public class CustomersPanel extends javax.swing.JPanel {
         
         try {
             
-            customer = ctrlCustomer.getList(customer).get(tblCustomers.convertRowIndexToModel(tblCustomers.getSelectedRow()));
-            
             lblCustomersUtil.setText(TxtUtil.EDIT_CUSTOMER);
+            
+            customer = getCustomer();
             txtFirstName.setText(customer.getFirstName());
             txtLastName.setText(customer.getLastName());
             txtEmail.setText(customer.getEmail());
             txtAddress.setText(customer.getAddress());
-            //txtLocality.setText(cmbMjesta.getSelectedItem());
-            DefaultComboBoxModel model = (DefaultComboBoxModel) cmbMjesta.getModel();
+            
+            DefaultComboBoxModel model = (DefaultComboBoxModel) cmbNaselja.getModel();
             for (int i = 0; i < model.getSize(); i++) {
                 if (model.getElementAt(i).equals(customer.getLocality())) {
-                    cmbMjesta.setSelectedItem(model.getElementAt(i));
+                    cmbNaselja.setSelectedItem(model.getElementAt(i));
                 }
             }
             
@@ -472,7 +468,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         
         try {
             
-            customer = ctrlCustomer.getList(customer).get(tblCustomers.convertRowIndexToModel(tblCustomers.getSelectedRow()));
+            customer = getCustomer();
             ctrlCustomer.delete(customer);
             updateCustomers();
             customer = new Customer();
@@ -487,7 +483,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         customer.setLastName(txtLastName.getText());
         customer.setEmail(txtEmail.getText());
         customer.setAddress(txtAddress.getText());
-        customer.setLocality(cmbMjesta.getSelectedItem().toString());
+        customer.setLocality(cmbNaselja.getSelectedItem().toString());
         
         if (InputController.customerInputError(customer)) {
             
@@ -510,6 +506,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnExportToExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportToExcelActionPerformed
+        
         ExcelMaker.customersToExcel(ctrlCustomer.getOrderedList(customer, "LastName"));
     }//GEN-LAST:event_btnExportToExcelActionPerformed
 
@@ -518,39 +515,6 @@ public class CustomersPanel extends javax.swing.JPanel {
         MainFrame.pnlOrders.jumpToCustomer(getCustomer());
         MainFrame.setActivePanel(MainFrame.pnlOrders);
     }//GEN-LAST:event_btnOrderActionPerformed
-
-    private void cmbMjestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMjestaActionPerformed
-
-    }//GEN-LAST:event_cmbMjestaActionPerformed
-    
-    public void applyTheme() {
-        
-        setBackground(Theme.color2);
-        btnAddCustomer.setBackground(Theme.color3);
-        btnRemoveCustomer.setBackground(Theme.color3);
-        btnEditCustomer.setBackground(Theme.color3);
-        btnExportToExcel.setBackground(Theme.color3);
-        btnOrder.setBackground(Theme.color3);
-        btnFindCustomer.setBackground(Theme.color3);
-        txtFindCustomer.setBackground(Theme.color4);
-        tblCustomers.setBackground(Theme.color4);
-        tblCustomers.setForeground(Theme.font1);
-        pnlUtilTitle.setBackground(Theme.color1);
-        pnlUtil.setBackground(Theme.color2);
-        txtFirstName.setBackground(Theme.color4);
-        txtLastName.setBackground(Theme.color4);
-        txtAddress.setBackground(Theme.color4);
-        txtEmail.setBackground(Theme.color4);
-        //txtLocality.setBackground(Theme.color4);
-        btnConfirm.setBackground(Theme.color3);
-        btnCancel.setBackground(Theme.color3);
-        txtFindCustomer.setForeground(Theme.font1);
-        txtFirstName.setForeground(Theme.font1);
-        txtLastName.setForeground(Theme.font1);
-        txtEmail.setForeground(Theme.font1);
-        txtAddress.setForeground(Theme.font1);
-        //txtLocality.setForeground(Theme.font1);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCustomer;
@@ -562,7 +526,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnOrder;
     private javax.swing.JButton btnRemoveCustomer;
     private javax.swing.JComboBox<String> cmbFindBy;
-    private javax.swing.JComboBox<String> cmbMjesta;
+    private javax.swing.JComboBox<String> cmbNaselja;
     private javax.swing.JFrame frameCustomersUtil;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -582,4 +546,36 @@ public class CustomersPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;
     // End of variables declaration//GEN-END:variables
+
+    private void drawBorder() {
+        frameCustomersUtil.getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color2, Theme.color1));
+    }
+    
+    public void applyTheme() {
+        
+        setBackground(Theme.color2);
+        btnAddCustomer.setBackground(Theme.color3);
+        btnRemoveCustomer.setBackground(Theme.color3);
+        btnEditCustomer.setBackground(Theme.color3);
+        btnExportToExcel.setBackground(Theme.color3);
+        btnOrder.setBackground(Theme.color3);
+        btnFindCustomer.setBackground(Theme.color3);
+        txtFindCustomer.setBackground(Theme.color4);
+        tblCustomers.setBackground(Theme.color4);
+        tblCustomers.setForeground(Theme.font1);
+        pnlUtilTitle.setBackground(Theme.color1);
+        pnlUtil.setBackground(Theme.color2);
+        txtFirstName.setBackground(Theme.color4);
+        txtLastName.setBackground(Theme.color4);
+        txtAddress.setBackground(Theme.color4);
+        txtEmail.setBackground(Theme.color4);
+        btnConfirm.setBackground(Theme.color3);
+        btnCancel.setBackground(Theme.color3);
+        txtFindCustomer.setForeground(Theme.font1);
+        txtFirstName.setForeground(Theme.font1);
+        txtLastName.setForeground(Theme.font1);
+        txtEmail.setForeground(Theme.font1);
+        txtAddress.setForeground(Theme.font1);
+        frameCustomersUtil.getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color2, Theme.color1));
+    }
 }
