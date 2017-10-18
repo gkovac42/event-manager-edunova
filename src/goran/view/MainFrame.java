@@ -5,7 +5,6 @@
  */
 package goran.view;
 
-import com.github.lgooddatepicker.components.CalendarPanel;
 import goran.util.HibernateUtil;
 import goran.util.Theme;
 import java.io.IOException;
@@ -376,28 +375,6 @@ public class MainFrame extends javax.swing.JFrame {
         setActivePanel(pnlOrders);
     }//GEN-LAST:event_btnOrdersActionPerformed
 
-    private void applyTheme() {
-
-        pnlTitle.setBackground(Theme.color1);
-        lblMinimize.setBackground(Theme.color1);
-        lblClose.setBackground(Theme.color1);
-        lblLightSwitch.setBackground(Theme.color1);
-
-        pnlSide.setBackground(Theme.color3);
-        btnEvents.setBackground(Theme.color3);
-        btnReview.setBackground(Theme.color3);
-        btnCustomers.setBackground(Theme.color3);
-        btnOrders.setBackground(Theme.color3);
-        btnLocations.setBackground(Theme.color3);
-        btnGit.setBackground(Theme.color3);
-
-        pnlEvents.applyTheme();
-        pnlReview.applyTheme();
-        pnlCustomers.applyTheme();
-        pnlLocations.applyTheme();
-        pnlOrders.applyTheme();
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCustomers;
     private javax.swing.JButton btnEvents;
@@ -422,4 +399,25 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlTitle;
     // End of variables declaration//GEN-END:variables
 
+     private void applyTheme() {
+
+        pnlTitle.setBackground(Theme.color1);
+        lblMinimize.setBackground(Theme.color1);
+        lblClose.setBackground(Theme.color1);
+        lblLightSwitch.setBackground(Theme.color1);
+
+        pnlSide.setBackground(Theme.color3);
+        btnEvents.setBackground(Theme.color3);
+        btnReview.setBackground(Theme.color3);
+        btnCustomers.setBackground(Theme.color3);
+        btnOrders.setBackground(Theme.color3);
+        btnLocations.setBackground(Theme.color3);
+        btnGit.setBackground(Theme.color3);
+
+        pnlEvents.applyTheme();
+        pnlReview.applyTheme();
+        pnlCustomers.applyTheme();
+        pnlLocations.applyTheme();
+        pnlOrders.applyTheme();
+    }
 }
