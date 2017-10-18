@@ -7,7 +7,6 @@ package goran.view;
 
 import com.github.lgooddatepicker.components.CalendarPanel;
 import goran.util.HibernateUtil;
-import goran.util.MotionPanel;
 import goran.util.Theme;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -66,10 +65,10 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         pnlTitle = new MotionPanel(this);
         lblIcon = new javax.swing.JLabel();
-        lblLightSwitch = new javax.swing.JLabel();
-        lblClose = new javax.swing.JLabel();
+        lblLightSwitch = new CustomLabel();
+        lblClose = new CustomLabel();
         lblTitle = new javax.swing.JLabel();
-        lblMinimize = new javax.swing.JLabel();
+        lblMinimize = new CustomLabel();
         btnGit = new javax.swing.JButton();
         lblUserName = new javax.swing.JLabel();
         lblTitle2 = new javax.swing.JLabel();
@@ -141,12 +140,6 @@ public class MainFrame extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblLightSwitchMouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblLightSwitchMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblLightSwitchMouseExited(evt);
-            }
         });
         pnlTitle.add(lblLightSwitch, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 0, 30, 40));
 
@@ -158,12 +151,6 @@ public class MainFrame extends javax.swing.JFrame {
         lblClose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblCloseMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblCloseMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblCloseMouseExited(evt);
             }
         });
         pnlTitle.add(lblClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, 30, 40));
@@ -181,12 +168,6 @@ public class MainFrame extends javax.swing.JFrame {
         lblMinimize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMinimizeMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblMinimizeMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblMinimizeMouseExited(evt);
             }
         });
         pnlTitle.add(lblMinimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 0, 30, 50));
@@ -336,25 +317,9 @@ public class MainFrame extends javax.swing.JFrame {
         setActivePanel(pnlCustomers);
     }//GEN-LAST:event_btnCustomersActionPerformed
 
-    private void lblMinimizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizeMouseExited
-        lblMinimize.setBackground(Theme.color1);
-    }//GEN-LAST:event_lblMinimizeMouseExited
-
-    private void lblMinimizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizeMouseEntered
-        lblMinimize.setBackground(Theme.color2);
-    }//GEN-LAST:event_lblMinimizeMouseEntered
-
     private void lblMinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizeMouseClicked
         this.setState(MainFrame.ICONIFIED);
     }//GEN-LAST:event_lblMinimizeMouseClicked
-
-    private void lblCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseExited
-        lblClose.setBackground(Theme.color1);
-    }//GEN-LAST:event_lblCloseMouseExited
-
-    private void lblCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseEntered
-        lblClose.setBackground(Theme.color2);
-    }//GEN-LAST:event_lblCloseMouseEntered
 
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
         HibernateUtil.getSession().close();
@@ -365,14 +330,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
         System.exit(0);
     }//GEN-LAST:event_lblCloseMouseClicked
-
-    private void lblLightSwitchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLightSwitchMouseExited
-        lblLightSwitch.setBackground(Theme.color1);
-    }//GEN-LAST:event_lblLightSwitchMouseExited
-
-    private void lblLightSwitchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLightSwitchMouseEntered
-        lblLightSwitch.setBackground(Theme.color2);
-    }//GEN-LAST:event_lblLightSwitchMouseEntered
 
     private void lblLightSwitchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLightSwitchMouseClicked
 

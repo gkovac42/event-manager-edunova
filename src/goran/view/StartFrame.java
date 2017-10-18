@@ -5,7 +5,6 @@
  */
 package goran.view;
 
-import goran.util.MotionPanel;
 import goran.util.Theme;
 import java.awt.Color;
 import java.awt.HeadlessException;
@@ -26,7 +25,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class StartFrame extends javax.swing.JFrame {
 
     public static String user;
-    public static Process mySQLprocess;
 
     public StartFrame() {
         initComponents();
@@ -83,7 +81,7 @@ public class StartFrame extends javax.swing.JFrame {
     private void startMySQL(String path) {
 
         try {
-            mySQLprocess = Runtime.getRuntime().exec("cmd /c start /B " + path);
+            Runtime.getRuntime().exec("cmd /c start /B " + path);
         } catch (IOException ex) {
             new JOptionPane("Greška pri pokretanju MySQL servera!");
             System.exit(0);
@@ -108,9 +106,9 @@ public class StartFrame extends javax.swing.JFrame {
         lblUser1 = new javax.swing.JLabel();
         pnlTitle = new MotionPanel(this);
         lblIcon = new javax.swing.JLabel();
-        lblClose = new javax.swing.JLabel();
+        lblClose = new CustomLabel();
         lblTitle = new javax.swing.JLabel();
-        lblMinimize = new javax.swing.JLabel();
+        lblMinimize = new CustomLabel();
         lblLoading = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -211,12 +209,6 @@ public class StartFrame extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblCloseMouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblCloseMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblCloseMouseExited(evt);
-            }
         });
         pnlTitle.add(lblClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 30, 40));
 
@@ -233,12 +225,6 @@ public class StartFrame extends javax.swing.JFrame {
         lblMinimize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMinimizeMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblMinimizeMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblMinimizeMouseExited(evt);
             }
         });
         pnlTitle.add(lblMinimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 30, 50));
@@ -267,26 +253,9 @@ public class StartFrame extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_lblCloseMouseClicked
 
-    private void lblCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseEntered
-        lblClose.setBackground(Theme.color2);
-    }//GEN-LAST:event_lblCloseMouseEntered
-
-    private void lblCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseExited
-        lblClose.setBackground(Theme.color1);
-    }//GEN-LAST:event_lblCloseMouseExited
-
     private void lblMinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizeMouseClicked
         this.setState(StartFrame.ICONIFIED);
-
     }//GEN-LAST:event_lblMinimizeMouseClicked
-
-    private void lblMinimizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizeMouseEntered
-        lblMinimize.setBackground(Theme.color2);
-    }//GEN-LAST:event_lblMinimizeMouseEntered
-
-    private void lblMinimizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizeMouseExited
-        lblMinimize.setBackground(Theme.color1);
-    }//GEN-LAST:event_lblMinimizeMouseExited
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 

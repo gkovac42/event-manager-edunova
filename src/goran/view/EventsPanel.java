@@ -5,7 +5,6 @@
  */
 package goran.view;
 
-import goran.util.MotionPanel;
 import goran.util.Theme;
 import com.github.lgooddatepicker.components.DatePicker;
 import goran.util.TxtUtil;
