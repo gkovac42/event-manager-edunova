@@ -36,7 +36,7 @@ Sama aplikacija sastoji se od glavnog prozora u kojem se izmjenjuje nekoliko pan
 
 <p align="center"><img src="screenshots/ss05.PNG" width="350" height="250" /></p><br />
 
-* Za kraj, kako ne bi sve bilo tako crno, pritiskom na ikonu žarulje moguće je promjeniti vizualnu temu aplikacije:
+* Pritiskom na ikonu žarulje moguće je promjeniti vizualnu temu aplikacije:
 
 <p align="center"><img src="screenshots/ss06.PNG" width="350" height="250" /></p>
 
