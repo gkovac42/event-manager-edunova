@@ -1,8 +1,8 @@
-# Uvod
+## Uvod
 
 Event Manager je Java desktop aplikacija koja služi kao katalog glazbenih, kulturnih i drugih događanja i ulaznica te evidenciju narudžbi istih od strane korisnika. Korisničko sučelje aplikacije izrađeno je u Swing okruženju, dok se podaci spremaju u MySQL bazu podataka na lokalnom disku. Za posredstvo između korisničkog sučelja i baze odgovoran je Hibernate ORM.
 
-# Korišteni alati
+## Korišteni alati
 
 * Java i MySQL
 * [Netbeans IDE](https://netbeans.org/)
@@ -10,7 +10,7 @@ Event Manager je Java desktop aplikacija koja služi kao katalog glazbenih, kult
 * Apache [PDFBox](https://pdfbox.apache.org/) i [POI](https://poi.apache.org/)
 * Google [Static Maps](https://developers.google.com/maps/documentation/static-maps/) i [Geocoding](https://developers.google.com/maps/documentation/geocoding/intro) API
 
-# Sažetak
+## Sažetak
 
 Sama aplikacija sastoji se od glavnog prozora u kojem se izmjenjuje nekoliko panela, ovisno o kategoriji odabranoj u glavnom izborniku.
 
