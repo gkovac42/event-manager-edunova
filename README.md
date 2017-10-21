@@ -26,19 +26,19 @@ Sama aplikacija sastoji se od glavnog prozora u kojem se izmjenjuje nekoliko pan
 
 * Kategorija "Osobe" odgovorna je za CRUD kupaca te sadrži popis naselja u Republici Hrvatskoj s pripadajućim poštanskim brojevima(preuzeto od [ndekic](https://github.com/ndekic/popis_naselja_u_republici_hrvatskoj))
 
-<img src="screenshots/ss03.PNG" width="350" height="250" />   <img src="screenshots/ss08.png" width="350" height="250" />
+<p align="center"><img src="screenshots/ss03.PNG" width="350" height="250" />   <img src="screenshots/ss08.png" width="350" height="250" /></p>
 
 * U kategoriji "Narudžbe" implementiran je jednostavan sustav izrade narudžbi putem košarice. Također je moguće narudžbe izraditi i pohraniti u PDF formatu.
 
-<img src="screenshots/ss04.PNG" width="350" height="250" />
+<p align="center"><img src="screenshots/ss04.PNG" width="350" height="250" /></p>
 
 * Kategorija "Pregled" sadrži sve bitne podatke na jednom mjestu u obliku tablica te omogućava brzo i jednostavno sortiranje i pretraživanje. Za svaku tablicu moguće je izraditi i pohraniti Excel datoteku.
 
-<img src="screenshots/ss05.PNG" width="350" height="250" />
+<p align="center"><img src="screenshots/ss05.PNG" width="350" height="250" /></p>
 
 * Za kraj, pritiskom na ikonu žarulje moguće je promjeniti vizualnu temu aplikacije:
 
-<img src="screenshots/ss06.PNG" width="350" height="250" />
+<p align="center"><img src="screenshots/ss06.PNG" width="350" height="250" /></p>
 
 
 
