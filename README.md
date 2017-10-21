@@ -16,14 +16,10 @@ Event Manager je Java desktop aplikacija koja služi kao katalog glazbenih, kult
 
 Sama aplikacija sastoji se od glavnog prozora u kojem se izmjenjuje nekoliko panela, ovisno o kategoriji odabranoj u glavnom izborniku.
 
-* Kategorija "Eventi" omogućava čitanje, unos, promjenu i brisanje eventa u/iz baze podataka (CRUD). Evente se može pretraživati i sortirati na različite načine. Svakom eventu moguće je dodjeliti datum i mjesto održavanja te pripadajuće ulaznice.
-
-<img src="screenshots/ss01.PNG" width="350" height="250" />   <img src="screenshots/ss07.PNG" width="350" height="250" />
+* Kategorija "Eventi" omogućava čitanje, unos, promjenu i brisanje eventa u/iz baze podataka (CRUD). Evente se može pretraživati i sortirati na različite načine. Svakom eventu moguće je dodjeliti datum i mjesto održavanja te pripadajuće ulaznice. <img src="screenshots/ss01.PNG" width="350" height="250" />   <img src="screenshots/ss07.PNG" width="350" height="250" />
 
 
-* U Kategoriji "Lokacije", uz CRUD, koriste si i Google-ovi Static Maps i Geocoding API-ji. Oni omogućavaju lociranje i iscrtavanje karte za određene koordinate, na osnovu naziva, adrese ili mjesta koje korisnik unese.
-
-<img src="screenshots/ss02.PNG" width="350" height="250" />
+* U Kategoriji "Lokacije", uz CRUD, koriste si i Google-ovi Static Maps i Geocoding API-ji. Oni omogućavaju lociranje i iscrtavanje karte za određene koordinate, na osnovu naziva, adrese ili mjesta koje korisnik unese. <img src="screenshots/ss02.PNG" width="350" height="250" />
 
 
 * Kategorija "Osobe" odgovorna je za CRUD kupaca te sadrži popis naselja u Republici Hrvatskoj s pripadajućim poštanskim brojevima(preuzeto od [ndekic](https://github.com/ndekic/popis_naselja_u_republici_hrvatskoj))
