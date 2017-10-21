@@ -23,7 +23,7 @@ Sama aplikacija sastoji se od glavnog prozora u kojem se izmjenjuje nekoliko pan
 
 <p align="center"><img src="screenshots/ss02.PNG" width="350" height="250" /></p><br />
 
-* Kategorija "Osobe" odgovorna je za CRUD kupaca te sadrži popis naselja u Republici Hrvatskoj s pripadajućim poštanskim brojevima(preuzeto od [ndekic](https://github.com/ndekic/popis_naselja_u_republici_hrvatskoj))
+* Kategorija "Osobe" odgovorna je za CRUD kupaca te sadrži popis naselja u Republici Hrvatskoj s pripadajućim poštanskim brojevima (preuzeto od [ndekic](https://github.com/ndekic/popis_naselja_u_republici_hrvatskoj))
 
 <p align="center"><img src="screenshots/ss03.PNG" width="350" height="250" />   <img src="screenshots/ss08.png" width="350" height="250" /></p><br />
 
