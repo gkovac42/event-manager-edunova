@@ -6,34 +6,14 @@ Event Manager je aplikacija koja služi kao katalog glazbenih, kulturnih i drugi
 
 * Java
 * MySQL
-* Hibernate ORM
-* Netbeans IDE
-* Google Static Maps API
-* Google Geocoding API
+* [Hibernate ORM](http://hibernate.org/orm/)
+* [Netbeans IDE](https://netbeans.org/)
+* [Apache PDFBox](https://pdfbox.apache.org/)
+* [Apache POI](https://poi.apache.org/)
+* [LGoodDatePicker](https://github.com/LGoodDatePicker/LGoodDatePicker)
+* [Google Static Maps API](https://developers.google.com/maps/documentation/static-maps/)
+* [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro)
 
-## Plan rada
-
-Ostvareno:
-
-* glavni izbornik i prozori za pojedine entitete
-* CRUD za tablice bez vanjskih ključeva (korisnik, lokacija)
-* djelomično CRUD za druge tablice (event, ulaznica)
-* kontrola unosa podataka
-* pretraživanje podataka za neke tablice (djelomično)
-* povezivanje s Google Static Maps i Geocoding API
-* vizualni identitet aplikacije
-
-Za uraditi:
-
-* izraditi CRUD za preostale tablice i podatke
-* osmisliti dizajn i funkcionalnost za narudžbe
-* poboljšati pretraživanja podataka (filteri, kategorije)
-* poboljšati Google Maps klasu (spremanje na disk)
-* debugging
-
-## Screenshot
-
-![Alt text](em01.jpg?raw=true "events")
-![Alt text](em02.jpg?raw=true "tickets")
-![Alt text](em03.jpg?raw=true "locations")
-![Alt text](em04.jpg?raw=true "users")
+<img src="screenshots/ss01.PNG" width="350" height="250" /> <img src="screenshots/ss04.PNG" width="350" height="250" />
+<img src="screenshots/ss02.PNG" width="350" height="250" /> <img src="screenshots/ss05.PNG" width="350" height="250" />
+<img src="screenshots/ss03.PNG" width="350" height="250" /> <img src="screenshots/ss06.PNG" width="350" height="250" />
