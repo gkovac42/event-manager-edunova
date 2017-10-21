@@ -9,7 +9,8 @@ Event Manager je aplikacija koja služi kao katalog glazbenih, kulturnih i drugi
 * Hibernate ORM
 * Netbeans IDE
 * Apache PDFBox i POI
-* LGoodDatePicker [a link](hhttps://github.com/LGoodDatePicker/LGoodDatePicke)
+* LGoodDatePicker
+[Sites Using React](https://github.com/facebook/react/wiki/Sites-Using-React)
 * Google Static Maps API
 * Google Geocoding API
 
