@@ -11,29 +11,8 @@ Event Manager je aplikacija koja služi kao katalog glazbenih, kulturnih i drugi
 * Google Static Maps API
 * Google Geocoding API
 
-## Plan rada
 
-Ostvareno:
-
-* glavni izbornik i prozori za pojedine entitete
-* CRUD za tablice bez vanjskih ključeva (korisnik, lokacija)
-* djelomično CRUD za druge tablice (event, ulaznica)
-* kontrola unosa podataka
-* pretraživanje podataka za neke tablice (djelomično)
-* povezivanje s Google Static Maps i Geocoding API
-* vizualni identitet aplikacije
-
-Za uraditi:
-
-* izraditi CRUD za preostale tablice i podatke
-* osmisliti dizajn i funkcionalnost za narudžbe
-* poboljšati pretraživanja podataka (filteri, kategorije)
-* poboljšati Google Maps klasu (spremanje na disk)
-* debugging
-
-## Screenshot
-
-![Alt text](em01.jpg?raw=true "events")
-![Alt text](em02.jpg?raw=true "tickets")
-![Alt text](em03.jpg?raw=true "locations")
-![Alt text](em04.jpg?raw=true "users")
+![Alt text](screenshots/ss01.png?raw=true "events")
+![Alt text](ss02.png?raw=true "tickets")
+![Alt text](ss03.png?raw=true "locations")
+![Alt text](ss04.png?raw=true "users")
