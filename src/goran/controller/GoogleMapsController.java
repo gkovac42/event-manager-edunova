@@ -86,13 +86,16 @@ public class GoogleMapsController {
 
                 String component = jObject.get("long_name").getAsString();
 
-                if (type.matches("street_number")) {
+                if (type.equals("street_number")) {
                     data[2] = component;
-                } else if (type.matches("route")) {
+                } else if (type.equals("route")) {
                     data[3] = component;
-                } else if (type.matches("locality")) {
+                } else if (type.equals("locality")) {
                     data[4] = component;
-                } else if (type.matches("country")) {
+                } else if (type.equals("country")) {
+                    if (component.equals("Croatia")) {
+                        component = "Hrvatska";
+                    }
                     data[5] = component;
                 }
 
