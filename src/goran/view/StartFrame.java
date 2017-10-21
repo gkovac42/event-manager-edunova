@@ -5,7 +5,8 @@
  */
 package goran.view;
 
-import goran.util.Theme;
+import goran.util.MotionPanel;
+import goran.util.CustomLabel;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.io.File;
@@ -109,11 +110,12 @@ public class StartFrame extends javax.swing.JFrame {
         lblClose = new CustomLabel();
         lblTitle = new javax.swing.JLabel();
         lblMinimize = new CustomLabel();
+        lblBackground1 = new javax.swing.JLabel();
         lblLoading = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setOpacity(0.97F);
+        setOpacity(0.98F);
         setSize(new java.awt.Dimension(310, 290));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -122,35 +124,35 @@ public class StartFrame extends javax.swing.JFrame {
         pnlLogin.setPreferredSize(new java.awt.Dimension(312, 250));
         pnlLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblPassword.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblPassword.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("ZAPORKA");
         pnlLogin.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 80, 40));
 
-        lblUser.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblUser.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         lblUser.setForeground(new java.awt.Color(255, 255, 255));
         lblUser.setText("KORISNIK");
         pnlLogin.add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 80, 40));
 
         txtUsername.setBackground(new java.awt.Color(120, 120, 120));
-        txtUsername.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtUsername.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(255, 255, 255));
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
             }
         });
-        pnlLogin.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 200, 40));
+        pnlLogin.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 190, 40));
 
         txtPassword.setBackground(new java.awt.Color(120, 120, 120));
-        txtPassword.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtPassword.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtPassword.setForeground(new java.awt.Color(255, 255, 255));
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
             }
         });
-        pnlLogin.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 200, 40));
+        pnlLogin.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 190, 40));
 
         btnLogin.setBackground(new java.awt.Color(0, 0, 0));
         btnLogin.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -186,7 +188,7 @@ public class StartFrame extends javax.swing.JFrame {
         lblError.setForeground(new java.awt.Color(255, 0, 0));
         pnlLogin.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 290, 40));
 
-        lblUser1.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblUser1.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         lblUser1.setForeground(new java.awt.Color(255, 255, 255));
         lblUser1.setText("Unesite korisničko ime i zaporku :");
         pnlLogin.add(lblUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 250, 40));
@@ -231,11 +233,15 @@ public class StartFrame extends javax.swing.JFrame {
 
         pnlLogin.add(pnlTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
 
+        lblBackground1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"))); // NOI18N
+        lblBackground1.setOpaque(true);
+        pnlLogin.add(lblBackground1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 500));
+
         getContentPane().add(pnlLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 290));
 
         lblLoading.setBackground(new java.awt.Color(25, 25, 25));
         lblLoading.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        lblLoading.setForeground(new java.awt.Color(180, 180, 180));
+        lblLoading.setForeground(new java.awt.Color(220, 220, 220));
         lblLoading.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/ajax-loader.gif"))); // NOI18N
         lblLoading.setText("UČITAVANJE PODATAKA...");
         lblLoading.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -289,6 +295,7 @@ public class StartFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnLogin;
+    public javax.swing.JLabel lblBackground1;
     private javax.swing.JLabel lblClose;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblIcon;

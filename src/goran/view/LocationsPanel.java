@@ -91,18 +91,18 @@ public class LocationsPanel extends javax.swing.JPanel {
         txtLocationLocality = new javax.swing.JTextField();
         txtLocationCountry = new javax.swing.JTextField();
         btnFindOnMap = new javax.swing.JButton();
-        btnAddLocation = new javax.swing.JButton();
         btnEditLocation = new javax.swing.JButton();
         btnRemoveLocation = new javax.swing.JButton();
         btnNewLocation = new javax.swing.JButton();
         lblMap = new javax.swing.JLabel();
         lblTitle1 = new javax.swing.JLabel();
         lblTitle2 = new javax.swing.JLabel();
-        lblTitle4 = new javax.swing.JLabel();
         lblError = new javax.swing.JLabel();
         lblTitle6 = new javax.swing.JLabel();
         txtFindLocation = new javax.swing.JTextField();
-        lblSearch1 = new javax.swing.JLabel();
+        lblTitle5 = new javax.swing.JLabel();
+        lblSearch2 = new javax.swing.JLabel();
+        lblBackground = new javax.swing.JLabel();
 
         locationsMenu.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         locationsMenu.setToolTipText("");
@@ -144,7 +144,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lstLocations.setBackground(new java.awt.Color(120, 120, 120));
-        lstLocations.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lstLocations.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         lstLocations.setForeground(new java.awt.Color(255, 255, 255));
         lstLocations.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstLocations.setFocusable(false);
@@ -158,7 +158,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 320, 180));
 
         txtLocationName.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtLocationName.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtLocationName.setForeground(new java.awt.Color(255, 255, 255));
         txtLocationName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,7 +168,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         add(txtLocationName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, 240, 40));
 
         txtLocationAddress.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationAddress.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtLocationAddress.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtLocationAddress.setForeground(new java.awt.Color(255, 255, 255));
         txtLocationAddress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,7 +178,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         add(txtLocationAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 240, 40));
 
         txtLocationLocality.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationLocality.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtLocationLocality.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtLocationLocality.setForeground(new java.awt.Color(255, 255, 255));
         txtLocationLocality.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,7 +188,7 @@ public class LocationsPanel extends javax.swing.JPanel {
         add(txtLocationLocality, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, 240, 40));
 
         txtLocationCountry.setBackground(new java.awt.Color(120, 120, 120));
-        txtLocationCountry.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtLocationCountry.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtLocationCountry.setForeground(new java.awt.Color(255, 255, 255));
         txtLocationCountry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,45 +201,32 @@ public class LocationsPanel extends javax.swing.JPanel {
         btnFindOnMap.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnFindOnMap.setForeground(new java.awt.Color(255, 255, 255));
         btnFindOnMap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_locate.png"))); // NOI18N
-        btnFindOnMap.setText("PRONAĐI");
+        btnFindOnMap.setText("PRONAĐI NA KARTI");
         btnFindOnMap.setBorder(null);
         btnFindOnMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFindOnMapActionPerformed(evt);
             }
         });
-        add(btnFindOnMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 160, 40));
-
-        btnAddLocation.setBackground(new java.awt.Color(0, 0, 0));
-        btnAddLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        btnAddLocation.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_add.png"))); // NOI18N
-        btnAddLocation.setText("DODAJ");
-        btnAddLocation.setBorder(null);
-        btnAddLocation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddLocationActionPerformed(evt);
-            }
-        });
-        add(btnAddLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 100, 40));
+        add(btnFindOnMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 350, 40));
 
         btnEditLocation.setBackground(new java.awt.Color(0, 0, 0));
         btnEditLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnEditLocation.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_edit.png"))); // NOI18N
-        btnEditLocation.setText("UREDI");
+        btnEditLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_save.png"))); // NOI18N
+        btnEditLocation.setText("SPREMI");
         btnEditLocation.setBorder(null);
         btnEditLocation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditLocationActionPerformed(evt);
             }
         });
-        add(btnEditLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 100, 40));
+        add(btnEditLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 100, 40));
 
         btnRemoveLocation.setBackground(new java.awt.Color(0, 0, 0));
         btnRemoveLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnRemoveLocation.setForeground(new java.awt.Color(255, 255, 255));
-        btnRemoveLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_remove.png"))); // NOI18N
+        btnRemoveLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_cancel_order.png"))); // NOI18N
         btnRemoveLocation.setText("UKLONI");
         btnRemoveLocation.setBorder(null);
         btnRemoveLocation.addActionListener(new java.awt.event.ActionListener() {
@@ -247,58 +234,62 @@ public class LocationsPanel extends javax.swing.JPanel {
                 btnRemoveLocationActionPerformed(evt);
             }
         });
-        add(btnRemoveLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 100, 40));
+        add(btnRemoveLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 100, 40));
 
         btnNewLocation.setBackground(new java.awt.Color(0, 0, 0));
         btnNewLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnNewLocation.setForeground(new java.awt.Color(255, 255, 255));
         btnNewLocation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_new.png"))); // NOI18N
-        btnNewLocation.setText("NOVA LOKACIJA");
+        btnNewLocation.setText("NOVA");
         btnNewLocation.setBorder(null);
         btnNewLocation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNewLocationActionPerformed(evt);
             }
         });
-        add(btnNewLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 450, 180, 40));
+        add(btnNewLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 100, 40));
 
         lblMap.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.darkGray));
         lblMap.setPreferredSize(new java.awt.Dimension(460, 460));
         add(lblMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 350, 430));
 
-        lblTitle1.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTitle1.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         lblTitle1.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle1.setText("ADRESA");
         add(lblTitle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 70, 40));
 
-        lblTitle2.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTitle2.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         lblTitle2.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle2.setText("MJESTO");
         add(lblTitle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 70, 40));
-
-        lblTitle4.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        lblTitle4.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle4.setText("NAZIV");
-        add(lblTitle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 70, 40));
 
         lblError.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblError.setForeground(new java.awt.Color(255, 0, 0));
         lblError.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 240, 40));
 
-        lblTitle6.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTitle6.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         lblTitle6.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle6.setText("DRŽAVA");
         add(lblTitle6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 70, 40));
 
         txtFindLocation.setBackground(new java.awt.Color(120, 120, 120));
-        txtFindLocation.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtFindLocation.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtFindLocation.setForeground(new java.awt.Color(255, 255, 255));
         add(txtFindLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 280, 40));
 
-        lblSearch1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSearch1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
-        add(lblSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 40, 40));
+        lblTitle5.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
+        lblTitle5.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitle5.setText("NAZIV");
+        add(lblTitle5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 70, 40));
+
+        lblSearch2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSearch2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
+        add(lblSearch2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 40, 40));
+
+        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"))); // NOI18N
+        lblBackground.setOpaque(true);
+        add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 500));
     }// </editor-fold>//GEN-END:initComponents
 
     private void lstLocationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstLocationsValueChanged
@@ -342,26 +333,10 @@ public class LocationsPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnFindOnMapActionPerformed
 
-    private void btnAddLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLocationActionPerformed
-
-        getUserInput();
-
-        if (InputController.locationInputError(location)) {
-
-            lblError.setText(TxtUtil.INPUT_ERROR);
-
-        } else {
-
-            ctrlLocation.save(location);
-            updateLocations(sortLocations);
-            lblError.setText("");
-            location = new Location();
-        }
-    }//GEN-LAST:event_btnAddLocationActionPerformed
-
     private void btnEditLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditLocationActionPerformed
 
-        if (lstLocations.getSelectedIndex() == -1) {
+        if (location == null) {
+            lblError.setText("Odaberite postojeću ili kreirajte novu lokaciju");
         } else {
 
             getUserInput();
@@ -416,18 +391,18 @@ public class LocationsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_mnuDateCreatedActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddLocation;
     private javax.swing.JButton btnEditLocation;
     private javax.swing.JButton btnFindOnMap;
     private javax.swing.JButton btnNewLocation;
     private javax.swing.JButton btnRemoveLocation;
     private javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblMap;
-    private javax.swing.JLabel lblSearch1;
+    private javax.swing.JLabel lblSearch2;
     private javax.swing.JLabel lblTitle1;
     private javax.swing.JLabel lblTitle2;
-    private javax.swing.JLabel lblTitle4;
+    private javax.swing.JLabel lblTitle5;
     private javax.swing.JLabel lblTitle6;
     private javax.swing.JPopupMenu locationsMenu;
     private javax.swing.JList<Location> lstLocations;
@@ -473,7 +448,6 @@ public class LocationsPanel extends javax.swing.JPanel {
     public void applyTheme() {
 
         setBackground(Theme.color2);
-        btnAddLocation.setBackground(Theme.color3);
         btnEditLocation.setBackground(Theme.color3);
         btnRemoveLocation.setBackground(Theme.color3);
         btnNewLocation.setBackground(Theme.color3);
@@ -482,7 +456,12 @@ public class LocationsPanel extends javax.swing.JPanel {
         txtLocationAddress.setBackground(Theme.color4);
         txtLocationLocality.setBackground(Theme.color4);
         txtLocationCountry.setBackground(Theme.color4);
+        txtLocationName.setForeground(Theme.font1);
+        txtLocationAddress.setForeground(Theme.font1);
+        txtLocationLocality.setForeground(Theme.font1);
+        txtLocationCountry.setForeground(Theme.font1);
         txtFindLocation.setBackground(Theme.color4);
+        txtFindLocation.setForeground(Theme.font1);
         lstLocations.setBackground(Theme.color4);
         lstLocations.setForeground(Theme.font1);
         lblMap.setBorder(new EtchedBorder(Theme.color1, Theme.color2));

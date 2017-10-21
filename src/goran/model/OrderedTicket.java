@@ -54,7 +54,7 @@ public class OrderedTicket extends Entity implements Serializable {
 
     @Override
     public String toString() {
-        return ticket.getName() + " - " + new DecimalFormat("#.00kn").format(getTotalPrice()) + "   x" + quantity;
+        return ticket.getName() + "   x" + quantity + " - " + new DecimalFormat("#.00kn").format(getTotalPrice());
     }
     
     

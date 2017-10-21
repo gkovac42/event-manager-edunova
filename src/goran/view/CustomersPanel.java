@@ -5,6 +5,7 @@
  */
 package goran.view;
 
+import goran.util.MotionPanel;
 import goran.util.Theme;
 import goran.controller.HibernateController;
 import goran.controller.InputController;
@@ -129,6 +130,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         lblError = new javax.swing.JLabel();
         cmbNaselja = new javax.swing.JComboBox<>();
+        lblBackground = new javax.swing.JLabel();
         pnlUtilTitle = new MotionPanel(frameCustomersUtil);
         lblCustomersUtil = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -142,6 +144,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         cmbFindBy = new javax.swing.JComboBox<>();
         btnExportToExcel = new javax.swing.JButton();
         btnOrder = new javax.swing.JButton();
+        lblBackground1 = new javax.swing.JLabel();
 
         frameCustomersUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameCustomersUtil.setAlwaysOnTop(true);
@@ -158,7 +161,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         btnConfirm.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnConfirm.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_confirm.png"))); // NOI18N
-        btnConfirm.setText("POTVRDI");
+        btnConfirm.setText("SPREMI");
         btnConfirm.setBorder(null);
         btnConfirm.setFocusPainted(false);
         btnConfirm.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -167,7 +170,7 @@ public class CustomersPanel extends javax.swing.JPanel {
                 btnConfirmActionPerformed(evt);
             }
         });
-        pnlUtil.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, 100, 40));
+        pnlUtil.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 110, 40));
 
         btnCancel.setBackground(new java.awt.Color(0, 0, 0));
         btnCancel.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -182,10 +185,10 @@ public class CustomersPanel extends javax.swing.JPanel {
                 btnCancelActionPerformed(evt);
             }
         });
-        pnlUtil.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 100, 40));
+        pnlUtil.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 110, 40));
 
         txtFirstName.setBackground(new java.awt.Color(120, 120, 120));
-        txtFirstName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtFirstName.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtFirstName.setForeground(new java.awt.Color(255, 255, 255));
         txtFirstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,7 +198,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         pnlUtil.add(txtFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 300, 40));
 
         txtLastName.setBackground(new java.awt.Color(120, 120, 120));
-        txtLastName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtLastName.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtLastName.setForeground(new java.awt.Color(255, 255, 255));
         txtLastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +208,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         pnlUtil.add(txtLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 300, 40));
 
         txtEmail.setBackground(new java.awt.Color(120, 120, 120));
-        txtEmail.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtEmail.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(255, 255, 255));
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,7 +218,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         pnlUtil.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 300, 40));
 
         txtAddress.setBackground(new java.awt.Color(120, 120, 120));
-        txtAddress.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtAddress.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtAddress.setForeground(new java.awt.Color(255, 255, 255));
         txtAddress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,27 +227,27 @@ public class CustomersPanel extends javax.swing.JPanel {
         });
         pnlUtil.add(txtAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 300, 40));
 
-        jLabel7.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("MJESTO");
         pnlUtil.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 80, 40));
 
-        jLabel8.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("IME");
-        pnlUtil.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 80, 40));
+        pnlUtil.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, 40));
 
-        jLabel9.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("PREZIME");
         pnlUtil.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 80, 40));
 
-        jLabel10.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("E-MAIL");
         pnlUtil.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 80, 40));
 
-        jLabel11.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("ADRESA");
         pnlUtil.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 80, 40));
@@ -254,8 +257,12 @@ public class CustomersPanel extends javax.swing.JPanel {
         pnlUtil.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 170, 40));
 
         cmbNaselja.setBackground(new java.awt.Color(120, 120, 120));
-        cmbNaselja.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        cmbNaselja.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         pnlUtil.add(cmbNaselja, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 300, 40));
+
+        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"))); // NOI18N
+        lblBackground.setOpaque(true);
+        pnlUtil.add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 500));
 
         frameCustomersUtil.getContentPane().add(pnlUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 400, 310));
 
@@ -280,20 +287,19 @@ public class CustomersPanel extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtFindCustomer.setBackground(new java.awt.Color(120, 120, 120));
-        txtFindCustomer.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtFindCustomer.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtFindCustomer.setForeground(new java.awt.Color(255, 255, 255));
         txtFindCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFindCustomerActionPerformed(evt);
             }
         });
-        add(txtFindCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 450, 40));
+        add(txtFindCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 500, 40));
 
         btnFindCustomer.setBackground(new java.awt.Color(0, 0, 0));
         btnFindCustomer.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnFindCustomer.setForeground(new java.awt.Color(255, 255, 255));
         btnFindCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
-        btnFindCustomer.setText("TRAŽI");
         btnFindCustomer.setBorder(null);
         btnFindCustomer.setFocusPainted(false);
         btnFindCustomer.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -302,7 +308,7 @@ public class CustomersPanel extends javax.swing.JPanel {
                 btnFindCustomerActionPerformed(evt);
             }
         });
-        add(btnFindCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 100, 40));
+        add(btnFindCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 40, 40));
 
         btnAddCustomer.setBackground(new java.awt.Color(0, 0, 0));
         btnAddCustomer.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -352,7 +358,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         tblCustomers.setAutoCreateRowSorter(true);
         tblCustomers.setBackground(new java.awt.Color(120, 120, 120));
         tblCustomers.getTableHeader().setFont(new java.awt.Font("Lucida Sans", 1, 14));
-        tblCustomers.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        tblCustomers.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         tblCustomers.setForeground(new java.awt.Color(255, 255, 255));
         tblCustomers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -371,6 +377,9 @@ public class CustomersPanel extends javax.swing.JPanel {
             }
         });
         tblCustomers.setRowHeight(24);
+        tblCustomers.getColumnModel().getColumn(2).setPreferredWidth(160);
+        tblCustomers.getColumnModel().getColumn(3).setPreferredWidth(120);
+        tblCustomers.getColumnModel().getColumn(4).setPreferredWidth(120);
         tblCustomers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane5.setViewportView(tblCustomers);
 
@@ -381,7 +390,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         cmbFindBy.setForeground(new java.awt.Color(255, 255, 255));
         cmbFindBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PREZIME", "IME", "E-MAIL", "ADRESA", "MJESTO" }));
         cmbFindBy.setMinimumSize(new java.awt.Dimension(90, 25));
-        add(cmbFindBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 110, 40));
+        add(cmbFindBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 120, 40));
 
         btnExportToExcel.setBackground(new java.awt.Color(0, 0, 0));
         btnExportToExcel.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -396,13 +405,13 @@ public class CustomersPanel extends javax.swing.JPanel {
                 btnExportToExcelActionPerformed(evt);
             }
         });
-        add(btnExportToExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 450, 110, 40));
+        add(btnExportToExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 450, 90, 40));
 
         btnOrder.setBackground(new java.awt.Color(0, 0, 0));
         btnOrder.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnOrder.setForeground(new java.awt.Color(255, 255, 255));
         btnOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_orders.png"))); // NOI18N
-        btnOrder.setText("NARUČI");
+        btnOrder.setText("IZRADI NARUDŽBU");
         btnOrder.setBorder(null);
         btnOrder.setFocusPainted(false);
         btnOrder.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -411,7 +420,11 @@ public class CustomersPanel extends javax.swing.JPanel {
                 btnOrderActionPerformed(evt);
             }
         });
-        add(btnOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 160, 40));
+        add(btnOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 250, 40));
+
+        lblBackground1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"))); // NOI18N
+        lblBackground1.setOpaque(true);
+        add(lblBackground1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 500));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindCustomerActionPerformed
@@ -510,7 +523,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnExportToExcelActionPerformed
 
     private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
-        
+        MainFrame.pnlOrders.updateCustomers();
         MainFrame.pnlOrders.jumpToCustomer(getCustomer());
         MainFrame.setActivePanel(MainFrame.pnlOrders);
     }//GEN-LAST:event_btnOrderActionPerformed
@@ -534,6 +547,8 @@ public class CustomersPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane5;
+    public javax.swing.JLabel lblBackground;
+    public javax.swing.JLabel lblBackground1;
     private javax.swing.JLabel lblCustomersUtil;
     private javax.swing.JLabel lblError;
     private javax.swing.JPanel pnlUtil;

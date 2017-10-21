@@ -5,12 +5,16 @@
  */
 package goran.view;
 
+import goran.util.MotionPanel;
+import goran.util.CustomLabel;
 import goran.util.HibernateUtil;
 import goran.util.Theme;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
@@ -26,12 +30,14 @@ public class MainFrame extends javax.swing.JFrame {
     public static OrdersPanel pnlOrders;
     private AbsoluteConstraints panelPosition;
 
+    private ImageIcon bgIcon;
     private int theme = Theme.DARK;
 
     public MainFrame() {
 
         initComponents();
 
+        getRootPane().setBorder(new EtchedBorder(Theme.color2, Theme.color1));
         panelPosition = new AbsoluteConstraints(100, 40, 700, 560);
         pnlEvents = new EventsPanel();
         getContentPane().add(pnlEvents, panelPosition);
@@ -44,7 +50,9 @@ public class MainFrame extends javax.swing.JFrame {
         pnlOrders = new OrdersPanel();
         getContentPane().add(pnlOrders, panelPosition);
         lblUserName.setText(StartFrame.user + ")");
-
+        
+        bgIcon = new ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"));
+        applyTheme();
         setActivePanel(pnlEvents);
     }
 
@@ -112,8 +120,16 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
-        setOpacity(0.97F);
+        setOpacity(0.98F);
         setSize(new java.awt.Dimension(800, 540));
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+                formWindowLostFocus(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -152,7 +168,7 @@ public class MainFrame extends javax.swing.JFrame {
                 lblCloseMouseClicked(evt);
             }
         });
-        pnlTitle.add(lblClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, 30, 40));
+        pnlTitle.add(lblClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, 26, 40));
 
         lblTitle.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(255, 255, 255));
@@ -188,18 +204,18 @@ public class MainFrame extends javax.swing.JFrame {
         });
         pnlTitle.add(btnGit, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, 100, 20));
 
-        lblUserName.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblUserName.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         lblUserName.setForeground(new java.awt.Color(255, 255, 255));
         pnlTitle.add(lblUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 150, 40));
 
         lblTitle2.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblTitle2.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle2.setText("(KORISNIK :");
+        lblTitle2.setText("(KORISNIK : ");
         pnlTitle.add(lblTitle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 90, 40));
 
         getContentPane().add(pnlTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 40));
 
-        pnlSide.setBackground(new java.awt.Color(0, 0, 0));
+        pnlSide.setBackground(new java.awt.Color(30, 30, 40));
         pnlSide.setForeground(new java.awt.Color(255, 255, 255));
         pnlSide.setPreferredSize(new java.awt.Dimension(100, 560));
         pnlSide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -234,7 +250,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btnReviewActionPerformed(evt);
             }
         });
-        pnlSide.add(btnReview, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 100, 100));
+        pnlSide.add(btnReview, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 100, 96));
 
         btnCustomers.setBackground(new java.awt.Color(0, 0, 0));
         btnCustomers.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -297,7 +313,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnlCustomers.setVisible(false);
         pnlLocations.setVisible(false);
         pnlOrders.setVisible(false);
-
+        
         panel.setVisible(true);
     }
 
@@ -336,12 +352,14 @@ public class MainFrame extends javax.swing.JFrame {
 
             theme = Theme.LIGHT;
             lblLightSwitch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/light_on.png")));
+            bgIcon = new ImageIcon(getClass().getResource("/goran/resources/icons/bg_alt.jpg"));
             Theme.setLightTheme();
 
         } else {
 
             theme = Theme.DARK;
             lblLightSwitch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/light_off.png")));
+            bgIcon = new ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"));
             Theme.setDarkTheme();
         }
 
@@ -375,6 +393,20 @@ public class MainFrame extends javax.swing.JFrame {
         setActivePanel(pnlOrders);
     }//GEN-LAST:event_btnOrdersActionPerformed
 
+    private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
+        pnlTitle.setBackground(Theme.color2);
+        lblClose.setBackground(Theme.color2);
+        lblMinimize.setBackground(Theme.color2);
+        lblLightSwitch.setBackground(Theme.color2);
+    }//GEN-LAST:event_formWindowLostFocus
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        pnlTitle.setBackground(Theme.color1);
+        lblClose.setBackground(Theme.color1);
+        lblMinimize.setBackground(Theme.color1);
+        lblLightSwitch.setBackground(Theme.color1);
+    }//GEN-LAST:event_formWindowGainedFocus
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCustomers;
     private javax.swing.JButton btnEvents;
@@ -401,23 +433,32 @@ public class MainFrame extends javax.swing.JFrame {
 
      private void applyTheme() {
 
+        getRootPane().setBorder(new EtchedBorder(Theme.color2, Theme.color1));
         pnlTitle.setBackground(Theme.color1);
         lblMinimize.setBackground(Theme.color1);
         lblClose.setBackground(Theme.color1);
         lblLightSwitch.setBackground(Theme.color1);
 
-        pnlSide.setBackground(Theme.color3);
+        pnlSide.setBackground(Theme.color1);
         btnEvents.setBackground(Theme.color3);
         btnReview.setBackground(Theme.color3);
         btnCustomers.setBackground(Theme.color3);
         btnOrders.setBackground(Theme.color3);
         btnLocations.setBackground(Theme.color3);
         btnGit.setBackground(Theme.color3);
-
+        
         pnlEvents.applyTheme();
+        pnlEvents.lblBackground.setIcon(bgIcon);
+        pnlEvents.lblBackground1.setIcon(bgIcon);
+        pnlEvents.lblBackground2.setIcon(bgIcon);
         pnlReview.applyTheme();
+        pnlReview.lblBackground.setIcon(bgIcon);
         pnlCustomers.applyTheme();
+        pnlCustomers.lblBackground.setIcon(bgIcon);
+        pnlCustomers.lblBackground1.setIcon(bgIcon);
         pnlLocations.applyTheme();
+        pnlLocations.lblBackground.setIcon(bgIcon);
         pnlOrders.applyTheme();
+        pnlOrders.lblBackground.setIcon(bgIcon);
     }
 }

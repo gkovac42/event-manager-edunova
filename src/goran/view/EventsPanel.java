@@ -5,8 +5,9 @@
  */
 package goran.view;
 
+import goran.util.MotionPanel;
+import goran.util.MyDatePicker;
 import goran.util.Theme;
-import com.github.lgooddatepicker.components.DatePicker;
 import goran.util.TxtUtil;
 import goran.controller.GoogleMapsController;
 import goran.controller.HibernateController;
@@ -15,10 +16,8 @@ import goran.model.Event;
 import goran.model.Location;
 import goran.model.Ticket;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.Locale;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.border.EtchedBorder;
@@ -39,14 +38,13 @@ public class EventsPanel extends javax.swing.JPanel {
     private HibernateController<Event> ctrlEvent;
     private HibernateController<Location> ctrlLocation;
     private GoogleMapsController ctrlMap;
-    private DatePicker startDatePicker, endDatePicker;
+    private MyDatePicker startDatePicker, endDatePicker;
     private SimpleDateFormat sdf;
     private String sortEvents;
 
     public EventsPanel() {
 
         initComponents();
-        initDateComponents();
         drawBorders();
 
         event = new Event();
@@ -132,6 +130,7 @@ public class EventsPanel extends javax.swing.JPanel {
         lblDateTimeUtil3 = new javax.swing.JLabel();
         lblDateTimeUtil4 = new javax.swing.JLabel();
         lblDateTimeUtil5 = new javax.swing.JLabel();
+        lblBackground1 = new javax.swing.JLabel();
         pnlEventsUtilTitle = new MotionPanel(frameEventsUtil);
         lblEventsUtil = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -146,6 +145,7 @@ public class EventsPanel extends javax.swing.JPanel {
         jLabel17 = new javax.swing.JLabel();
         txtTicketQuantity = new javax.swing.JTextField();
         lblErrorTicket = new javax.swing.JLabel();
+        lblBackground2 = new javax.swing.JLabel();
         pnlTicketsUtilTitle = new MotionPanel(frameTicketsUtil);
         lblTicketsUtil = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -175,14 +175,19 @@ public class EventsPanel extends javax.swing.JPanel {
         lblSearch = new javax.swing.JLabel();
         lblSearch1 = new javax.swing.JLabel();
         lblSearch3 = new javax.swing.JLabel();
+        lblSearch4 = new javax.swing.JLabel();
+        lblSearch5 = new javax.swing.JLabel();
+        lblSearch6 = new javax.swing.JLabel();
+        lblBackground = new javax.swing.JLabel();
 
         frameEventsUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameEventsUtil.setAlwaysOnTop(true);
         frameEventsUtil.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         frameEventsUtil.setUndecorated(true);
         frameEventsUtil.setResizable(false);
-        frameEventsUtil.setSize(new java.awt.Dimension(390, 430));
+        frameEventsUtil.setSize(new java.awt.Dimension(320, 430));
         frameEventsUtil.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        initDateComponents();
 
         pnlEventsUtil.setBackground(new java.awt.Color(60, 60, 70));
         pnlEventsUtil.setPreferredSize(new java.awt.Dimension(550, 150));
@@ -192,7 +197,7 @@ public class EventsPanel extends javax.swing.JPanel {
         btnConfirmEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnConfirmEvent.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirmEvent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_confirm.png"))); // NOI18N
-        btnConfirmEvent.setText("POTVRDI");
+        btnConfirmEvent.setText("SPREMI");
         btnConfirmEvent.setBorder(null);
         btnConfirmEvent.setFocusPainted(false);
         btnConfirmEvent.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -201,7 +206,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnConfirmEventActionPerformed(evt);
             }
         });
-        pnlEventsUtil.add(btnConfirmEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 100, 40));
+        pnlEventsUtil.add(btnConfirmEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, 100, 40));
 
         btnCancelEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnCancelEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -216,59 +221,64 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnCancelEventActionPerformed(evt);
             }
         });
-        pnlEventsUtil.add(btnCancelEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 340, 100, 40));
+        pnlEventsUtil.add(btnCancelEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 100, 40));
 
         txtEventName.setBackground(new java.awt.Color(120, 120, 120));
-        txtEventName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtEventName.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtEventName.setForeground(new java.awt.Color(255, 255, 255));
         txtEventName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmEventActionPerformed(evt);
             }
         });
-        pnlEventsUtil.add(txtEventName, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 310, 40));
+        pnlEventsUtil.add(txtEventName, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 240, 40));
 
         lblErrorEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblErrorEvent.setForeground(new java.awt.Color(255, 0, 0));
-        pnlEventsUtil.add(lblErrorEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 110, 40));
+        pnlEventsUtil.add(lblErrorEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 180, 30));
 
-        jLabel14.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("NAZIV");
         pnlEventsUtil.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 60, 40));
 
         lblSearch2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSearch2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
-        pnlEventsUtil.add(lblSearch2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, 40, 40));
+        pnlEventsUtil.add(lblSearch2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 40, 40));
 
         txtFindLocation.setBackground(new java.awt.Color(120, 120, 120));
-        txtFindLocation.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtFindLocation.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtFindLocation.setForeground(new java.awt.Color(255, 255, 255));
-        pnlEventsUtil.add(txtFindLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 330, 40));
+        pnlEventsUtil.add(txtFindLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 260, 40));
 
         lstLocations.setBackground(new java.awt.Color(120, 120, 120));
-        lstLocations.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lstLocations.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         lstLocations.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane4.setViewportView(lstLocations);
 
-        pnlEventsUtil.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 370, 120));
+        pnlEventsUtil.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 300, 120));
 
-        lblDateTimeUtil3.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblDateTimeUtil3.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         lblDateTimeUtil3.setForeground(new java.awt.Color(255, 255, 255));
         lblDateTimeUtil3.setText("LOKACIJA");
-        pnlEventsUtil.add(lblDateTimeUtil3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 120, 30));
+        pnlEventsUtil.add(lblDateTimeUtil3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 90, 30));
 
-        lblDateTimeUtil4.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblDateTimeUtil4.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         lblDateTimeUtil4.setForeground(new java.awt.Color(255, 255, 255));
         lblDateTimeUtil4.setText("ZAVRŠETAK");
-        pnlEventsUtil.add(lblDateTimeUtil4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 120, 30));
+        pnlEventsUtil.add(lblDateTimeUtil4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 120, 30));
 
-        lblDateTimeUtil5.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblDateTimeUtil5.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         lblDateTimeUtil5.setForeground(new java.awt.Color(255, 255, 255));
         lblDateTimeUtil5.setText("POČETAK");
         pnlEventsUtil.add(lblDateTimeUtil5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 120, 30));
 
-        frameEventsUtil.getContentPane().add(pnlEventsUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 390, 390));
+        lblBackground1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"))); // NOI18N
+        lblBackground1.setOpaque(true);
+        initDateComponents();
+        pnlEventsUtil.add(lblBackground1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 500));
+
+        frameEventsUtil.getContentPane().add(pnlEventsUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 320, 390));
 
         pnlEventsUtilTitle.setBackground(new java.awt.Color(30, 30, 40));
         pnlEventsUtilTitle.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -283,7 +293,7 @@ public class EventsPanel extends javax.swing.JPanel {
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         pnlEventsUtilTitle.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 40));
 
-        frameEventsUtil.getContentPane().add(pnlEventsUtilTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 40));
+        frameEventsUtil.getContentPane().add(pnlEventsUtilTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 40));
 
         frameTicketsUtil.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         frameTicketsUtil.setAlwaysOnTop(true);
@@ -300,7 +310,7 @@ public class EventsPanel extends javax.swing.JPanel {
         btnConfirmTicket.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnConfirmTicket.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirmTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_confirm.png"))); // NOI18N
-        btnConfirmTicket.setText("POTVRDI");
+        btnConfirmTicket.setText("SPREMI");
         btnConfirmTicket.setBorder(null);
         btnConfirmTicket.setFocusPainted(false);
         btnConfirmTicket.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -327,7 +337,7 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlTicketsUtilMain.add(btnCancelTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 100, 40));
 
         txtTicketName.setBackground(new java.awt.Color(120, 120, 120));
-        txtTicketName.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtTicketName.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtTicketName.setForeground(new java.awt.Color(255, 255, 255));
         txtTicketName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -336,13 +346,13 @@ public class EventsPanel extends javax.swing.JPanel {
         });
         pnlTicketsUtilMain.add(txtTicketName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 290, 40));
 
-        jLabel15.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("NAZIV");
         pnlTicketsUtilMain.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 40));
 
         txtTicketPrice.setBackground(new java.awt.Color(120, 120, 120));
-        txtTicketPrice.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtTicketPrice.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtTicketPrice.setForeground(new java.awt.Color(255, 255, 255));
         txtTicketPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -351,18 +361,18 @@ public class EventsPanel extends javax.swing.JPanel {
         });
         pnlTicketsUtilMain.add(txtTicketPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 290, 40));
 
-        jLabel16.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("CIJENA");
         pnlTicketsUtilMain.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 90, 40));
 
-        jLabel17.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel17.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("KOLIČINA");
         pnlTicketsUtilMain.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 90, 40));
 
         txtTicketQuantity.setBackground(new java.awt.Color(120, 120, 120));
-        txtTicketQuantity.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtTicketQuantity.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtTicketQuantity.setForeground(new java.awt.Color(255, 255, 255));
         txtTicketQuantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -373,7 +383,11 @@ public class EventsPanel extends javax.swing.JPanel {
 
         lblErrorTicket.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblErrorTicket.setForeground(new java.awt.Color(255, 0, 0));
-        pnlTicketsUtilMain.add(lblErrorTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 40));
+        pnlTicketsUtilMain.add(lblErrorTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 160, 40));
+
+        lblBackground2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"))); // NOI18N
+        lblBackground2.setOpaque(true);
+        pnlTicketsUtilMain.add(lblBackground2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 500));
 
         frameTicketsUtil.getContentPane().add(pnlTicketsUtilMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 400, 210));
 
@@ -441,12 +455,12 @@ public class EventsPanel extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lstTickets.setBackground(new java.awt.Color(120, 120, 120));
-        lstTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lstTickets.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         lstTickets.setForeground(new java.awt.Color(255, 255, 255));
         lstTickets.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(lstTickets);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 320, 100));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 320, 90));
 
         btnEditEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnEditEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -461,7 +475,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnEditEventActionPerformed(evt);
             }
         });
-        add(btnEditEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 100, 40));
+        add(btnEditEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 100, 40));
 
         btnRemoveEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnRemoveEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -476,10 +490,10 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnRemoveEventActionPerformed(evt);
             }
         });
-        add(btnRemoveEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 100, 40));
+        add(btnRemoveEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 100, 40));
 
         lstEvents.setBackground(new java.awt.Color(120, 120, 120));
-        lstEvents.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lstEvents.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         lstEvents.setForeground(new java.awt.Color(255, 255, 255));
         lstEvents.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstEvents.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -489,7 +503,7 @@ public class EventsPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(lstEvents);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 320, 180));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 320, 160));
 
         btnAddEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnAddEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -504,7 +518,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 btnAddEventActionPerformed(evt);
             }
         });
-        add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 100, 40));
+        add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 100, 40));
 
         btnAddTicketToEvent.setBackground(new java.awt.Color(0, 0, 0));
         btnAddTicketToEvent.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -521,10 +535,10 @@ public class EventsPanel extends javax.swing.JPanel {
         });
         add(btnAddTicketToEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 100, 40));
 
-        lblDateTime.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblDateTime.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         lblDateTime.setForeground(new java.awt.Color(255, 255, 255));
-        lblDateTime.setText("DATUM ODRŽAVANJA EVENTA");
-        add(lblDateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 290, 40));
+        lblDateTime.setText("Datum održavanja");
+        add(lblDateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 310, 40));
 
         btnRemoveTicket.setBackground(new java.awt.Color(0, 0, 0));
         btnRemoveTicket.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -556,45 +570,61 @@ public class EventsPanel extends javax.swing.JPanel {
         });
         add(btnEditTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 450, 100, 40));
 
-        lblEventLocation.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblEventLocation.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         lblEventLocation.setForeground(new java.awt.Color(255, 255, 255));
-        lblEventLocation.setText("LOKACIJA EVENTA");
-        add(lblEventLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, 290, 40));
+        lblEventLocation.setText("Lokacija");
+        add(lblEventLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 310, 40));
 
-        lblTitle5.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTitle5.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         lblTitle5.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle5.setText("ULAZNICE");
-        add(lblTitle5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 250, 30));
+        add(lblTitle5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 250, 40));
 
-        lblTitle6.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTitle6.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         lblTitle6.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle6.setText("DETALJI");
-        add(lblTitle6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 220, 30));
+        add(lblTitle6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 220, 40));
 
         lblMap.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.darkGray));
         add(lblMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 350, 360));
 
-        lblTitle7.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTitle7.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         lblTitle7.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle7.setText("EVENTI");
-        add(lblTitle7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 30));
+        add(lblTitle7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 220, 40));
 
         txtFindEvent.setBackground(new java.awt.Color(120, 120, 120));
         txtFindEvent.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
         txtFindEvent.setForeground(new java.awt.Color(255, 255, 255));
-        add(txtFindEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 280, 40));
+        add(txtFindEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 280, 40));
 
         lblSearch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_location.png"))); // NOI18N
+        lblSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/ic_location_on_white_24dp_1x.png"))); // NOI18N
         add(lblSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, 40, 40));
 
         lblSearch1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSearch1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_search.png"))); // NOI18N
-        add(lblSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 40, 40));
+        add(lblSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 40, 40));
 
         lblSearch3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSearch3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_calendar.png"))); // NOI18N
-        add(lblSearch3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 40, 40));
+        lblSearch3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/ic_info_outline_white_24dp_1x.png"))); // NOI18N
+        add(lblSearch3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, 40, 40));
+
+        lblSearch4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSearch4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_calendar.png"))); // NOI18N
+        add(lblSearch4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 40, 40));
+
+        lblSearch5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSearch5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/ic_queue_music_white_24dp_1x.png"))); // NOI18N
+        add(lblSearch5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 40));
+
+        lblSearch6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSearch6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/ic_list_white_24dp_1x.png"))); // NOI18N
+        add(lblSearch6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 40, 40));
+
+        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"))); // NOI18N
+        lblBackground.setOpaque(true);
+        add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 500));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditEventActionPerformed
@@ -759,7 +789,7 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void btnAddTicketToEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTicketToEventActionPerformed
 
-        if (lstEvents.getSelectedIndex() == -1) {
+        if (lstEvents.getSelectedValue() == null ) {
 
         } else {
 
@@ -846,7 +876,7 @@ public class EventsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_mnuDateCreatedActionPerformed
 
     public void applyTheme() {
-
+        
         //Events Panel
         setBackground(Theme.color2);
         btnAddEvent.setBackground(Theme.color3);
@@ -873,6 +903,8 @@ public class EventsPanel extends javax.swing.JPanel {
         lstLocations.setForeground(Theme.font1);
         txtFindLocation.setBackground(Theme.color4);
         txtFindLocation.setForeground(Theme.font1);
+        endDatePicker.applyTheme();
+        startDatePicker.applyTheme();
 
         //Tickets Util
         pnlTicketsUtilTitle.setBackground(Theme.color1);
@@ -885,7 +917,10 @@ public class EventsPanel extends javax.swing.JPanel {
         txtTicketName.setForeground(Theme.font1);
         txtTicketPrice.setForeground(Theme.font1);
         txtTicketQuantity.setForeground(Theme.font1);
-
+        
+        eventsMenu.setBackground(Theme.color2);
+        eventsMenu.setForeground(Theme.font1);
+        
         lblMap.setBorder(new EtchedBorder(Theme.color1, Theme.color2));
         drawBorders();
 
@@ -914,6 +949,9 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
+    public javax.swing.JLabel lblBackground;
+    public javax.swing.JLabel lblBackground1;
+    public javax.swing.JLabel lblBackground2;
     private javax.swing.JLabel lblDateTime;
     private javax.swing.JLabel lblDateTimeUtil3;
     private javax.swing.JLabel lblDateTimeUtil4;
@@ -927,6 +965,9 @@ public class EventsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblSearch1;
     private javax.swing.JLabel lblSearch2;
     private javax.swing.JLabel lblSearch3;
+    private javax.swing.JLabel lblSearch4;
+    private javax.swing.JLabel lblSearch5;
+    private javax.swing.JLabel lblSearch6;
     private javax.swing.JLabel lblTicketsUtil;
     private javax.swing.JLabel lblTitle5;
     private javax.swing.JLabel lblTitle6;
@@ -953,30 +994,14 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void initDateComponents() {
 
-        startDatePicker = new DatePicker();
-        startDatePicker.setLocale(new Locale("hr"));
-        startDatePicker.setDateToToday();
-        startDatePicker.setBackground(Theme.color2);
-        startDatePicker.getComponentDateTextField().setBackground(Theme.color2);
-        startDatePicker.getComponentDateTextField().setForeground(Theme.font1);
-        startDatePicker.getComponentToggleCalendarButton().setText("");
-        startDatePicker.getComponentToggleCalendarButton()
-                .setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_calendar.png")));
-        startDatePicker.getComponentToggleCalendarButton().setBackground(Theme.color3);
-        startDatePicker.getSettings().setDateRangeLimits(LocalDate.now(), LocalDate.MAX);
-        endDatePicker = new DatePicker();
-        endDatePicker.setLocale(new Locale("hr"));
-        endDatePicker.setBackground(Theme.color2);
-        endDatePicker.getComponentToggleCalendarButton().setText("");
-        endDatePicker.getComponentToggleCalendarButton()
-                .setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_calendar.png")));
-        endDatePicker.getComponentDateTextField().setBackground(Theme.color2);
-        endDatePicker.getComponentDateTextField().setForeground(Theme.font1);
-        endDatePicker.getComponentToggleCalendarButton().setBackground(Theme.color3);
-        endDatePicker.getSettings().setDateRangeLimits(LocalDate.now(), LocalDate.MAX);
+        startDatePicker = new MyDatePicker();
+        endDatePicker = new MyDatePicker();
+        
         pnlEventsUtil.add(startDatePicker, new AbsoluteConstraints(10, 90));
-        pnlEventsUtil.add(endDatePicker, new AbsoluteConstraints(200, 90));
+        pnlEventsUtil.add(endDatePicker, new AbsoluteConstraints(150, 90));
+        
         sdf = new SimpleDateFormat("dd.MM.yyyy");
+        
     }
 
     private void addEventSearchListener() {

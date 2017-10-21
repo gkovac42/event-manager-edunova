@@ -54,7 +54,7 @@ public class PdfMaker {
 
             for (OrderedTicket t : order.getTickets()) {
                 contentStream.showText(t.getTicket().getName() + " x" + t.getQuantity() + " = "
-                        + new DecimalFormat("#.00").format(t.getTicket().getTotalPrice()) + "kn");
+                        + new DecimalFormat("#.00").format(t.getTicket().getPrice()* t.getQuantity()) + "kn");
                 contentStream.newLine();
             }
 

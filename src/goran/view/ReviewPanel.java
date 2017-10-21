@@ -208,6 +208,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         paneEvents = new javax.swing.JScrollPane();
         tblEvents = new javax.swing.JTable();
         lblTotal = new javax.swing.JLabel();
+        lblBackground = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(60, 60, 70));
         setMinimumSize(new java.awt.Dimension(700, 500));
@@ -217,7 +218,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         tblTickets.setAutoCreateRowSorter(true);
         tblTickets.setBackground(new java.awt.Color(120, 120, 120));
         tblTickets.getTableHeader().setFont(new java.awt.Font("Lucida Sans", 1, 14));
-        tblTickets.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        tblTickets.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         tblTickets.setForeground(new java.awt.Color(255, 255, 255));
         tblTickets.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -248,7 +249,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         add(paneTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 380));
 
         txtFind.setBackground(new java.awt.Color(120, 120, 120));
-        txtFind.setFont(new java.awt.Font("Lucida Sans", 0, 16)); // NOI18N
+        txtFind.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         txtFind.setForeground(new java.awt.Color(255, 255, 255));
         txtFind.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,7 +305,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         tblOrders.setAutoCreateRowSorter(true);
         tblOrders.setBackground(new java.awt.Color(120, 120, 120));
         tblOrders.getTableHeader().setFont(new java.awt.Font("Lucida Sans", 1, 14));
-        tblOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        tblOrders.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         tblOrders.setForeground(new java.awt.Color(255, 255, 255));
         tblOrders.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -353,7 +354,7 @@ public class ReviewPanel extends javax.swing.JPanel {
         btnJumpTo.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnJumpTo.setForeground(new java.awt.Color(255, 255, 255));
         btnJumpTo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/btn_jump_to.png"))); // NOI18N
-        btnJumpTo.setText("IDI DO");
+        btnJumpTo.setText("TRAŽI ODABRANO");
         btnJumpTo.setBorder(null);
         btnJumpTo.setFocusPainted(false);
         btnJumpTo.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -362,7 +363,7 @@ public class ReviewPanel extends javax.swing.JPanel {
                 btnJumpToActionPerformed(evt);
             }
         });
-        add(btnJumpTo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, 90, 40));
+        add(btnJumpTo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, 170, 40));
 
         btnOrders.setBackground(new java.awt.Color(0, 0, 0));
         btnOrders.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -381,7 +382,7 @@ public class ReviewPanel extends javax.swing.JPanel {
 
         tblEvents.setAutoCreateRowSorter(true);
         tblEvents.setBackground(new java.awt.Color(120, 120, 120));
-        tblEvents.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        tblEvents.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         tblEvents.getTableHeader().setFont(new java.awt.Font("Lucida Sans", 1, 14));
         tblEvents.setForeground(new java.awt.Color(255, 255, 255));
         tblEvents.setModel(new javax.swing.table.DefaultTableModel(
@@ -411,10 +412,14 @@ public class ReviewPanel extends javax.swing.JPanel {
 
         add(paneEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 380));
 
-        lblTotal.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblTotal.setFont(new java.awt.Font("Lucida Sans", 0, 15)); // NOI18N
         lblTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblTotal.setText("ukupno");
         add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 380, 40));
+
+        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"))); // NOI18N
+        lblBackground.setOpaque(true);
+        add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 500));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
@@ -516,6 +521,7 @@ public class ReviewPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnJumpTo;
     private javax.swing.JButton btnOrders;
     private javax.swing.JButton btnTickets;
+    public javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JScrollPane paneEvents;
     private javax.swing.JScrollPane paneOrders;
