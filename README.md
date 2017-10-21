@@ -23,19 +23,19 @@ Sama aplikacija sastoji se od glavnog prozora u kojem se izmjenjuje nekoliko pan
 
 * U Kategoriji "Lokacije", uz CRUD, koriste si i Google-ovi Static Maps i Geocoding API-ji. Oni omogućavaju lociranje i iscrtavanje karte za određene koordinate, na osnovu naziva, adrese ili mjesta koje korisnik unese. 
 
-<p align="center"><img src="screenshots/ss02.PNG" width="350" height="250" /></p>
+<p align="center"><img src="screenshots/ss02.PNG" width="350" height="250" /></p><br />
 
 * Kategorija "Osobe" odgovorna je za CRUD kupaca te sadrži popis naselja u Republici Hrvatskoj s pripadajućim poštanskim brojevima(preuzeto od [ndekic](https://github.com/ndekic/popis_naselja_u_republici_hrvatskoj))
 
-<p align="center"><img src="screenshots/ss03.PNG" width="350" height="250" />   <img src="screenshots/ss08.png" width="350" height="250" /></p>
+<p align="center"><img src="screenshots/ss03.PNG" width="350" height="250" />   <img src="screenshots/ss08.png" width="350" height="250" /></p><br />
 
 * U kategoriji "Narudžbe" implementiran je jednostavan sustav izrade narudžbi putem košarice. Također je moguće narudžbe izraditi i pohraniti u PDF formatu.
 
-<p align="center"><img src="screenshots/ss04.PNG" width="350" height="250" /></p>
+<p align="center"><img src="screenshots/ss04.PNG" width="350" height="250" /></p><br />
 
 * Kategorija "Pregled" sadrži sve bitne podatke na jednom mjestu u obliku tablica te omogućava brzo i jednostavno sortiranje i pretraživanje. Za svaku tablicu moguće je izraditi i pohraniti Excel datoteku.
 
-<p align="center"><img src="screenshots/ss05.PNG" width="350" height="250" /></p>
+<p align="center"><img src="screenshots/ss05.PNG" width="350" height="250" /></p><br />
 
 * Za kraj, pritiskom na ikonu žarulje moguće je promjeniti vizualnu temu aplikacije:
 
