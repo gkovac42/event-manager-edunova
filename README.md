@@ -16,7 +16,7 @@ Event Manager je Java desktop aplikacija koja služi kao katalog glazbenih, kult
 
 Sama aplikacija sastoji se od glavnog prozora u kojem se izmjenjuje nekoliko panela, ovisno o kategoriji odabranoj u glavnom izborniku.
 
-<img src="screenshots/ss01.PNG" width="350" height="250" /> 
+<div style="text-align:center"><img src="screenshots/ss01.PNG" width="350" height="250" /></div> 
 
 Kategorija "Eventi" omogućava unos, promjenu i brisanje eventa u/iz baze podataka. Evente se može pretraživati i sortirati na različite načine. Svakom eventu moguće je dodjeliti datum i mjesto održavanja te pripadajuće ulaznice.
 
