@@ -10,8 +10,6 @@ import goran.util.CustomLabel;
 import goran.util.HibernateUtil;
 import goran.util.Theme;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
@@ -34,10 +32,9 @@ public class MainFrame extends javax.swing.JFrame {
     private int theme = Theme.DARK;
 
     public MainFrame() {
-
         initComponents();
 
-        getRootPane().setBorder(new EtchedBorder(Theme.color2, Theme.color1));
+        drawBorder();
         panelPosition = new AbsoluteConstraints(100, 40, 700, 560);
         pnlEvents = new EventsPanel();
         getContentPane().add(pnlEvents, panelPosition);
@@ -50,9 +47,10 @@ public class MainFrame extends javax.swing.JFrame {
         pnlOrders = new OrdersPanel();
         getContentPane().add(pnlOrders, panelPosition);
         lblUserName.setText(StartFrame.user + ")");
-        
+
         bgIcon = new ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"));
         applyTheme();
+
         setActivePanel(pnlEvents);
     }
 
@@ -307,13 +305,12 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void setActivePanel(JPanel panel) {
-
         pnlEvents.setVisible(false);
         pnlReview.setVisible(false);
         pnlCustomers.setVisible(false);
         pnlLocations.setVisible(false);
         pnlOrders.setVisible(false);
-        
+
         panel.setVisible(true);
     }
 
@@ -337,42 +334,28 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMinimizeMouseClicked
 
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
-        HibernateUtil.getSession().close();
-        try {
-            Runtime.getRuntime().exec("cmd /c Taskkill /IM mysqld.exe /F");
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.exit(0);
+        HibernateUtil.exit();
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void lblLightSwitchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLightSwitchMouseClicked
 
         if (theme == Theme.DARK) {
-
             theme = Theme.LIGHT;
             lblLightSwitch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/light_on.png")));
             bgIcon = new ImageIcon(getClass().getResource("/goran/resources/icons/bg_alt.jpg"));
             Theme.setLightTheme();
 
         } else {
-
             theme = Theme.DARK;
             lblLightSwitch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goran/resources/icons/light_off.png")));
             bgIcon = new ImageIcon(getClass().getResource("/goran/resources/icons/bg_main.jpg"));
             Theme.setDarkTheme();
         }
-
         applyTheme();
     }//GEN-LAST:event_lblLightSwitchMouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        HibernateUtil.getSession().close();
-        try {
-            Runtime.getRuntime().exec("cmd /c Taskkill /IM mysqld.exe /F");
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        HibernateUtil.exit();
     }//GEN-LAST:event_formWindowClosed
 
     private void btnLocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocationsActionPerformed
@@ -380,7 +363,6 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLocationsActionPerformed
 
     private void btnGitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGitActionPerformed
-
         try {
             Runtime.getRuntime().exec("cmd /c start https://github.com/gkovac42/event-manager-edunova");
         } catch (IOException ex) {
@@ -431,9 +413,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlTitle;
     // End of variables declaration//GEN-END:variables
 
-     private void applyTheme() {
-
+    private void drawBorder() {
         getRootPane().setBorder(new EtchedBorder(Theme.color2, Theme.color1));
+    }
+    private void applyTheme() {
+
+        drawBorder();
         pnlTitle.setBackground(Theme.color1);
         lblMinimize.setBackground(Theme.color1);
         lblClose.setBackground(Theme.color1);
@@ -446,7 +431,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnOrders.setBackground(Theme.color3);
         btnLocations.setBackground(Theme.color3);
         btnGit.setBackground(Theme.color3);
-        
+
         pnlEvents.applyTheme();
         pnlEvents.lblBackground.setIcon(bgIcon);
         pnlEvents.lblBackground1.setIcon(bgIcon);
