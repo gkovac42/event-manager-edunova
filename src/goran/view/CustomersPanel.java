@@ -13,9 +13,12 @@ import goran.util.TxtUtil;
 import goran.model.Customer;
 import goran.util.ExcelMaker;
 import goran.util.NaseljaRH;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Goran
  */
 public class CustomersPanel extends javax.swing.JPanel {
-    
+
     private Customer customer;
     private HibernateController<Customer> ctrlCustomer;
     ArrayList<String> naselja;
@@ -32,36 +35,36 @@ public class CustomersPanel extends javax.swing.JPanel {
      * Creates new form CustomerPanel
      */
     public CustomersPanel() {
-        
+
         initComponents();
         drawBorder();
-        
+
         customer = new Customer();
         ctrlCustomer = new HibernateController<>();
         naselja = (ArrayList<String>) NaseljaRH.popisNaselja;
-        
+
         updateCustomers();
         updateMjesta();
     }
-    
+
     public Customer getCustomer() {
         return ctrlCustomer.getList(customer).get(tblCustomers.convertRowIndexToModel(tblCustomers.getSelectedRow()));
     }
-    
+
     private void updateMjesta() {
-        
+
         DefaultComboBoxModel model = (DefaultComboBoxModel) cmbNaselja.getModel();
         for (String naselje : NaseljaRH.popisNaselja) {
             model.addElement(naselje);
         }
     }
-    
+
     private void updateCustomers() {
-        
+
         DefaultTableModel model = (DefaultTableModel) tblCustomers.getModel();
         model.setRowCount(0);
         Object rowData[] = new Object[5];
-        
+
         for (Customer c : ctrlCustomer.getList(customer)) {
             rowData[0] = c.getFirstName();
             rowData[1] = c.getLastName();
@@ -71,15 +74,15 @@ public class CustomersPanel extends javax.swing.JPanel {
             model.addRow(rowData);
         }
     }
-    
+
     private void findCustomers() {
-        
+
         DefaultTableModel model = (DefaultTableModel) tblCustomers.getModel();
         model.setRowCount(0);
         Object rowData[] = new Object[5];
-        
+
         String findBy = "";
-        
+
         switch (cmbFindBy.getSelectedItem().toString()) {
             case "IME":
                 findBy = "firstName";
@@ -97,7 +100,7 @@ public class CustomersPanel extends javax.swing.JPanel {
                 findBy = "locality";
                 break;
         }
-        
+
         for (Customer c : ctrlCustomer.find(customer, findBy, txtFindCustomer.getText())) {
             rowData[0] = c.getFirstName();
             rowData[1] = c.getLastName();
@@ -428,7 +431,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFindCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindCustomerActionPerformed
-        
+
         if (txtFindCustomer.getText().equals("")) {
             updateCustomers();
         } else {
@@ -437,72 +440,72 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnFindCustomerActionPerformed
 
     private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
-        
+
         lblCustomersUtil.setText(TxtUtil.ADD_CUSTOMER);
-        
+
         txtFirstName.setText("");
         txtLastName.setText("");
         txtEmail.setText("");
         txtAddress.setText("");
         cmbNaselja.setSelectedItem(null);
-        
+
         frameCustomersUtil.setVisible(true);
         frameCustomersUtil.setLocationRelativeTo(this);
     }//GEN-LAST:event_btnAddCustomerActionPerformed
 
     private void btnEditCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCustomerActionPerformed
-        
+
         try {
-            
+
             lblCustomersUtil.setText(TxtUtil.EDIT_CUSTOMER);
-            
+
             customer = getCustomer();
             txtFirstName.setText(customer.getFirstName());
             txtLastName.setText(customer.getLastName());
             txtEmail.setText(customer.getEmail());
             txtAddress.setText(customer.getAddress());
-            
+
             DefaultComboBoxModel model = (DefaultComboBoxModel) cmbNaselja.getModel();
             for (int i = 0; i < model.getSize(); i++) {
                 if (model.getElementAt(i).equals(customer.getLocality())) {
                     cmbNaselja.setSelectedItem(model.getElementAt(i));
                 }
             }
-            
+
             frameCustomersUtil.setVisible(true);
             frameCustomersUtil.setLocationRelativeTo(this);
-            
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnEditCustomerActionPerformed
 
     private void btnRemoveCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveCustomerActionPerformed
-        
+
         try {
-            
+
             customer = getCustomer();
             ctrlCustomer.delete(customer);
             updateCustomers();
             customer = new Customer();
-            
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnRemoveCustomerActionPerformed
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
-        
+
         customer.setFirstName(txtFirstName.getText());
         customer.setLastName(txtLastName.getText());
         customer.setEmail(txtEmail.getText());
         customer.setAddress(txtAddress.getText());
         customer.setLocality(cmbNaselja.getSelectedItem().toString());
-        
+
         if (InputController.customerInputError(customer)) {
-            
+
             lblError.setText(TxtUtil.INPUT_ERROR);
-            
+
         } else {
-            
+
             ctrlCustomer.save(customer);
             updateCustomers();
             lblError.setText("");
@@ -512,13 +515,13 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        
+
         lblError.setText("");
         frameCustomersUtil.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnExportToExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportToExcelActionPerformed
-        
+
         ExcelMaker.customersToExcel(ctrlCustomer.getOrderedList(customer, "LastName"));
     }//GEN-LAST:event_btnExportToExcelActionPerformed
 
@@ -564,9 +567,9 @@ public class CustomersPanel extends javax.swing.JPanel {
     private void drawBorder() {
         frameCustomersUtil.getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color2, Theme.color1));
     }
-    
+
     public void applyTheme() {
-        
+
         setBackground(Theme.color2);
         btnAddCustomer.setBackground(Theme.color3);
         btnRemoveCustomer.setBackground(Theme.color3);
@@ -590,6 +593,18 @@ public class CustomersPanel extends javax.swing.JPanel {
         txtLastName.setForeground(Theme.font1);
         txtEmail.setForeground(Theme.font1);
         txtAddress.setForeground(Theme.font1);
+        jScrollPane5.getViewport().setBackground(Theme.color4);
         frameCustomersUtil.getRootPane().setBorder(BorderFactory.createEtchedBorder(Theme.color2, Theme.color1));
+
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setBackground(Theme.color2);
+        headerRenderer.setForeground(Color.WHITE);
+        headerRenderer.setBorder(new EtchedBorder(Color.WHITE, Color.WHITE));
+        for (int i = 0; i < tblCustomers.getModel().getColumnCount(); i++) {
+            tblCustomers.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+
+        
+
     }
 }

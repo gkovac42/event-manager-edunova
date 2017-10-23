@@ -18,7 +18,7 @@ public class InputController {
 
     public static boolean customerInputError(Customer c) {
         return c.getFirstName().equals("") || c.getLastName().equals("") || c.getAddress().equals("")
-                || c.getLocality().equals("") || c.getEmail().equals("");
+                || c.getLocality() == null || c.getEmail().equals("");
     }
 
     public static boolean locationInputError(Location l) {

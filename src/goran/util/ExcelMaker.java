@@ -5,6 +5,7 @@
  */
 package goran.util;
 
+import com.bulenkov.darcula.DarculaLaf;
 import goran.model.Customer;
 import goran.model.Event;
 import goran.model.Order;
@@ -15,8 +16,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -248,6 +254,12 @@ public class ExcelMaker {
 
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel datoteka(.xls)", "xls");
 
+        
+        try {
+            UIManager.setLookAndFeel(new DarculaLaf());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(ExcelMaker.class.getName()).log(Level.SEVERE, null, ex);
+        }
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(filter);
         fileChooser.setDialogTitle("Odaberite datoteku za pohranu");
@@ -257,7 +269,11 @@ public class ExcelMaker {
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             return fileChooser.getSelectedFile().getAbsolutePath();
         }
-
+        try {
+            UIManager.setLookAndFeel(new NimbusLookAndFeel());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(ExcelMaker.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
 

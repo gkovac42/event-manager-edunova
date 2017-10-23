@@ -923,7 +923,8 @@ public class EventsPanel extends javax.swing.JPanel {
         
         lblMap.setBorder(new EtchedBorder(Theme.color1, Theme.color2));
         drawBorders();
-
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

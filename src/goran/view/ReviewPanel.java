@@ -11,8 +11,11 @@ import goran.model.Event;
 import goran.model.Order;
 import goran.model.Ticket;
 import goran.util.ExcelMaker;
+import java.awt.Color;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -549,6 +552,24 @@ public class ReviewPanel extends javax.swing.JPanel {
         btnOrders.setBackground(Theme.color3);
         btnJumpTo.setBackground(Theme.color3);
         btnExportToExcel.setBackground(Theme.color3);
+        
+        paneEvents.getViewport().setBackground(Theme.color4);
+        paneOrders.getViewport().setBackground(Theme.color4);
+        paneTickets.getViewport().setBackground(Theme.color4);
+
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setBackground(Theme.color2);
+        headerRenderer.setForeground(Color.WHITE);
+        headerRenderer.setBorder(new EtchedBorder(Theme.color2, Theme.color1));
+        for (int i = 0; i < tblEvents.getModel().getColumnCount(); i++) {
+            tblEvents.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        for (int i = 0; i < tblOrders.getModel().getColumnCount(); i++) {
+            tblOrders.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        for (int i = 0; i < tblTickets.getModel().getColumnCount(); i++) {
+            tblTickets.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
 
     }
 }

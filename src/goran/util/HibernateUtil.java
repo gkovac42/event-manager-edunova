@@ -5,6 +5,7 @@
  */
 package goran.util;
 
+import com.bulenkov.darcula.DarculaLaf;
 import goran.view.MainFrame;
 import java.awt.HeadlessException;
 import java.io.File;
@@ -16,7 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -48,7 +52,7 @@ public class HibernateUtil {
     }
 
     public static void exit() {
-        HibernateUtil.getSession().close();
+        getSession().close();
         try {
             Runtime.getRuntime().exec("cmd /c Taskkill /IM mysqld.exe /F");
         } catch (IOException ex) {
@@ -85,6 +89,11 @@ public class HibernateUtil {
             try {
                 FileNameExtensionFilter filter = new FileNameExtensionFilter(".exe", "exe");
 
+                try {
+                    UIManager.setLookAndFeel(new DarculaLaf());
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(ExcelMaker.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setFileFilter(filter);
                 fileChooser.setDialogTitle("Odaberite datoteku MySQL servera (mysql\\bin)");
@@ -101,6 +110,11 @@ public class HibernateUtil {
 
                 } else if (userSelection == JFileChooser.CANCEL_OPTION) {
                     System.exit(0);
+                }
+                try {
+                    UIManager.setLookAndFeel(new NimbusLookAndFeel());
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(ExcelMaker.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } catch (HeadlessException | IOException ex) {
