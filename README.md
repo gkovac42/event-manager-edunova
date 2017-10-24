@@ -7,7 +7,7 @@ Event Manager je Java desktop aplikacija koja služi kao katalog glazbenih, kult
 * Java i MySQL
 * [Netbeans IDE](https://netbeans.org/)
 * [Hibernate ORM](http://hibernate.org/orm/)
-* [Gson] (https://github.com/google/gson) 
+* [Gson](https://github.com/google/gson)
 * Apache [PDFBox](https://pdfbox.apache.org/) i [POI](https://poi.apache.org/)
 * Google [Static Maps](https://developers.google.com/maps/documentation/static-maps/) i [Geocoding](https://developers.google.com/maps/documentation/geocoding/intro) API
 * [Material Design](https://material.io/icons/) ikone
