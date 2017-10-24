@@ -30,12 +30,11 @@ public class MyDatePicker extends DatePicker {
 
         applyTheme();
 
-}
+    }
 
     public void applyTheme() {
-        
+
         this.setBackground(Theme.color2);
-        this.setForeground(Color.WHITE);
 
         this.getSettings().setColor(DatePickerSettings.DateArea.TextFieldBackgroundValidDate, Theme.color4);
         this.getSettings().setColor(DatePickerSettings.DateArea.BackgroundOverallCalendarPanel, Theme.color2);
@@ -50,16 +49,23 @@ public class MyDatePicker extends DatePicker {
         this.getSettings().setColor(DatePickerSettings.DateArea.BackgroundTodayLabel, Theme.color2);
         this.getSettings().setColor(DatePickerSettings.DateArea.TextClearLabel, Color.WHITE);
         this.getSettings().setColor(DatePickerSettings.DateArea.BackgroundClearLabel, Theme.color2);
-
-        this.getComponentToggleCalendarButton().setForeground(Color.WHITE);
-        this.getComponentToggleCalendarButton().setBackground(Theme.color3);
-
         this.getSettings().setColorBackgroundWeekNumberLabels(Theme.color2, false);
         this.getSettings().setColorBackgroundWeekdayLabels(Theme.color2, false);
 
-        this.getComponentDateTextField().setForeground(Theme.font1);
+        this.getSettings().setColor(DatePickerSettings.DateArea.DatePickerTextValidDate, Theme.font1);
+        this.getSettings().setColor(DatePickerSettings.DateArea.CalendarTextWeekdays, Color.WHITE);
+        this.getSettings().setFontValidDate(new java.awt.Font("Lucida Sans", 0, 15));
+        this.getSettings().setFontCalendarDateLabels(new java.awt.Font("Lucida Sans", 0, 15));
+        this.getSettings().setFontCalendarWeekNumberLabels(new java.awt.Font("Lucida Sans", 0, 15));
+        this.getSettings().setFontCalendarWeekdayLabels(new java.awt.Font("Lucida Sans", 0, 15));
+        this.getSettings().setFontClearLabel(new java.awt.Font("Lucida Sans", 0, 15));
+        this.getSettings().setFontMonthAndYearMenuLabels(new java.awt.Font("Lucida Sans", 0, 15));
+        this.getSettings().setFontTodayLabel(new java.awt.Font("Lucida Sans", 0, 15));
+        this.getSettings().setColorBackgroundWeekNumberLabels(Theme.color2, false);
+        this.getSettings().setColorBackgroundWeekdayLabels(Theme.color2, false);
+
+        this.getComponentToggleCalendarButton().setBackground(Theme.color3);
+
     }
-        
-    
-    
+
 }
