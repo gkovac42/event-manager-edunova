@@ -53,13 +53,14 @@ public class HibernateUtil {
 
     public static void exit() {
         getSession().close();
-        try {
-            Runtime.getRuntime().exec("cmd /c Taskkill /IM mysqld.exe /F");
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            System.exit(0);
-        }
+//        try {
+//            Runtime.getRuntime().exec("cmd /c Taskkill /IM mysqld.exe /F");
+//        } catch (IOException ex) {
+//            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            System.exit(0);
+//        }
+        System.exit(0);
     }
 
     public static void startMySQL() {

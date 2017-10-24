@@ -775,8 +775,13 @@ public class EventsPanel extends javax.swing.JPanel {
                 ctrlEvent.save(event);
                 updateEventTickets();
                 frameTicketsUtil.dispose();
-
+                
+                Thread t = new Thread(() -> {
+                    MainFrame.pnlOrders.updateTickets("name");
+                });
+                t.start();
             }
+            
         } catch (NumberFormatException numberFormatException) {
             lblErrorTicket.setText(TxtUtil.NUMBER_ERROR);
         }
@@ -833,6 +838,11 @@ public class EventsPanel extends javax.swing.JPanel {
             ctrlTicket.delete(ticket);
             ctrlEvent.save(event);
             updateEventTickets();
+            
+            Thread t = new Thread(() -> {
+                    MainFrame.pnlOrders.updateTickets("name");
+                });
+                t.start();
 
         }
     }//GEN-LAST:event_btnRemoveTicketActionPerformed

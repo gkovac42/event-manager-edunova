@@ -210,6 +210,7 @@ public class StartFrame extends javax.swing.JFrame {
                 pnlLogin.setVisible(false);
 
                 Thread t = new Thread(() -> {
+                    //new LoadData;
                     new MainFrame().setVisible(true);
                     dispose();
                 });

@@ -9,8 +9,6 @@ import goran.controller.HibernateController;
 import goran.model.Customer;
 import goran.model.Event;
 import goran.model.Location;
-import goran.model.Order;
-import goran.model.OrderedTicket;
 import goran.model.Ticket;
 import java.util.List;
 
@@ -23,8 +21,6 @@ public class LoadData {
     private HibernateController<Customer> ctrlCustomer = new HibernateController<>();
     private HibernateController<Event> ctrlEvent = new HibernateController<>();
     private HibernateController<Ticket> ctrlTicket = new HibernateController<>();
-    private HibernateController<Order> ctrlOrder = new HibernateController<>();
-    private HibernateController<OrderedTicket> ctrlOrderedTicket = new HibernateController<>();
     private HibernateController<Location> ctrlLocation = new HibernateController<>();
 
     public LoadData() {
@@ -59,7 +55,7 @@ public class LoadData {
         Ticket t;
         List<Location> locations = ctrlLocation.getList(new Location());
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 20; i++) {
             e = new Event();
             e.setName("Event" + i);
             e.setStartDate(new java.util.Date());
@@ -86,7 +82,7 @@ public class LoadData {
 
         Customer c;
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 30; i++) {
             c = new Customer();
             c.setFirstName("Ime" + i);
             c.setLastName("Prezime" + i);
