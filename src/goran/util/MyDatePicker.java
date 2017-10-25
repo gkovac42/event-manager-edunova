@@ -20,7 +20,7 @@ public class MyDatePicker extends DatePicker {
     public MyDatePicker() {
 
         this.setLocale(new Locale("hr"));
-        this.getSettings().setFormatForDatesCommonEra("dd.MM.yyyy");
+        this.getSettings().setFormatForDatesCommonEra("dd.MM.yyyy.");
         this.getSettings().setDateRangeLimits(LocalDate.now(), LocalDate.MAX);
         this.setDateToToday();
 
@@ -54,7 +54,7 @@ public class MyDatePicker extends DatePicker {
 
         this.getSettings().setColor(DatePickerSettings.DateArea.DatePickerTextValidDate, Theme.font1);
         this.getSettings().setColor(DatePickerSettings.DateArea.CalendarTextWeekdays, Color.WHITE);
-        this.getSettings().setFontValidDate(new java.awt.Font("Lucida Sans", 0, 15));
+        this.getSettings().setFontValidDate(new java.awt.Font("Lucida Sans", 0, 13));
         this.getSettings().setFontCalendarDateLabels(new java.awt.Font("Lucida Sans", 0, 15));
         this.getSettings().setFontCalendarWeekNumberLabels(new java.awt.Font("Lucida Sans", 0, 15));
         this.getSettings().setFontCalendarWeekdayLabels(new java.awt.Font("Lucida Sans", 0, 15));

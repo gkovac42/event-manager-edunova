@@ -1011,7 +1011,7 @@ public class EventsPanel extends javax.swing.JPanel {
         pnlEventsUtil.add(startDatePicker, new AbsoluteConstraints(10, 90));
         pnlEventsUtil.add(endDatePicker, new AbsoluteConstraints(150, 90));
         
-        sdf = new SimpleDateFormat("dd.MM.yyyy");
+        sdf = new SimpleDateFormat("dd.MM.yyyy.");
         
     }
 
