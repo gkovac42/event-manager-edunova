@@ -515,13 +515,13 @@ public class OrdersPanel extends javax.swing.JPanel {
 
             t.setQuantity(t.getQuantity() + ordTicket.getQuantity());
 
-            calcTotalPrice();
             lstTickets.setSelectedValue(t, true);
             order.getTickets().remove(ordTicket);
 
             updateOrderTickets();
             lstOrderTickets.repaint();
             lstTickets.repaint();
+            calcTotalPrice();
 
         }
     }//GEN-LAST:event_btnRemoveActionPerformed

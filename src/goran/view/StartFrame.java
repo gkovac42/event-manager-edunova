@@ -5,6 +5,7 @@
  */
 package goran.view;
 
+import goran.LoadData;
 import goran.util.MotionPanel;
 import goran.util.CustomLabel;
 import goran.util.HibernateUtil;
@@ -210,7 +211,7 @@ public class StartFrame extends javax.swing.JFrame {
                 pnlLogin.setVisible(false);
 
                 Thread t = new Thread(() -> {
-                    //new LoadData;
+                    new LoadData();
                     new MainFrame().setVisible(true);
                     dispose();
                 });

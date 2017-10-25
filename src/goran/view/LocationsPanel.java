@@ -350,7 +350,7 @@ public class LocationsPanel extends javax.swing.JPanel {
                 ctrlLocation.save(location);
                 updateLocations(sortLocations);
                 lblError.setText("");
-                location = new Location();
+                lstLocations.setSelectedValue(location, true);
             }
         }
     }//GEN-LAST:event_btnEditLocationActionPerformed
