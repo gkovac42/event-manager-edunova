@@ -6,8 +6,8 @@
 package goran.view;
 
 import goran.util.MotionPanel;
-import goran.util.CustomLabel;
-import goran.util.HibernateUtil;
+import goran.util.TitleBarLabel;
+import goran.controller.HibernateUtil;
 import goran.util.Theme;
 import java.io.IOException;
 import javax.swing.ImageIcon;
@@ -70,10 +70,10 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         pnlTitle = new MotionPanel(this);
         lblIcon = new javax.swing.JLabel();
-        lblLightSwitch = new CustomLabel();
-        lblClose = new CustomLabel();
+        lblLightSwitch = new TitleBarLabel();
+        lblClose = new TitleBarLabel();
         lblTitle = new javax.swing.JLabel();
-        lblMinimize = new CustomLabel();
+        lblMinimize = new TitleBarLabel();
         btnGit = new javax.swing.JButton();
         lblUserName = new javax.swing.JLabel();
         lblTitle2 = new javax.swing.JLabel();

@@ -42,7 +42,7 @@ public class Theme {
         font1 = new Color(255, 255, 255);
     }
 
-    // green
+    // autumn
     public static void setLightTheme() {
 
         color1 = new Color(90, 15, 0);

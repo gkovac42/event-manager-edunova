@@ -35,8 +35,10 @@ import javax.swing.JLabel;
  */
 public class GoogleMapsController {
 
-    private final String API_KEY = "AIzaSyATHO_6DIs4uKZNZJo50n95QERyy2Np13w";
+    // Google Geocoding API key
+    private static final String API_KEY = "AIzaSyATHO_6DIs4uKZNZJo50n95QERyy2Np13w";
 
+    // generate Google Geocoding URL based on location info
     public String generateUrl(Location location) {
 
         String url = "";
@@ -53,13 +55,14 @@ public class GoogleMapsController {
         }
 
         return url;
-
     }
 
+    // get location data from Geocoding API based on generated URL
     public String[] getGoogleMapsData(String generatedUrl) {
 
         try {
-
+            
+            // latitude, longitude, streetNo, route, locality, country
             String[] data = {"", "", "", "", "", ""};
 
             URL url = new URL(generatedUrl);
@@ -86,19 +89,24 @@ public class GoogleMapsController {
 
                 String component = jObject.get("long_name").getAsString();
 
-                if (type.equals("street_number")) {
-                    data[2] = component;
-                } else if (type.equals("route")) {
-                    data[3] = component;
-                } else if (type.equals("locality")) {
-                    data[4] = component;
-                } else if (type.equals("country")) {
-                    if (component.equals("Croatia")) {
-                        component = "Hrvatska";
-                    }
-                    data[5] = component;
+                switch (type) {
+                    case "street_number":
+                        data[2] = component;
+                        break;
+                    case "route":
+                        data[3] = component;
+                        break;
+                    case "locality":
+                        data[4] = component;
+                        break;
+                    case "country":
+                        if (component.equals("Croatia")) {
+                            component = "Hrvatska";
+                        }   data[5] = component;
+                        break;
+                    default:
+                        break;
                 }
-
             }
 
             return data;
@@ -112,11 +120,14 @@ public class GoogleMapsController {
         return null;
     }
 
+    // get map .png file from Google Static Maps API
     public void openOrDownloadMap(Location location, int zoomLevel, JLabel lblMap, String type) {
 
+        // threaded to prevent gui freezing while downloading
         Thread t = new Thread(() -> {
 
             try {
+                // try to open map from local disk
                 File sourceImage = null;
                 if (location.getId() != null) {
                     sourceImage = new File("data/maps/" + location.getId() + type + ".png");
@@ -125,13 +136,13 @@ public class GoogleMapsController {
                 lblMap.setIcon(new ImageIcon(image.getScaledInstance(lblMap.getWidth(), lblMap.getHeight(), Image.SCALE_SMOOTH)));
 
             } catch (Exception e) {
-
+                // if map is not found on local disk, download map through Static Maps API
                 String imageUrl = "http://maps.googleapis.com/maps/api/staticmap?center="
                         + location.getLat() + ",%20" + location.getLng() + "&zoom=" + zoomLevel + "&size=" + lblMap.getWidth() + "x" + lblMap.getHeight()
                         + "&scale=1&markers=" + location.getLat() + ",%20" + location.getLng() + "&sensor=true";
 
                 try {
-
+                    // download map
                     URL url = new URL(imageUrl);
                     InputStream in = new BufferedInputStream(url.openStream());
                     ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -144,10 +155,12 @@ public class GoogleMapsController {
                     in.close();
                     byte[] response = out.toByteArray();
 
+                    // save map to disk
                     FileOutputStream fos = new FileOutputStream("data/maps/" + location.getId() + type + ".png");
                     fos.write(response);
                     fos.close();
 
+                    // load map
                     File sourceImage = new File("data/maps/" + location.getId() + type + ".png");
                     Image image = ImageIO.read(sourceImage);
 

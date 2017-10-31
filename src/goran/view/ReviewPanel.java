@@ -53,21 +53,6 @@ public class ReviewPanel extends javax.swing.JPanel {
         lblTotal.setText("Ukupan broj evenata u bazi: " + tblEvents.getRowCount());
     }
 
-    public Order getOrder() {
-        order = ctrlOrder.getList(order).get(tblOrders.convertRowIndexToModel(tblOrders.getSelectedRow()));
-        return order;
-    }
-
-    public Ticket getTicket() {
-        ticket = ctrlTicket.getOrderedList(ticket, "name").get(tblTickets.convertRowIndexToModel(tblTickets.getSelectedRow()));
-        return ticket;
-    }
-
-    public Event getEvent() {
-        event = ctrlEvent.getOrderedList(event, "name").get(tblEvents.convertRowIndexToModel(tblEvents.getSelectedRow()));
-        return event;
-    }
-
     public void updateTickets() {
 
         DefaultTableModel model = (DefaultTableModel) tblTickets.getModel();
@@ -188,6 +173,21 @@ public class ReviewPanel extends javax.swing.JPanel {
 
             model.addRow(rowData);
         }
+    }
+    
+    public Order getOrder() {
+        order = ctrlOrder.getList(order).get(tblOrders.convertRowIndexToModel(tblOrders.getSelectedRow()));
+        return order;
+    }
+
+    public Ticket getTicket() {
+        ticket = ctrlTicket.getOrderedList(ticket, "name").get(tblTickets.convertRowIndexToModel(tblTickets.getSelectedRow()));
+        return ticket;
+    }
+
+    public Event getEvent() {
+        event = ctrlEvent.getOrderedList(event, "name").get(tblEvents.convertRowIndexToModel(tblEvents.getSelectedRow()));
+        return event;
     }
 
     /**

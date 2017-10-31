@@ -589,12 +589,9 @@ public class OrdersPanel extends javax.swing.JPanel {
             txtQuantity.setEnabled(true);
 
         } else {
-
             if (lblOrder.getText().equals("NOVA NARUDŽBA") && lstOrderTickets.getModel().getSize() > 0) {
-
                 emptyCart();
             }
-
             order = lstOrders.getSelectedValue();
             lblOrder.setText("NARUDŽBA #" + order.getId());
             cmbCustomer.setSelectedItem(order.getCustomer());
@@ -606,19 +603,15 @@ public class OrdersPanel extends javax.swing.JPanel {
             btnMinus.setEnabled(false);
             txtQuantity.setEnabled(false);
         }
-
         updateOrderTickets();
         calcTotalPrice();
-
     }//GEN-LAST:event_lstOrdersValueChanged
 
     private void btnNewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewOrderActionPerformed
 
         if (lblOrder.getText().equals("NOVA NARUDŽBA")) {
-
             emptyCart();
         }
-
         updateOrders(sortOrders);
         order = new Order();
         updateOrderTickets();

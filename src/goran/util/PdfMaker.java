@@ -54,7 +54,7 @@ public class PdfMaker {
 
             for (OrderedTicket t : order.getTickets()) {
                 contentStream.showText(t.getTicket().getName() + " x" + t.getQuantity() + " = "
-                        + new DecimalFormat("#.00").format(t.getTicket().getPrice()* t.getQuantity()) + "kn");
+                        + new DecimalFormat("#.00").format(t.getTicket().getPrice() * t.getQuantity()) + "kn");
                 contentStream.newLine();
             }
 
@@ -75,7 +75,6 @@ public class PdfMaker {
             err.println(
                     "Exception while trying to create simple document - " + ioEx);
         }
-
     }
 
     public static void openPdf(Order order) {
@@ -85,7 +84,6 @@ public class PdfMaker {
                 File f = new File(PDF_PATH + order.getId() + ".pdf");
                 Desktop.getDesktop().open(f);
             } catch (IOException ex) {
-                // no application registered for PDFs
             }
         }
     }

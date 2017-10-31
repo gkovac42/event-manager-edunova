@@ -7,8 +7,8 @@ package goran.view;
 
 import goran.LoadData;
 import goran.util.MotionPanel;
-import goran.util.CustomLabel;
-import goran.util.HibernateUtil;
+import goran.util.TitleBarLabel;
+import goran.controller.HibernateUtil;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 
@@ -45,9 +45,9 @@ public class StartFrame extends javax.swing.JFrame {
         lblUser1 = new javax.swing.JLabel();
         pnlTitle = new MotionPanel(this);
         lblIcon = new javax.swing.JLabel();
-        lblClose = new CustomLabel();
+        lblClose = new TitleBarLabel();
         lblTitle = new javax.swing.JLabel();
-        lblMinimize = new CustomLabel();
+        lblMinimize = new TitleBarLabel();
         lblBackground1 = new javax.swing.JLabel();
         lblLoading = new javax.swing.JLabel();
 

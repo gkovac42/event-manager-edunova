@@ -456,7 +456,6 @@ public class CustomersPanel extends javax.swing.JPanel {
     private void btnEditCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCustomerActionPerformed
 
         try {
-
             lblCustomersUtil.setText(TxtUtil.EDIT_CUSTOMER);
 
             customer = getCustomer();
@@ -482,7 +481,6 @@ public class CustomersPanel extends javax.swing.JPanel {
     private void btnRemoveCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveCustomerActionPerformed
 
         try {
-
             customer = getCustomer();
             ctrlCustomer.delete(customer);
             updateCustomers();
@@ -515,13 +513,11 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-
         lblError.setText("");
         frameCustomersUtil.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnExportToExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportToExcelActionPerformed
-
         ExcelMaker.customersToExcel(ctrlCustomer.getOrderedList(customer, "LastName"));
     }//GEN-LAST:event_btnExportToExcelActionPerformed
 
@@ -603,8 +599,5 @@ public class CustomersPanel extends javax.swing.JPanel {
         for (int i = 0; i < tblCustomers.getModel().getColumnCount(); i++) {
             tblCustomers.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
-
-        
-
     }
 }

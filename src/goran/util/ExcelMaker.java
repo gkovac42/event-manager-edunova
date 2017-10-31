@@ -32,10 +32,41 @@ import org.apache.poi.ss.usermodel.Row;
  * @author Goran
  */
 public class ExcelMaker {
+    
+    private static final String FILTER_DESC = "Excel datoteka(.xls)";
+    private static final String FILTER_EXTENSION = "xls";
+    private static final String FILTER_TITLE = "Odaberite datoteku za pohranu";
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
+    
+    private static String getFilepath(String name) {
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(FILTER_DESC, FILTER_EXTENSION);
+
+        try {
+            UIManager.setLookAndFeel(new DarculaLaf());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(ExcelMaker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(filter);
+        fileChooser.setDialogTitle(FILTER_TITLE);
+        fileChooser.setSelectedFile(new File(name + FILTER_EXTENSION));
+        int userSelection = fileChooser.showSaveDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            return fileChooser.getSelectedFile().getAbsolutePath();
+        }
+        try {
+            UIManager.setLookAndFeel(new NimbusLookAndFeel());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(ExcelMaker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public static void ticketsToExcel(List<Ticket> tickets) {
 
-        String filepath = getFilepath("Ulaznice " + new SimpleDateFormat("dd.MM.yy").format(new Date()));
+        String filepath = getFilepath("Ulaznice " + sdf.format(new Date()));
 
         if (filepath == null) {
 
@@ -45,7 +76,6 @@ public class ExcelMaker {
         try {
             HSSFWorkbook wb = new HSSFWorkbook();
 
-            // setting sheet name later
             Row row;
             Cell cell;
             int red = 0;
@@ -87,7 +117,7 @@ public class ExcelMaker {
 
     public static void ordersToExcel(List<Order> orders) {
 
-        String filepath = getFilepath("Narudžbe " + new SimpleDateFormat("dd.MM.yy").format(new Date()));
+        String filepath = getFilepath("Narudžbe " + sdf.format(new Date()));
 
         if (filepath == null) {
 
@@ -97,7 +127,6 @@ public class ExcelMaker {
         try {
             HSSFWorkbook wb = new HSSFWorkbook();
 
-            // setting sheet name later
             Row row;
             Cell cell;
             int red = 0;
@@ -122,7 +151,7 @@ public class ExcelMaker {
                 cell = row.createCell(kolona++);
                 cell.setCellValue(o.getId());
                 cell = row.createCell(kolona++);
-                cell.setCellValue(new SimpleDateFormat("dd.MM.yy").format(o.getDateCreated()));
+                cell.setCellValue(sdf.format(o.getDateCreated()));
                 cell = row.createCell(kolona++);
                 cell.setCellValue(o.getCustomer().toString());
                 cell = row.createCell(kolona);
@@ -139,7 +168,7 @@ public class ExcelMaker {
 
     public static void eventsToExcel(List<Event> events) {
 
-        String filepath = getFilepath("Eventi " + new SimpleDateFormat("dd.MM.yy").format(new Date()));
+        String filepath = getFilepath("Eventi " + sdf.format(new Date()));
 
         if (filepath == null) {
 
@@ -149,7 +178,6 @@ public class ExcelMaker {
         try {
             HSSFWorkbook wb = new HSSFWorkbook();
 
-            // setting sheet name later
             Row row;
             Cell cell;
             int red = 0;
@@ -183,7 +211,7 @@ public class ExcelMaker {
                 }
                 cell = row.createCell(kolona);
                 if (e.getStartDate() != null) {
-                    cell.setCellValue(new SimpleDateFormat("dd.MM.yy").format(e.getDateCreated()));
+                    cell.setCellValue(sdf.format(e.getDateCreated()));
                 }
             }
 
@@ -196,7 +224,7 @@ public class ExcelMaker {
 
     public static void customersToExcel(List<Customer> customers) {
 
-        String filepath = getFilepath("Korisnici " + new SimpleDateFormat("dd.MM.yy").format(new Date()));
+        String filepath = getFilepath("Korisnici " + sdf.format(new Date()));
 
         if (filepath == null) {
 
@@ -206,7 +234,6 @@ public class ExcelMaker {
         try {
             HSSFWorkbook wb = new HSSFWorkbook();
 
-            // setting sheet name later
             Row row;
             Cell cell;
             int red = 0;
@@ -240,7 +267,6 @@ public class ExcelMaker {
                 cell.setCellValue(c.getLocality());
                 cell = row.createCell(kolona);
                 cell.setCellValue(c.getEmail());
-
             }
 
             writeFile(wb, filepath);
@@ -250,35 +276,8 @@ public class ExcelMaker {
         }
     }
 
-    private static String getFilepath(String name) {
-
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel datoteka(.xls)", "xls");
-
-        
-        try {
-            UIManager.setLookAndFeel(new DarculaLaf());
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(ExcelMaker.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(filter);
-        fileChooser.setDialogTitle("Odaberite datoteku za pohranu");
-        fileChooser.setSelectedFile(new File(name + ".xls"));
-        int userSelection = fileChooser.showSaveDialog(null);
-
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            return fileChooser.getSelectedFile().getAbsolutePath();
-        }
-        try {
-            UIManager.setLookAndFeel(new NimbusLookAndFeel());
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(ExcelMaker.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
     private static void writeFile(HSSFWorkbook wb, String filepath) throws IOException {
-
+        
         FileOutputStream fileOut = new FileOutputStream(filepath);
         wb.write(fileOut);
         wb.close();

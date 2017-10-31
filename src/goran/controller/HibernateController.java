@@ -6,7 +6,6 @@
 package goran.controller;
 
 import goran.model.Entity;
-import goran.util.HibernateUtil;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
@@ -32,9 +31,11 @@ public class HibernateController<T extends Entity> {
             entity.setDateCreated(currentDate);
         }
         entity.setDateModified(currentDate);
+        
         session.beginTransaction();
         session.saveOrUpdate(entity);
         session.getTransaction().commit();
+        
         return entity;
     }
 
@@ -45,6 +46,7 @@ public class HibernateController<T extends Entity> {
     }
     
     public void permDelete (T entity) {
+        
         session.beginTransaction();
         session.delete(entity);
         session.getTransaction().commit();
@@ -54,6 +56,7 @@ public class HibernateController<T extends Entity> {
         
         Date currentDate = new Date();
         session.beginTransaction();
+        
         list.stream().forEach((entity) -> {
             if (entity.getId() == null) {
                 entity.setDateCreated(currentDate);
@@ -62,6 +65,7 @@ public class HibernateController<T extends Entity> {
             session.saveOrUpdate(entity);
         });
         session.getTransaction().commit();
+        
         return list;
     }
     
@@ -85,7 +89,7 @@ public class HibernateController<T extends Entity> {
         
         List<T> list = HibernateUtil.getSession().createQuery
         ("from " + entity.getClass().getName() + " where deleted=false and " + param + " like ?")
-                .setString(0, "%"+find+"%").list();
+                .setString(0, "%"+ find +"%").list();
         
         return list;
     }

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package goran.util;
+package goran.controller;
 
 import com.bulenkov.darcula.DarculaLaf;
+import goran.util.ExcelMaker;
 import goran.view.MainFrame;
 import java.awt.HeadlessException;
 import java.io.File;
@@ -16,7 +17,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -27,17 +27,21 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 
+    private static final String HIBERNATE_CFG_PATH = "hibernate.cfg.xml";
+
     private static Session session = null;
 
-    protected HibernateUtil() {
+    private HibernateUtil() {
 
     }
 
+    // singleton for single instance of Hibernate session
     public static Session getSession() {
+
         if (session == null) {
             try {
-
-                File f = new File("hibernate.cfg.xml");
+                // get external hibernate.cfg file
+                File f = new File(HIBERNATE_CFG_PATH);
                 SessionFactory sessionFactory = new Configuration().configure(f).buildSessionFactory();
                 session = sessionFactory.openSession();
 
@@ -51,32 +55,33 @@ public class HibernateUtil {
         return session;
     }
 
+    // close Hibernate session and mySQL server on exit
     public static void exit() {
+
         getSession().close();
-//        try {
-//            Runtime.getRuntime().exec("cmd /c Taskkill /IM mysqld.exe /F");
-//        } catch (IOException ex) {
-//            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            System.exit(0);
-//        }
-        System.exit(0);
+        try {
+            Runtime.getRuntime().exec("cmd /c Taskkill /IM mysqld.exe /F");
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.exit(0);
+        }
     }
 
     public static void startMySQL() {
         try {
             Runtime.getRuntime().exec("cmd /c start /B " + getMySQLPath());
         } catch (IOException ex) {
-            new JOptionPane("Greška pri pokretanju MySQL servera!");
             System.exit(0);
         }
     }
 
-    public static String getMySQLPath() {
+    private static String getMySQLPath() {
 
         String path;
         Properties properties = new Properties();
 
+        // try to get mySQLpath from properties file
         try {
             FileInputStream in = new FileInputStream("properties");
             properties.load(in);
@@ -87,6 +92,7 @@ public class HibernateUtil {
 
         } catch (IOException iOException) {
 
+            // if no properties, ask for user input
             try {
                 FileNameExtensionFilter filter = new FileNameExtensionFilter(".exe", "exe");
 
@@ -95,6 +101,7 @@ public class HibernateUtil {
                 } catch (UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(ExcelMaker.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setFileFilter(filter);
                 fileChooser.setDialogTitle("Odaberite datoteku MySQL servera (mysql\\bin)");
@@ -103,6 +110,7 @@ public class HibernateUtil {
 
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
                     path = fileChooser.getSelectedFile().getAbsolutePath();
+                    // save properties file
                     properties.setProperty("mysql_path", path);
                     FileOutputStream out = new FileOutputStream("properties");
                     properties.store(out, "MySQL path added.");
@@ -123,5 +131,4 @@ public class HibernateUtil {
             return null;
         }
     }
-
 }

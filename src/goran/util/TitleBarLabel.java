@@ -5,17 +5,15 @@
  */
 package goran.util;
 
-import goran.util.Theme;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  *
  * @author Goran
  */
-public class CustomLabel extends JLabel {
+public class TitleBarLabel extends JLabel {
 
-    public CustomLabel() {
+    public TitleBarLabel() {
         
         super();
         addListener();

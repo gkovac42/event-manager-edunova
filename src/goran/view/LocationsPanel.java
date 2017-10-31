@@ -38,17 +38,16 @@ public class LocationsPanel extends javax.swing.JPanel {
         ctrlLocation = new HibernateController<>();
         mapControl = new GoogleMapsController();
         sortLocations = "name";
-        
+
         lstLocations.setComponentPopupMenu(locationsMenu);
         menuButtonGroup.setSelected(mnuNam.getModel(), true);
-        
+
         addLocationSearchListener();
 
         updateLocations(sortLocations);
     }
 
     private void updateLocations(String orderBy) {
-
         DefaultListModel<Location> model = new DefaultListModel<>();
         lstLocations.setModel(model);
         for (Location l : ctrlLocation.getOrderedList(location, orderBy)) {
@@ -294,18 +293,15 @@ public class LocationsPanel extends javax.swing.JPanel {
 
     private void lstLocationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstLocationsValueChanged
 
-        if (lstLocations.getSelectedIndex() == -1) {
-        } else {
+        if (lstLocations.getSelectedIndex() != -1) {
 
             location = lstLocations.getSelectedValue();
-
             txtLocationAddress.setText(location.getAddress());
             txtLocationLocality.setText(location.getLocality());
             txtLocationCountry.setText(location.getCountry());
             txtLocationName.setText(location.getName());
 
             mapControl.openOrDownloadMap(location, MAP_ZOOM, lblMap, MAP_TYPE);
-
             lblError.setText("");
         }
 
@@ -315,7 +311,6 @@ public class LocationsPanel extends javax.swing.JPanel {
     private void btnFindOnMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindOnMapActionPerformed
 
         try {
-
             getUserInput();
 
             String[] mapData = mapControl.getGoogleMapsData(mapControl.generateUrl(location));
@@ -357,19 +352,16 @@ public class LocationsPanel extends javax.swing.JPanel {
 
     private void btnRemoveLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveLocationActionPerformed
 
-        if (lstLocations.getSelectedIndex() == -1) {
-        } else {
+        if (lstLocations.getSelectedIndex() != -1) {
 
             clearUserInput();
             ctrlLocation.delete(location);
             updateLocations(sortLocations);
             location = new Location();
-
         }
     }//GEN-LAST:event_btnRemoveLocationActionPerformed
 
     private void btnNewLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewLocationActionPerformed
-
         clearUserInput();
         lstLocations.setSelectedIndex(-1);
         location = new Location();
@@ -465,6 +457,5 @@ public class LocationsPanel extends javax.swing.JPanel {
         lstLocations.setBackground(Theme.color4);
         lstLocations.setForeground(Theme.font1);
         lblMap.setBorder(new EtchedBorder(Theme.color1, Theme.color2));
-
     }
 }

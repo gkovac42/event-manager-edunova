@@ -629,9 +629,7 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void btnEditEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditEventActionPerformed
 
-        if (lstEvents.getSelectedIndex() == -1) {
-
-        } else {
+        if (lstEvents.getSelectedIndex() != -1) {
 
             lblEventsUtil.setText(TxtUtil.EDIT_EVENT);
             txtEventName.setText(event.getName());
@@ -639,7 +637,7 @@ public class EventsPanel extends javax.swing.JPanel {
             endDatePicker.setDate(event.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             lstLocations.setSelectedValue(event.getLocation(), true);
             updateLocations();
-            
+
             frameEventsUtil.setVisible(true);
             frameEventsUtil.setLocationRelativeTo(this);
         }
@@ -647,17 +645,13 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void btnRemoveEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveEventActionPerformed
 
-        if (lstEvents.getSelectedIndex() == -1) {
-
-        } else {
+        if (lstEvents.getSelectedIndex() != -1) {
 
             for (Ticket t : event.getTickets()) {
                 ctrlTicket.delete(t);
             }
-
             ctrlEvent.delete(event);
             updateEvents(sortEvents);
-
         }
     }//GEN-LAST:event_btnRemoveEventActionPerformed
 
@@ -692,7 +686,7 @@ public class EventsPanel extends javax.swing.JPanel {
                 ctrlMap.openOrDownloadMap(location, 14, lblMap, "S");
                 lblEventLocation.setText(location.toString());
             }
-            
+
             ctrlEvent.save(event);
             updateEvents(sortEvents);
             lblErrorEvent.setText("");
@@ -775,13 +769,13 @@ public class EventsPanel extends javax.swing.JPanel {
                 ctrlEvent.save(event);
                 updateEventTickets();
                 frameTicketsUtil.dispose();
-                
+
                 Thread t = new Thread(() -> {
                     MainFrame.pnlOrders.updateTickets("name");
                 });
                 t.start();
             }
-            
+
         } catch (NumberFormatException numberFormatException) {
             lblErrorTicket.setText(TxtUtil.NUMBER_ERROR);
         }
@@ -794,9 +788,7 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void btnAddTicketToEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTicketToEventActionPerformed
 
-        if (lstEvents.getSelectedValue() == null ) {
-
-        } else {
+        if (lstEvents.getSelectedValue() != null) {
 
             ticket = new Ticket();
 
@@ -829,29 +821,24 @@ public class EventsPanel extends javax.swing.JPanel {
 
     private void btnRemoveTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveTicketActionPerformed
 
-        if (lstTickets.getSelectedIndex() == -1) {
-
-        } else {
+        if (lstTickets.getSelectedIndex() != -1) {
 
             ticket = lstTickets.getSelectedValue();
             event.getTickets().remove(ticket);
             ctrlTicket.delete(ticket);
             ctrlEvent.save(event);
             updateEventTickets();
-            
-            Thread t = new Thread(() -> {
-                    MainFrame.pnlOrders.updateTickets("name");
-                });
-                t.start();
 
+            Thread t = new Thread(() -> {
+                MainFrame.pnlOrders.updateTickets("name");
+            });
+            t.start();
         }
     }//GEN-LAST:event_btnRemoveTicketActionPerformed
 
     private void btnEditTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditTicketActionPerformed
 
-        if (lstTickets.getSelectedIndex() == -1) {
-
-        } else {
+        if (lstTickets.getSelectedIndex() != -1) {
 
             ticket = lstTickets.getSelectedValue();
             lblTicketsUtil.setText(TxtUtil.EDIT_TICKET);
@@ -861,7 +848,6 @@ public class EventsPanel extends javax.swing.JPanel {
 
             frameTicketsUtil.setVisible(true);
             frameTicketsUtil.setLocationRelativeTo(this);
-
         }
     }//GEN-LAST:event_btnEditTicketActionPerformed
 
@@ -886,7 +872,7 @@ public class EventsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_mnuDateCreatedActionPerformed
 
     public void applyTheme() {
-        
+
         //Events Panel
         setBackground(Theme.color2);
         btnAddEvent.setBackground(Theme.color3);
@@ -927,14 +913,13 @@ public class EventsPanel extends javax.swing.JPanel {
         txtTicketName.setForeground(Theme.font1);
         txtTicketPrice.setForeground(Theme.font1);
         txtTicketQuantity.setForeground(Theme.font1);
-        
+
         eventsMenu.setBackground(Theme.color2);
         eventsMenu.setForeground(Theme.font1);
-        
+
         lblMap.setBorder(new EtchedBorder(Theme.color1, Theme.color2));
         drawBorders();
-        
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1007,12 +992,12 @@ public class EventsPanel extends javax.swing.JPanel {
 
         startDatePicker = new MyDatePicker();
         endDatePicker = new MyDatePicker();
-        
+
         pnlEventsUtil.add(startDatePicker, new AbsoluteConstraints(10, 90));
         pnlEventsUtil.add(endDatePicker, new AbsoluteConstraints(150, 90));
-        
+
         sdf = new SimpleDateFormat("dd.MM.yyyy.");
-        
+
     }
 
     private void addEventSearchListener() {
