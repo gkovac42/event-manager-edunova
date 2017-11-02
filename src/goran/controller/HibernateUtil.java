@@ -57,8 +57,10 @@ public class HibernateUtil {
 
     // close Hibernate session and mySQL server on exit
     public static void exit() {
-
-        getSession().close();
+        
+        if (session != null) {
+            session.close();
+        }
         try {
             Runtime.getRuntime().exec("cmd /c Taskkill /IM mysqld.exe /F");
         } catch (IOException ex) {
